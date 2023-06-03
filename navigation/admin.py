@@ -1,0 +1,28 @@
+from django.contrib import admin
+from .models import MediaBucket,SubMenu,Menu,Header,Page,Blogs,Pricingsectionone,BlogPost,Ourwork,Pricing,Homepage,Whyus,Ourworkproject,Blogauthor,Tag
+
+
+# Register your models here.
+
+admin.site.register(MediaBucket)
+admin.site.register(SubMenu)
+admin.site.register(Menu)
+
+admin.site.register(Header)
+admin.site.register(Page)
+admin.site.register(Blogs)
+admin.site.register(Pricingsectionone)
+admin.site.register(BlogPost)
+admin.site.register(Ourwork)
+admin.site.register(Pricing)
+admin.site.register(Homepage)
+admin.site.register(Whyus)
+admin.site.register(Ourworkproject)
+admin.site.register(Blogauthor)
+admin.site.register(Tag)
+
+
+
+
+
+
