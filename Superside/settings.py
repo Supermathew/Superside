@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "ckeditor_uploader",
     "accounts",
     "drf_yasg",
+    "corsheaders",
     # "navigation",
 ]
 
@@ -68,7 +69,20 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
+
+
+CORS_ORIGIN_ALLOW_ALL = env("DJANGO_CORS_ORGIN_ALLOW")
+CORS_ALLOWED_ORIGINS = [
+    'http://superside-production.up.railway.app',
+    'https://superside-production.up.railway.app',
+    'superside-production.up.railway.app',
+    'http://superside-production.up.railway.app:3000',  # Assuming the frontend runs on port 3000
+    'https://superside-production.up.railway.app:3000',
+]
+
+CORS_ALLOW_CREDENTIALS = env("DJANGO_CORS_ALLOW_CREDENTIALS")
 
 ROOT_URLCONF = "Superside.urls"
 
