@@ -61,6 +61,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -70,16 +71,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
 ]
 
 
 CORS_ORIGIN_ALLOW_ALL = env.bool("DJANGO_CORS_ORGIN_ALLOW")
 CORS_ALLOWED_ORIGINS = [
-    'http://superside-production.up.railway.app',
-    'https://superside-production.up.railway.app',
-    'http://superside-production.up.railway.app:3000',  # Assuming the frontend runs on port 3000
-    'https://superside-production.up.railway.app:3000',
+    "http://superside-production.up.railway.app",
+    "https://superside-production.up.railway.app"
 ]
 
 CORS_ALLOW_CREDENTIALS = env.bool("DJANGO_CORS_ALLOW_CREDENTIALS")
