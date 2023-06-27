@@ -77,7 +77,13 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = env.bool("DJANGO_CORS_ORGIN_ALLOW")
 CORS_ALLOWED_ORIGINS = [
     "http://superside-production.up.railway.app",
-    "https://superside-production.up.railway.app"
+    "https://superside-production.up.railway.app",
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:3002",
+    "http://localhost:3003"
+
+    
 ]
 
 CORS_ALLOW_CREDENTIALS = env.bool("DJANGO_CORS_ALLOW_CREDENTIALS")
