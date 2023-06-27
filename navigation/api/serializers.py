@@ -47,12 +47,73 @@ class FooterSerializer(serializers.ModelSerializer):
         model = Footer
         fields = '__all__'
 
+# data_dict = {
+#     "text1": "Value 1",
+#     "text2": "Value 2",
+#     "text3": "Value 3",
+#     "text4": "Value 4",
+#     "text5": [
+#         {
+#             "text6": "Value 6",
+#             "text7": "Value 7",
+#             "text8": "Value 8",
+#         },
+#         {
+#             "text9": "Value 9",
+#             "text10": "Value 10",
+#             "text11": "Value 11",
+#         },
+#         {
+#             "text10": "Value 10",
+#             "text11": "Value 11",
+#             "text12": "Value 12",
+#         },
+#         {
+#             "text13": "Value 13",
+#             "text14": "Value 14",
+#             "text15": "Value 15",
+#         },
+#     ],
+# }
 
 class SectiontwoSerializer(serializers.ModelSerializer):
 
-      class Meta:
-        model = Sectiontwo
-        fields = '__all__'
+
+        def to_representation(self, instance):
+            representation = super().to_representation(instance)
+            data_dict = {
+                "text1": representation.get("text1"),
+                "text2": representation.get("text2"),
+                "text3": representation.get("text3"),
+                "Factcontent": [
+                    {
+                        "subTitle1": representation.get("text4"),
+                        "title1": representation.get("text5"),
+                        "desc1": representation.get("text6"),
+                    },
+                    {
+                        "subTitle2": representation.get("text7"),
+                        "title2": representation.get("text8"),
+                        "desc2": representation.get("text9"),
+                    },
+                    {
+                        "subTitle3": representation.get("text10"),
+                        "title3": representation.get("text11"),
+                        "desc3": representation.get("text12"),
+                    },
+                    {
+                        "subTitle4": representation.get("text13"),
+                        "title4": representation.get("text14"),
+                        "desc4": representation.get("text15"),
+                    },
+                ],
+            }
+            return data_dict
+
+
+        class Meta:
+            model = Sectiontwo
+            fields = '__all__'
 
 
 
