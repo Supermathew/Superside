@@ -111,6 +111,17 @@ class ImageUpdateUploadView(GenericAPIView):
         except MediaBucket.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+class UserHeaderView(GenericAPIView):
+
+    serializer_class = HeaderSerializer
+
+    def get(self, request):
+        try:
+            header = Header.objects.first()  # Retrieve the first and only Header object
+            serializer = HeaderSerializer(header)
+            return Response(serializer.data)
+        except Header.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class HeaderView(GenericAPIView):
@@ -246,6 +257,19 @@ class SubMenuUpdateView(GenericAPIView):
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except (Menu.DoesNotExist, SubMenu.DoesNotExist):
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class UserFooterView(GenericAPIView):
+
+    serializer_class = FooterSerializer
+
+    def get(self, request):
+        try:
+            footer = Footer.objects.first()  # Retrieve the first and only Header object
+            serializer = FooterSerializer(footer)
+            return Response(serializer.data)
+        except Footer.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
@@ -3168,6 +3192,28 @@ class bookacalluserView(GenericAPIView):
 
         serializer = bookcallUserSerializer(blogs)
         return Response(serializer.data)
+
+
+class UserSocialView(GenericAPIView):
+
+    serializer_class = SocialSerializer
+
+    def get_image(self, image_id):
+        try:
+            review = BookacallSlidersection2.objects.get(id=image_id)
+            return review
+        except BookacallSlidersection2.DoesNotExist:
+            return None
+    
+    def get(self, request):
+        try:
+            page = Social.objects.all()
+        except Social.DoesNotExist:
+            return Response({'error': ' Social Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        # images = BookacallSlidersection2.objects.filter(page=page)
+        serializer = SocialSerializer(page, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class SocialView(GenericAPIView):

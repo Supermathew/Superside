@@ -23,11 +23,11 @@ from navigation.api.views import (
     ImageUploadView, HeaderView, MenuView, SubMenuView, FooterView, SectiontwoView, SectionfourView,OurworkuserView,OurworkresultsingleView,ServicesUserpageView,BookacallUpdateSlidersection2View,PricingUpdateFaqView,whyusUpdateReviewView,authordetailsView,
     SectiononeView, VideoUploadView, SectionthreeView, DetailsView, HomepageReviewView, PageView,WhyususerView,OurworkallresultView,bookacalluserView,BookacallUpdateSlidersection1View,HomepageUpdateSlidersection2View,ServicesreviewUpdateView,authornameview,ImageUpdateUploadView,
     PagelistView, ServicessectiononeView, ServicessectiontwoView, ServicessectionThreeView,homepageView,homeView,BloguserView,SingleblogView,BlogbycategoryView,PricingUpdatedetailsView,DetailsUpdateView,PricingUpdatesubdetailsView,allBloguserView,BlogbytagView,
-    ServicesreviewView, FaqView, ServicessectionsixView, ServicessectionsevenView, SlidersectionView,servicesview,OurworkresultView,HomepageSlidersection1updateView,PricinguserUpdatereviewView,HomepageUpdateReviewView,FaqUpdateView,SocialupdateView,tagdetailsView,
-    BookacallView,BookacallsectiononeView,BookacallsectiontwoView,BookacallSlidersection1View,BookacallSlidersection2View,HomepageSlidersection1View,HomepageSlidersection2View,OurworkresultsinglepreviousView,OurworkresultsinglenextAPIView,BlogbyauthorView,
+    ServicesreviewView, FaqView, ServicessectionsixView, ServicessectionsevenView, SlidersectionView,servicesview,OurworkresultView,HomepageSlidersection1updateView,PricinguserUpdatereviewView,HomepageUpdateReviewView,FaqUpdateView,SocialupdateView,tagdetailsView,UserFooterView,
+    BookacallView,BookacallsectiononeView,BookacallsectiontwoView,BookacallSlidersection1View,BookacallSlidersection2View,HomepageSlidersection1View,HomepageSlidersection2View,OurworkresultsinglepreviousView,OurworkresultsinglenextAPIView,BlogbyauthorView,UserHeaderView,
     OurworksectiononeView, OurworksectiontwoView, OurworkView, BlogsView, BlogssectiononeView,OurworkprojectView,ServicessingleOurworkView,BlogauthorView,BlogauthorUpdateView,TagView,TagUpdateView,pricingView,SlidersectionUpdateView,EmailView,VideoUpdateUploadView,
     BlogssectiontwoView, BlogssectionthreeView, BlogssectionfourView, WhyussectiontwoView,WhyussectionthreeView,WhyussectionfourView,WhyussectionfiveView,WhyussectionsixView,whyusReviewView,WhyusView,WhyussectionsevenView,SocialView,MenuUpdateView,SubMenuUpdateView,
-    PricingdetailsView,PricingFaqView,PricingsectionfourView,PricingsectionthreeView,PricingView,PricingsectiontwoView,PricingsectiononeView,PricinguserreviewView,PricingsubdetailsView,ServicesBlogPostView,ServicessingleBlogPostView,
+    PricingdetailsView,PricingFaqView,PricingsectionfourView,PricingsectionthreeView,PricingView,PricingsectiontwoView,PricingsectiononeView,PricinguserreviewView,PricingsubdetailsView,ServicesBlogPostView,ServicessingleBlogPostView,UserSocialView
 )
 from django.urls import path, include
 from rest_framework import routers
@@ -57,12 +57,15 @@ urlpatterns = [
     path('upload/<int:image_id>/', ImageUpdateUploadView.as_view(), name='image-delete'),
     path('upload/video/', VideoUploadView.as_view(), name='video-upload'),
     path('upload/video/<int:video_id>/', VideoUpdateUploadView.as_view(), name='Video-delete'),
-    path('header/', HeaderView.as_view()),
-    path('menu/', MenuView.as_view()),
-    path('menu/<int:menu_id>/', MenuUpdateView.as_view()),
-    path('menu/<int:menu_id>/submenu/', SubMenuView.as_view()),
-    path('menu/<int:menu_id>/submenu/<int:submenu_id>/', SubMenuUpdateView.as_view()),
-    path('footer/', FooterView.as_view()),
+    path('header/', UserHeaderView.as_view()),
+    path('footer/', UserFooterView.as_view()),
+    path('social/', UserSocialView.as_view()),##approved
+    path('dashboard/header/', HeaderView.as_view()),
+    path('dashboard/menu/', MenuView.as_view()),
+    path('dashboard/menu/<int:menu_id>/', MenuUpdateView.as_view()),
+    path('dashboard/menu/<int:menu_id>/submenu/', SubMenuView.as_view()),
+    path('dashboard/menu/<int:menu_id>/submenu/<int:submenu_id>/', SubMenuUpdateView.as_view()),
+    path('dashboard/footer/', FooterView.as_view()),
     path('homepage/', homeView.as_view()),
     path('servicepage/<slug:page_slug>/', ServicesUserpageView.as_view(),name='servicespages'),
     path('pricing/', pricingView.as_view()),
