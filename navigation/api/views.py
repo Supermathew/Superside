@@ -35,31 +35,28 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from navigation.models import ( 
-    MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,HomepageReview,Pricingsubdetails,Emailinput,Social,
-    Bookacall,Bookacallsectionone,Bookacallsectiontwo,BookacallSlidersection1,BookacallSlidersection2,HomepageSlidersection1,HomepageSlidersection2,
-    Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Servicesreview,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,
-    Slidersection,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,
+    MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,Emailinput,Social,
+    Bookacall,Bookacallsectionone,Bookacallsectiontwo,
+    Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,CommonSlidersection2,CommonReview,CommonSlidersection1,
     Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionfour,Whyussectionthree,Whyussectionfour,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,
-    Whyussectiontwo,whyusreview,PricingFaq,Pricinguserreview,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,BlogPost,Ourworkproject
+    Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,BlogPost,Ourworkproject
 )
 
 from .serializers import (
     SubMenuSerializer,FooterSerializer,SectiontwoSerializer,HomepageSerializer,OurworkUserSerializer,ServicesuserSerializer,
     SectionfourSerializer,SectiononeSerializer,VideoBucketSerializer,WhyusUserSerializer,bookcallUserSerializer,SocialSerializer,
     SectionthreeSerializer,DetailsSerializer,HomepageReviewSerializer,BlogUserSerializer,blogsingleSerializer,blogpageauthorSerializer,
-    BookacallSerializer,BookacallsectiononeSerializer,BookacallsectiontwoSerializer,BookacallSlidersection1Serializer,
-    BookacallSlidersection2Serializer,PageblogSerializer,BlogTimepassUserSerializer,authordetailsSerializer,
+    BookacallSerializer,BookacallsectiononeSerializer,BookacallsectiontwoSerializer,PageblogSerializer,BlogTimepassUserSerializer,authordetailsSerializer,
     PageSerializer,ServicessectiononeSerializer,ServicessectiontwoSerializer,PageDashboardSerializer,
-    ServicessectionThreeSerializer,ServicesreviewSerializer,FaqSerializer,EmailSerializer,SectionsixSerializer,SectionfiveSerializer,singlereviewSerializer,
-
-    ServicessectionsixSerializer,ServicessectionsevenSerializer,SlidersectionSerializer,
+    ServicessectionThreeSerializer,FaqSerializer,EmailSerializer,SectionsixSerializer,SectionfiveSerializer,singlereviewSerializer,
+HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,HomepageReviewSerializer,
+    ServicessectionsixSerializer,ServicessectionsevenSerializer,
     OurworkSerializer,OurworksectiononeSerializer,OurworksectiontwoSerializer,
     BlogsSerializer,BlogsectiononeSerializer,BlogsectiontwoSerializer,
     BlogsectionthreeSerializer,BlogsectionfourSerializer,WhyusSerializer,
     WhyussectionsevenSerializer,WhyussectionsixSerializer,HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,
     WhyussectionfiveSerializer,WhyussectionfourSerializer,PricingUserSerializer,
-    WhyussectionthreeSerializer,WhyussectiontwoSerializer,HomeSerializer,
-    whyusreviewSerializer,PricinguserreviewSerializer,PricingFaqSerializer,
+    WhyussectionthreeSerializer,WhyussectiontwoSerializer,HomeSerializer,PricingFaqSerializer,
     PricingsectiononeSerializer,PricingSerializer,PricingsectiontwoSerializer,
     PricingsectionthreeSerializer,PricingsectionfourSerializer,PricingdetailsSerializer,ServicesBlogPostSerializer,OurworkprojectSerializer,
     PricingsubdetailsSerializer,ServicesBlogPostSerializer,TagSerializer,BlogauthorSerializer
@@ -722,6 +719,45 @@ class DetailsUpdateView(GenericAPIView):
         review.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class UserHomepageReviewView(GenericAPIView):
+    
+    # def get(self, request):
+    #     details = HomepageReview.objects.all()
+    #     serializer = HomepageReviewSerializer(details, many=True)
+    #     return Response(serializer.data)
+
+    # def post(self, request):
+    #     serializer = HomepageReviewSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # def delete(self, request, review_id):
+    #     try:
+    #         details = HomepageReview.objects.get(id=review_id)
+    #         details.delete()
+    #         return Response(status=status.HTTP_204_NO_CONTENT)
+    #     except HomepageReview.DoesNotExist:
+    #         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    # def put(self, request, review_id):
+    #     try:
+    #         details = HomepageReview.objects.get(id=review_id)
+    #         serializer = HomepageReviewSerializer(details, data=request.data)
+    #         if serializer.is_valid():
+    #             serializer.save()
+    #             return Response(serializer.data)
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #     except HomepageReview.DoesNotExist:
+    #         return Response(status=status.HTTP_404_NOT_FOUND)
+    serializer_class = HomepageReviewSerializer
+
+    def get(self, request):
+        menus = CommonReview.objects.all()
+        serializer = HomepageReviewSerializer(menus, many=True)
+        return Response(serializer.data)
+
 
 class HomepageReviewView(GenericAPIView):
     
@@ -758,34 +794,16 @@ class HomepageReviewView(GenericAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = HomepageReviewSerializer
 
-    def get_review(self, review_id):
-        try:
-            review = HomepageReview.objects.get(id=review_id)
-            return review
-        except HomepageReview.DoesNotExist:
-            return None
-    
-    def get(self, request, page_slug):
-        try:
-            page = Homepage.objects.get(slug=page_slug)
-        except Homepage.DoesNotExist:
-            return Response({'error': 'Homepage not found'}, status=status.HTTP_404_NOT_FOUND)
+    def get(self, request):
+        menus = CommonReview.objects.all()
+        serializer = HomepageReviewSerializer(menus, many=True)
+        return Response(serializer.data)
 
-        reviews = HomepageReview.objects.filter(page=page)
-        serializer = HomepageReviewSerializer(reviews, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def post(self, request, page_slug):
-        try:
-            page = Homepage.objects.get(slug=page_slug)
-        except Homepage.DoesNotExist:
-            return Response({'error': 'Homepage not found'}, status=status.HTTP_404_NOT_FOUND)
-        
+    def post(self, request):
         serializer = HomepageReviewSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(page=page)
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -794,42 +812,24 @@ class HomepageUpdateReviewView(GenericAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = HomepageReviewSerializer
 
-    def get_review(self, review_id):
+    def delete(self, request, review_id):
         try:
-            review = HomepageReview.objects.get(id=review_id)
-            return review
-        except HomepageReview.DoesNotExist:
-            return None
-    
-    def get(self, request, page_slug, review_id):
+            menu = CommonReview.objects.get(id=review_id)
+            menu.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except CommonReview.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def put(self, request, review_id):
         try:
-            page = Homepage.objects.get(slug=page_slug)
-        except Homepage.DoesNotExist:
-            return Response({'error': 'Homepage not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        reviews = HomepageReview.objects.filter(page=page,id=review_id)
-        serializer = HomepageReviewSerializer(reviews)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def put(self, request,page_slug, review_id):
-        review = self.get_review(review_id)
-        if not review:
-            return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = HomepageReviewSerializer(review, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request,page_slug, review_id):
-        review = self.get_review(review_id)
-        if not review:
-            return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        review.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+            menu = CommonReview.objects.get(id=review_id)
+            serializer = HomepageReviewSerializer(menu, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except CommonReview.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -838,127 +838,127 @@ class HomepageSlidersection1View(GenericAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = HomepageSlidersection1Serializer
 
-    def get_image(self, image_id):
-        try:
-            review = HomepageSlidersection1.objects.get(id=image_id)
-            return review
-        except HomepageSlidersection1.DoesNotExist:
-            return None
-    
-    def get(self, request, page_slug):
-        try:
-            page = Homepage.objects.get(slug=page_slug)
-        except Homepage.DoesNotExist:
-            return Response({'error': 'Homepage Page not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        images = HomepageSlidersection1.objects.filter(page=page)
-        serializer = HomepageSlidersection1Serializer(images, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def post(self, request, page_slug):
-        try:
-            page = Homepage.objects.get(slug=page_slug)
-        except Homepage.DoesNotExist:
-            return Response({'error':  ' Homepage Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        
+    def get(self, request):
+        menus = CommonSlidersection1.objects.all()
+        serializer = HomepageSlidersection1Serializer(menus, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
         serializer = HomepageSlidersection1Serializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(page=page)
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class HomepageSlidersection1updateView(GenericAPIView):
 
     permission_classes = [IsAuthenticated]
+    serializer_class = HomepageSlidersection2Serializer
+
+    # def get_image(self, image_id):
+    #     try:
+    #         review = HomepageSlidersection1.objects.get(id=image_id)
+    #         return review
+    #     except HomepageSlidersection1.DoesNotExist:
+    #         return None
+
+    # def get(self, request, page_slug, image_id):
+    #     try:
+    #         page = Homepage.objects.get(slug=page_slug)
+    #     except Homepage.DoesNotExist:
+    #         return Response({'error': 'Homepage Page not found'}, status=status.HTTP_404_NOT_FOUND)
+    #     image = self.get_image(image_id)
+    #     if image is None:
+    #         return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    #     # images = HomepageSlidersection1.objects.filter(page=page)
+    #     serializer = HomepageSlidersection1Serializer(image)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # def put(self, request , page_slug , image_id):
+    #     try:
+    #         page = Homepage.objects.get(slug=page_slug)
+    #     except Homepage.DoesNotExist:
+    #         return Response({'error': 'Homepage Page not found'}, status=status.HTTP_404_NOT_FOUND)
+    #     image = self.get_image(image_id)
+    #     if image is None:
+    #         return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    #     serializer = HomepageSlidersection1Serializer(image, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # def delete(self, request , page_slug , image_id):
+    #     try:
+    #         page = Homepage.objects.get(slug=page_slug)
+    #     except Homepage.DoesNotExist:
+    #         return Response({'error': 'Homepage Page not found'}, status=status.HTTP_404_NOT_FOUND)
+    #     image = self.get_image(image_id)
+    #     if image is None:
+    #         return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    #     image.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def delete(self, request, image_id):
+        try:
+            menu = CommonSlidersection2.objects.get(id=image_id)
+            menu.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except CommonSlidersection2.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def put(self, request, image_id):
+        try:
+            menu = CommonSlidersection2.objects.get(id=image_id)
+            serializer = HomepageSlidersection2Serializer(menu, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except CommonSlidersection2.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+class UserHomepageSlidersection2View(GenericAPIView):
+
+    serializer_class = HomepageSlidersection2Serializer
+
+    def get(self, request):
+        menus = CommonSlidersection2.objects.all()
+        serializer = HomepageSlidersection2Serializer(menus, many=True)
+        return Response(serializer.data)
+
+class UserHomepageSlidersection1View(GenericAPIView):
+
     serializer_class = HomepageSlidersection1Serializer
 
-    def get_image(self, image_id):
-        try:
-            review = HomepageSlidersection1.objects.get(id=image_id)
-            return review
-        except HomepageSlidersection1.DoesNotExist:
-            return None
-
-    def get(self, request, page_slug, image_id):
-        try:
-            page = Homepage.objects.get(slug=page_slug)
-        except Homepage.DoesNotExist:
-            return Response({'error': 'Homepage Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        image = self.get_image(image_id)
-        if image is None:
-            return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        # images = HomepageSlidersection1.objects.filter(page=page)
-        serializer = HomepageSlidersection1Serializer(image)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def put(self, request , page_slug , image_id):
-        try:
-            page = Homepage.objects.get(slug=page_slug)
-        except Homepage.DoesNotExist:
-            return Response({'error': 'Homepage Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        image = self.get_image(image_id)
-        if image is None:
-            return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = HomepageSlidersection1Serializer(image, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request , page_slug , image_id):
-        try:
-            page = Homepage.objects.get(slug=page_slug)
-        except Homepage.DoesNotExist:
-            return Response({'error': 'Homepage Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        image = self.get_image(image_id)
-        if image is None:
-            return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        image.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
+    def get(self, request):
+        menus = CommonSlidersection1.objects.all()
+        serializer = HomepageSlidersection1Serializer(menus, many=True)
+        return Response(serializer.data)
 
 class HomepageSlidersection2View(GenericAPIView):
 
     permission_classes = [IsAuthenticated]
     serializer_class = HomepageSlidersection2Serializer
 
-    def get_image(self, image_id):
-        try:
-            review = HomepageSlidersection2.objects.get(id=image_id)
-            return review
-        except HomepageSlidersection2.DoesNotExist:
-            return None
-    
-    def get(self, request, page_slug):
-        try:
-            page = Homepage.objects.get(slug=page_slug)
-        except Homepage.DoesNotExist:
-            return Response({'error': ' Homepage Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        try:
-          images = HomepageSlidersection2.objects.filter(page=page)
-        except ObjectDoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = HomepageSlidersection2Serializer(images, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def get(self, request):
+        menus = CommonSlidersection1.objects.all()
+        serializer = HomepageSlidersection1Serializer(menus, many=True)
+        return Response(serializer.data)
 
-    def post(self, request, page_slug):
-        try:
-            page = Homepage.objects.get(slug=page_slug)
-        except Homepage.DoesNotExist:
-            return Response({'error': 'Homepage Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = HomepageSlidersection2Serializer(data=request.data)
+    def post(self, request):
+        serializer = HomepageSlidersection1Serializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(page=page)
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class HomepageUpdateSlidersection2View(GenericAPIView):
@@ -966,52 +966,24 @@ class HomepageUpdateSlidersection2View(GenericAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = HomepageSlidersection2Serializer
 
-    def get_image(self, image_id):
+    def delete(self, request, image_id):
         try:
-            review = HomepageSlidersection2.objects.get(id=image_id)
-            return review
-        except HomepageSlidersection2.DoesNotExist:
-            return None
-    
-    def get(self, request, page_slug, image_id):
+            menu = CommonSlidersection2.objects.get(id=image_id)
+            menu.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except CommonSlidersection2.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def put(self, request, image_id):
         try:
-            page = Homepage.objects.get(slug=page_slug)
-        except Homepage.DoesNotExist:
-            return Response({'error': ' Homepage Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        try:
-          images = HomepageSlidersection2.objects.get(page=page,id=image_id)
-        except ObjectDoesNotExist:
-            return Response({'error': 'Image not found'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = HomepageSlidersection2Serializer(images)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def put(self, request,page_slug, image_id):
-        try:
-            page = Homepage.objects.get(slug=page_slug)
-        except Homepage.DoesNotExist:
-            return Response({'error': ' Homepage Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        image = self.get_image(image_id)
-        if image is None:
-            return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = HomepageSlidersection2Serializer(image, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request,page_slug, image_id):
-        try:
-            page = Homepage.objects.get(slug=page_slug)
-        except Homepage.DoesNotExist:
-            return Response({'error': ' Homepage Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        image = self.get_image(image_id)
-        if image is None:
-            return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        image.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+            menu = CommonSlidersection2.objects.get(id=image_id)
+            serializer = HomepageSlidersection2Serializer(menu, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except CommonSlidersection2.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 class PagelistView(GenericAPIView):
 
@@ -1209,90 +1181,90 @@ class ServicessectionThreeView(GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ServicesreviewView(GenericAPIView):
+# class ServicesreviewView(GenericAPIView):
 
-    permission_classes = [IsAuthenticated]
-    serializer_class = ServicesreviewSerializer
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = ServicesreviewSerializer
 
-    def get_review(self, review_id):
-        try:
-            review = Servicesreview.objects.get(id=review_id)
-            return review
-        except Servicesreview.DoesNotExist:
-            return None
+#     def get_review(self, review_id):
+#         try:
+#             review = Servicesreview.objects.get(id=review_id)
+#             return review
+#         except Servicesreview.DoesNotExist:
+#             return None
     
-    def get(self, request, page_slug):
-        try:
-            page = Page.objects.get(slug=page_slug)
-        except Page.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def get(self, request, page_slug):
+#         try:
+#             page = Page.objects.get(slug=page_slug)
+#         except Page.DoesNotExist:
+#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        reviews = Servicesreview.objects.filter(page=page)
-        serializer = ServicesreviewSerializer(reviews, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+#         reviews = Servicesreview.objects.filter(page=page)
+#         serializer = ServicesreviewSerializer(reviews, many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def post(self, request, page_slug):
-        try:
-            page = Page.objects.get(slug=page_slug)
-        except Page.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def post(self, request, page_slug):
+#         try:
+#             page = Page.objects.get(slug=page_slug)
+#         except Page.DoesNotExist:
+#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
         
-        serializer = ServicesreviewSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(page=page)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         serializer = ServicesreviewSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save(page=page)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ServicesreviewUpdateView(GenericAPIView):
+# class ServicesreviewUpdateView(GenericAPIView):
 
-    permission_classes = [IsAuthenticated]
-    serializer_class = ServicesreviewSerializer
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = ServicesreviewSerializer
 
-    def get_review(self, review_id):
-        try:
-            review = Servicesreview.objects.get(id=review_id)
-            return review
-        except Servicesreview.DoesNotExist:
-            return None
+#     def get_review(self, review_id):
+#         try:
+#             review = Servicesreview.objects.get(id=review_id)
+#             return review
+#         except Servicesreview.DoesNotExist:
+#             return None
     
-    def get(self, request, page_slug, review_id):
-        try:
-            page = Page.objects.get(slug=page_slug)
-        except Page.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def get(self, request, page_slug, review_id):
+#         try:
+#             page = Page.objects.get(slug=page_slug)
+#         except Page.DoesNotExist:
+#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        try:
-          reviews = Servicesreview.objects.get(page=page,id=review_id)
-        except Servicesreview.DoesNotExist:
-            return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
+#         try:
+#           reviews = Servicesreview.objects.get(page=page,id=review_id)
+#         except Servicesreview.DoesNotExist:
+#             return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = ServicesreviewSerializer(reviews)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+#         serializer = ServicesreviewSerializer(reviews)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def put(self, request,page_slug, review_id):
-        review = self.get_review(review_id)
-        if not review:
-           return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def put(self, request,page_slug, review_id):
+#         review = self.get_review(review_id)
+#         if not review:
+#            return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = ServicesreviewSerializer(review, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+#         serializer = ServicesreviewSerializer(review, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_200_OK)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request,page_slug, review_id):
-        try:
-            page = Page.objects.get(slug=page_slug)
-        except Page.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        review = self.get_review(review_id)
-        if not review:
-            return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def delete(self, request,page_slug, review_id):
+#         try:
+#             page = Page.objects.get(slug=page_slug)
+#         except Page.DoesNotExist:
+#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#         review = self.get_review(review_id)
+#         if not review:
+#             return Response({'error': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        review.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+#         review.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
@@ -1448,98 +1420,98 @@ class ServicessectionsevenView(GenericAPIView):
 
 
 
-class SlidersectionView(GenericAPIView):
+# class SlidersectionView(GenericAPIView):
 
-    permission_classes = [IsAuthenticated]
-    serializer_class = SlidersectionSerializer
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = SlidersectionSerializer
 
-    def get_image(self, image_id):
-        try:
-            review = Slidersection.objects.get(id=image_id)
-            return review
-        except Slidersection.DoesNotExist:
-            return None
+#     def get_image(self, image_id):
+#         try:
+#             review = Slidersection.objects.get(id=image_id)
+#             return review
+#         except Slidersection.DoesNotExist:
+#             return None
     
-    def get(self, request, page_slug):
-        try:
-            page = Page.objects.get(slug=page_slug)
-        except Page.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def get(self, request, page_slug):
+#         try:
+#             page = Page.objects.get(slug=page_slug)
+#         except Page.DoesNotExist:
+#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        images = Slidersection.objects.filter(page=page)
-        serializer = SlidersectionSerializer(images, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+#         images = Slidersection.objects.filter(page=page)
+#         serializer = SlidersectionSerializer(images, many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-    def post(self, request, page_slug):
-        try:
-            page = Page.objects.get(slug=page_slug)
-        except Page.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def post(self, request, page_slug):
+#         try:
+#             page = Page.objects.get(slug=page_slug)
+#         except Page.DoesNotExist:
+#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
         
-        serializer = SlidersectionSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(page=page)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         serializer = SlidersectionSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save(page=page)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class SlidersectionUpdateView(GenericAPIView):
+# class SlidersectionUpdateView(GenericAPIView):
 
-    permission_classes = [IsAuthenticated]
-    serializer_class = SlidersectionSerializer
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = SlidersectionSerializer
 
 
-    def get_image(self, image_id):
-        try:
-            review = Slidersection.objects.get(id=image_id)
-            return review
-        except Slidersection.DoesNotExist:
-            return None
+#     def get_image(self, image_id):
+#         try:
+#             review = Slidersection.objects.get(id=image_id)
+#             return review
+#         except Slidersection.DoesNotExist:
+#             return None
     
-    def get(self, request, page_slug, image_id):
-        try:
-            page = Page.objects.get(slug=page_slug)
-        except Page.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def get(self, request, page_slug, image_id):
+#         try:
+#             page = Page.objects.get(slug=page_slug)
+#         except Page.DoesNotExist:
+#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        try:
-          images = Slidersection.objects.get(page=page,id=image_id)
-        except Slidersection.DoesNotExist:
-            return Response({'error': 'image id  not found'}, status=status.HTTP_404_NOT_FOUND)
+#         try:
+#           images = Slidersection.objects.get(page=page,id=image_id)
+#         except Slidersection.DoesNotExist:
+#             return Response({'error': 'image id  not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = SlidersectionSerializer(images)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+#         serializer = SlidersectionSerializer(images)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def put(self, request,page_slug, image_id):
-        image = self.get_image(image_id)
-        if image is None:
-            return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def put(self, request,page_slug, image_id):
+#         image = self.get_image(image_id)
+#         if image is None:
+#             return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        try:
-            page = Page.objects.get(slug=page_slug)
-        except Page.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#         try:
+#             page = Page.objects.get(slug=page_slug)
+#         except Page.DoesNotExist:
+#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = SlidersectionSerializer(image, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+#         serializer = SlidersectionSerializer(image, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_200_OK)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request,page_slug, image_id):
-        image = self.get_image(image_id)
-        if image is None:
-            return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def delete(self, request,page_slug, image_id):
+#         image = self.get_image(image_id)
+#         if image is None:
+#             return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        try:
-            page = Page.objects.get(slug=page_slug)
-        except Page.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#         try:
+#             page = Page.objects.get(slug=page_slug)
+#         except Page.DoesNotExist:
+#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        image.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+#         image.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
@@ -2022,76 +1994,6 @@ class WhyussectiontwoView(GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class whyusReviewView(GenericAPIView):
-
-    permission_classes = [IsAuthenticated]
-    serializer_class = whyusreviewSerializer
-
-    
-    def get(self, request,page_slug):
-        try:
-            page = Whyus.objects.get(slug=page_slug)
-        except Whyus.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        details = whyusreview.objects.all()
-        serializer = whyusreviewSerializer(details, many=True)
-        return Response(serializer.data)
-
-    def post(self, request,page_slug):
-        try:
-            page = Whyus.objects.get(slug=page_slug)
-        except Whyus.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = whyusreviewSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(page=page)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class whyusUpdateReviewView(GenericAPIView):
-
-    permission_classes = [IsAuthenticated]
-    serializer_class = whyusreviewSerializer
-
-    
-    def get(self, request,page_slug, review_id):
-        try:
-            page = Whyus.objects.get(slug=page_slug)
-        except Whyus.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        try:
-          details = whyusreview.objects.get(id=review_id)
-        except whyusreview.DoesNotExist:
-            return Response({'error': 'review not found'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = whyusreviewSerializer(details)
-        return Response(serializer.data)
-
-    def delete(self, request,page_slug, review_id):
-        try:
-            page = Whyus.objects.get(slug=page_slug)
-        except Whyus.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        try:
-            details = whyusreview.objects.get(id=review_id)
-            details.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except whyusreview.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-    def put(self, request,page_slug, review_id):
-        try:
-            page = Whyus.objects.get(slug=page_slug)
-        except Whyus.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        try:
-            details = whyusreview.objects.get(id=review_id)
-            serializer = whyusreviewSerializer(details, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except whyusreview.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class PricingView(GenericAPIView):
@@ -2250,74 +2152,74 @@ class PricingsectionfourView(GenericAPIView):
 
 
 
-class PricinguserreviewView(GenericAPIView):
+# class PricinguserreviewView(GenericAPIView):
 
-    permission_classes = [IsAuthenticated]
-    serializer_class = PricinguserreviewSerializer
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = PricinguserreviewSerializer
 
-    def get(self, request,page_slug):
-        try:
-            page = Pricing.objects.get(slug=page_slug)
-        except Pricing.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        details = Pricinguserreview.objects.all()
-        serializer = PricinguserreviewSerializer(details, many=True)
-        return Response(serializer.data)
+#     def get(self, request,page_slug):
+#         try:
+#             page = Pricing.objects.get(slug=page_slug)
+#         except Pricing.DoesNotExist:
+#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#         details = Pricinguserreview.objects.all()
+#         serializer = PricinguserreviewSerializer(details, many=True)
+#         return Response(serializer.data)
 
-    def post(self, request,page_slug):
-        try:
-            page = Pricing.objects.get(slug=page_slug)
-        except Pricing.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = PricinguserreviewSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(page=page)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     def post(self, request,page_slug):
+#         try:
+#             page = Pricing.objects.get(slug=page_slug)
+#         except Pricing.DoesNotExist:
+#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#         serializer = PricinguserreviewSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save(page=page)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class PricinguserUpdatereviewView(GenericAPIView):
+# class PricinguserUpdatereviewView(GenericAPIView):
 
-    permission_classes = [IsAuthenticated]
-    serializer_class = PricinguserreviewSerializer
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = PricinguserreviewSerializer
 
-    def get(self, request,page_slug,review_id):
-        try:
-            page = Pricing.objects.get(slug=page_slug)
-        except Pricing.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        try:
-           details = Pricinguserreview.objects.get(id=review_id)
-        except Pricinguserreview.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = PricinguserreviewSerializer(details)
-        return Response(serializer.data)
+#     def get(self, request,page_slug,review_id):
+#         try:
+#             page = Pricing.objects.get(slug=page_slug)
+#         except Pricing.DoesNotExist:
+#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#         try:
+#            details = Pricinguserreview.objects.get(id=review_id)
+#         except Pricinguserreview.DoesNotExist:
+#             return Response(status=status.HTTP_404_NOT_FOUND)
+#         serializer = PricinguserreviewSerializer(details)
+#         return Response(serializer.data)
 
-    def delete(self, request,page_slug, review_id):
-        try:
-            page = Pricing.objects.get(slug=page_slug)
-        except Pricing.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        try:
-            details = Pricinguserreview.objects.get(id=review_id)
-            details.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except Pricinguserreview.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+#     def delete(self, request,page_slug, review_id):
+#         try:
+#             page = Pricing.objects.get(slug=page_slug)
+#         except Pricing.DoesNotExist:
+#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#         try:
+#             details = Pricinguserreview.objects.get(id=review_id)
+#             details.delete()
+#             return Response(status=status.HTTP_204_NO_CONTENT)
+#         except Pricinguserreview.DoesNotExist:
+#             return Response(status=status.HTTP_404_NOT_FOUND)
 
-    def put(self, request,page_slug, review_id):
-        try:
-            page = Pricing.objects.get(slug=page_slug)
-        except Pricing.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        try:
-            details = Pricinguserreview.objects.get(id=review_id)
-            serializer = PricinguserreviewSerializer(details, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except Pricinguserreview.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+#     def put(self, request,page_slug, review_id):
+#         try:
+#             page = Pricing.objects.get(slug=page_slug)
+#         except Pricing.DoesNotExist:
+#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#         try:
+#             details = Pricinguserreview.objects.get(id=review_id)
+#             serializer = PricinguserreviewSerializer(details, data=request.data)
+#             if serializer.is_valid():
+#                 serializer.save()
+#                 return Response(serializer.data)
+#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         except Pricinguserreview.DoesNotExist:
+#             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -3116,181 +3018,181 @@ class BookacallsectiontwoView(GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class BookacallSlidersection1View(GenericAPIView):
+# class BookacallSlidersection1View(GenericAPIView):
 
-    permission_classes = [IsAuthenticated]
-    serializer_class = BookacallSlidersection1Serializer
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = BookacallSlidersection1Serializer
 
-    def get_image(self, image_id):
-        try:
-            review = BookacallSlidersection1.objects.get(id=image_id)
-            return review
-        except BookacallSlidersection1.DoesNotExist:
-            return None
+#     def get_image(self, image_id):
+#         try:
+#             review = BookacallSlidersection1.objects.get(id=image_id)
+#             return review
+#         except BookacallSlidersection1.DoesNotExist:
+#             return None
     
-    def get(self, request, page_slug):
-        try:
-            page = Bookacall.objects.get(slug=page_slug)
-        except Bookacall.DoesNotExist:
-            return Response({'error': 'Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def get(self, request, page_slug):
+#         try:
+#             page = Bookacall.objects.get(slug=page_slug)
+#         except Bookacall.DoesNotExist:
+#             return Response({'error': 'Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        images = BookacallSlidersection1.objects.filter(page=page)
-        serializer = BookacallSlidersection1Serializer(images, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+#         images = BookacallSlidersection1.objects.filter(page=page)
+#         serializer = BookacallSlidersection1Serializer(images, many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def post(self, request, page_slug):
-        try:
-            page = Bookacall.objects.get(slug=page_slug)
-        except Bookacall.DoesNotExist:
-            return Response({'error':  ' Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def post(self, request, page_slug):
+#         try:
+#             page = Bookacall.objects.get(slug=page_slug)
+#         except Bookacall.DoesNotExist:
+#             return Response({'error':  ' Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
         
-        serializer = BookacallSlidersection1Serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(page=page)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         serializer = BookacallSlidersection1Serializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save(page=page)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class BookacallUpdateSlidersection1View(GenericAPIView):
+# class BookacallUpdateSlidersection1View(GenericAPIView):
 
-    permission_classes = [IsAuthenticated]
-    serializer_class = BookacallSlidersection1Serializer
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = BookacallSlidersection1Serializer
 
-    def get_image(self, image_id):
-        try:
-            review = BookacallSlidersection1.objects.get(id=image_id)
-            return review
-        except BookacallSlidersection1.DoesNotExist:
-            return None
+#     def get_image(self, image_id):
+#         try:
+#             review = BookacallSlidersection1.objects.get(id=image_id)
+#             return review
+#         except BookacallSlidersection1.DoesNotExist:
+#             return None
     
-    def get(self, request, page_slug , image_id):
-        try:
-            page = Bookacall.objects.get(slug=page_slug)
-        except Bookacall.DoesNotExist:
-            return Response({'error': 'Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        image = self.get_image(image_id)
-        if image is None:
-            return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
-        try:
-          images = BookacallSlidersection2.objects.filter(page=page,id=image_id)
-        except ObjectDoesNotExist:
-            return Response({'error': 'image id not found'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = BookacallSlidersection1Serializer(images,many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+#     def get(self, request, page_slug , image_id):
+#         try:
+#             page = Bookacall.objects.get(slug=page_slug)
+#         except Bookacall.DoesNotExist:
+#             return Response({'error': 'Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#         image = self.get_image(image_id)
+#         if image is None:
+#             return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
+#         try:
+#           images = BookacallSlidersection2.objects.filter(page=page,id=image_id)
+#         except ObjectDoesNotExist:
+#             return Response({'error': 'image id not found'}, status=status.HTTP_404_NOT_FOUND)
+#         serializer = BookacallSlidersection1Serializer(images,many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def put(self, request,page_slug, image_id):
-        try:
-            page = Bookacall.objects.get(slug=page_slug)
-        except Bookacall.DoesNotExist:
-            return Response({'error': 'Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        image = self.get_image(image_id)
-        if image is None:
-            return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def put(self, request,page_slug, image_id):
+#         try:
+#             page = Bookacall.objects.get(slug=page_slug)
+#         except Bookacall.DoesNotExist:
+#             return Response({'error': 'Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#         image = self.get_image(image_id)
+#         if image is None:
+#             return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = BookacallSlidersection1Serializer(image, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+#         serializer = BookacallSlidersection1Serializer(image, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_200_OK)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request,page_slug, image_id):
-        try:
-            page = Bookacall.objects.get(slug=page_slug)
-        except Bookacall.DoesNotExist:
-            return Response({'error': 'Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        image = self.get_image(image_id)
-        if image is None:
-            return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def delete(self, request,page_slug, image_id):
+#         try:
+#             page = Bookacall.objects.get(slug=page_slug)
+#         except Bookacall.DoesNotExist:
+#             return Response({'error': 'Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#         image = self.get_image(image_id)
+#         if image is None:
+#             return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        image.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
-class BookacallSlidersection2View(GenericAPIView):
-
-    permission_classes = [IsAuthenticated]
-    serializer_class = BookacallSlidersection2Serializer
+#         image.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-    def get_image(self, image_id):
-        try:
-            review = BookacallSlidersection2.objects.get(id=image_id)
-            return review
-        except BookacallSlidersection2.DoesNotExist:
-            return None
+
+# class BookacallSlidersection2View(GenericAPIView):
+
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = BookacallSlidersection2Serializer
+
+
+#     def get_image(self, image_id):
+#         try:
+#             review = BookacallSlidersection2.objects.get(id=image_id)
+#             return review
+#         except BookacallSlidersection2.DoesNotExist:
+#             return None
     
-    def get(self, request, page_slug):
-        try:
-            page = Bookacall.objects.get(slug=page_slug)
-        except Bookacall.DoesNotExist:
-            return Response({'error': ' Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def get(self, request, page_slug):
+#         try:
+#             page = Bookacall.objects.get(slug=page_slug)
+#         except Bookacall.DoesNotExist:
+#             return Response({'error': ' Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        images = BookacallSlidersection2.objects.filter(page=page)
-        serializer = BookacallSlidersection2Serializer(images, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+#         images = BookacallSlidersection2.objects.filter(page=page)
+#         serializer = BookacallSlidersection2Serializer(images, many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def post(self, request, page_slug):
-        try:
-            page = Bookacall.objects.get(slug=page_slug)
-        except Bookacall.DoesNotExist:
-            return Response({'error': 'Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def post(self, request, page_slug):
+#         try:
+#             page = Bookacall.objects.get(slug=page_slug)
+#         except Bookacall.DoesNotExist:
+#             return Response({'error': 'Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
         
-        serializer = BookacallSlidersection2Serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(page=page)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         serializer = BookacallSlidersection2Serializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save(page=page)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class BookacallUpdateSlidersection2View(GenericAPIView):
+# class BookacallUpdateSlidersection2View(GenericAPIView):
 
-    permission_classes = [IsAuthenticated]
-    serializer_class = BookacallSlidersection2Serializer
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = BookacallSlidersection2Serializer
 
-    def get_image(self, image_id):
-        try:
-            review = BookacallSlidersection2.objects.get(id=image_id)
-            return review
-        except BookacallSlidersection2.DoesNotExist:
-            return None
+#     def get_image(self, image_id):
+#         try:
+#             review = BookacallSlidersection2.objects.get(id=image_id)
+#             return review
+#         except BookacallSlidersection2.DoesNotExist:
+#             return None
     
-    def get(self, request, page_slug,image_id):
-        try:
-            page = Bookacall.objects.get(slug=page_slug)
-        except Bookacall.DoesNotExist:
-            return Response({'error': ' Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        image = self.get_image(image_id)
-        if image is None:
-            return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
-        try:
-          images = BookacallSlidersection2.objects.filter(page=page,id=image_id)
-        except ObjectDoesNotExist:
-            return Response({'error': 'image id not found'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = BookacallSlidersection2Serializer(images,many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+#     def get(self, request, page_slug,image_id):
+#         try:
+#             page = Bookacall.objects.get(slug=page_slug)
+#         except Bookacall.DoesNotExist:
+#             return Response({'error': ' Bookacall Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#         image = self.get_image(image_id)
+#         if image is None:
+#             return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
+#         try:
+#           images = BookacallSlidersection2.objects.filter(page=page,id=image_id)
+#         except ObjectDoesNotExist:
+#             return Response({'error': 'image id not found'}, status=status.HTTP_404_NOT_FOUND)
+#         serializer = BookacallSlidersection2Serializer(images,many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def put(self, request,page_slug, image_id):
-        image = self.get_image(image_id)
-        if image is None:
-            return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def put(self, request,page_slug, image_id):
+#         image = self.get_image(image_id)
+#         if image is None:
+#             return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = BookacallSlidersection2Serializer(image, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+#         serializer = BookacallSlidersection2Serializer(image, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_200_OK)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request,page_slug, image_id):
-        image = self.get_image(image_id)
-        if image is None:
-            return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def delete(self, request,page_slug, image_id):
+#         image = self.get_image(image_id)
+#         if image is None:
+#             return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        image.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+#         image.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class bookacalluserView(GenericAPIView):
@@ -3308,12 +3210,12 @@ class UserSocialView(GenericAPIView):
 
     serializer_class = SocialSerializer
 
-    def get_image(self, image_id):
-        try:
-            review = BookacallSlidersection2.objects.get(id=image_id)
-            return review
-        except BookacallSlidersection2.DoesNotExist:
-            return None
+    # def get_image(self, image_id):
+    #     try:
+    #         review = BookacallSlidersection2.objects.get(id=image_id)
+    #         return review
+    #     except BookacallSlidersection2.DoesNotExist:
+    #         return None
     
     def get(self, request):
         try:
@@ -3331,12 +3233,12 @@ class SocialView(GenericAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = SocialSerializer
 
-    def get_image(self, image_id):
-        try:
-            review = BookacallSlidersection2.objects.get(id=image_id)
-            return review
-        except BookacallSlidersection2.DoesNotExist:
-            return None
+    # def get_image(self, image_id):
+    #     try:
+    #         review = BookacallSlidersection2.objects.get(id=image_id)
+    #         return review
+    #     except BookacallSlidersection2.DoesNotExist:
+    #         return None
     
     def get(self, request):
         try:

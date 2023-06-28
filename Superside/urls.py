@@ -20,14 +20,13 @@ from django.conf.urls.static import static
 from django.conf import settings
 import navigation.signals
 from navigation.api.views import (
-    ImageUploadView, HeaderView, MenuView, SubMenuView, FooterView, SectiontwoView, SectionfourView,OurworkuserView,OurworkresultsingleView,ServicesUserpageView,BookacallUpdateSlidersection2View,PricingUpdateFaqView,whyusUpdateReviewView,authordetailsView,
-    SectiononeView, VideoUploadView, SectionthreeView, DetailsView, HomepageReviewView, PageView,WhyususerView,OurworkallresultView,bookacalluserView,BookacallUpdateSlidersection1View,HomepageUpdateSlidersection2View,ServicesreviewUpdateView,authornameview,ImageUpdateUploadView,
-    PagelistView, ServicessectiononeView, ServicessectiontwoView, ServicessectionThreeView,homepageView,homeView,BloguserView,SingleblogView,BlogbycategoryView,PricingUpdatedetailsView,DetailsUpdateView,PricingUpdatesubdetailsView,allBloguserView,BlogbytagView,SectionfiveView,singlereviewView,sectionsixView,
-    ServicesreviewView, FaqView, ServicessectionsixView, ServicessectionsevenView, SlidersectionView,servicesview,OurworkresultView,HomepageSlidersection1updateView,PricinguserUpdatereviewView,HomepageUpdateReviewView,FaqUpdateView,SocialupdateView,tagdetailsView,UserFooterView,UsernavbarView,
-    BookacallView,BookacallsectiononeView,BookacallsectiontwoView,BookacallSlidersection1View,BookacallSlidersection2View,HomepageSlidersection1View,HomepageSlidersection2View,OurworkresultsinglepreviousView,OurworkresultsinglenextAPIView,BlogbyauthorView,UserHeaderView,
-    OurworksectiononeView, OurworksectiontwoView, OurworkView, BlogsView, BlogssectiononeView,OurworkprojectView,ServicessingleOurworkView,BlogauthorView,BlogauthorUpdateView,TagView,TagUpdateView,pricingView,SlidersectionUpdateView,EmailView,VideoUpdateUploadView,
-    BlogssectiontwoView, BlogssectionthreeView, BlogssectionfourView, WhyussectiontwoView,WhyussectionthreeView,WhyussectionfourView,WhyussectionfiveView,WhyussectionsixView,whyusReviewView,WhyusView,WhyussectionsevenView,SocialView,MenuUpdateView,SubMenuUpdateView,
-    PricingdetailsView,PricingFaqView,PricingsectionfourView,PricingsectionthreeView,PricingView,PricingsectiontwoView,PricingsectiononeView,PricinguserreviewView,PricingsubdetailsView,ServicesBlogPostView,ServicessingleBlogPostView,UserSocialView
+    ImageUploadView, HeaderView, MenuView, SubMenuView, FooterView, SectiontwoView, SectionfourView,OurworkuserView,OurworkresultsingleView,ServicesUserpageView,PricingUpdateFaqView,authordetailsView,
+    SectiononeView, VideoUploadView, SectionthreeView, DetailsView, HomepageReviewView, PageView,WhyususerView,OurworkallresultView,bookacalluserView,HomepageUpdateSlidersection2View,authornameview,ImageUpdateUploadView,
+    PagelistView, ServicessectiononeView, ServicessectiontwoView, ServicessectionThreeView,homepageView,homeView,BloguserView,SingleblogView,BlogbycategoryView,PricingUpdatedetailsView,DetailsUpdateView,PricingUpdatesubdetailsView,allBloguserView,BlogbytagView,SectionfiveView,singlereviewView,sectionsixView, FaqView, ServicessectionsixView, ServicessectionsevenView,servicesview,OurworkresultView,HomepageSlidersection1updateView,HomepageUpdateReviewView,FaqUpdateView,SocialupdateView,tagdetailsView,UserFooterView,UsernavbarView,
+    BookacallView,BookacallsectiononeView,BookacallsectiontwoView,HomepageSlidersection1View,HomepageSlidersection2View,OurworkresultsinglepreviousView,OurworkresultsinglenextAPIView,BlogbyauthorView,UserHeaderView,UserHomepageSlidersection1View,UserHomepageSlidersection2View,UserHomepageReviewView,
+    OurworksectiononeView, OurworksectiontwoView, OurworkView, BlogsView, BlogssectiononeView,OurworkprojectView,ServicessingleOurworkView,BlogauthorView,BlogauthorUpdateView,TagView,TagUpdateView,pricingView,EmailView,VideoUpdateUploadView,
+    BlogssectiontwoView, BlogssectionthreeView, BlogssectionfourView, WhyussectiontwoView,WhyussectionthreeView,WhyussectionfourView,WhyussectionfiveView,WhyussectionsixView,WhyusView,WhyussectionsevenView,SocialView,MenuUpdateView,SubMenuUpdateView,
+    PricingdetailsView,PricingFaqView,PricingsectionfourView,PricingsectionthreeView,PricingView,PricingsectiontwoView,PricingsectiononeView,PricingsubdetailsView,ServicesBlogPostView,ServicessingleBlogPostView,UserSocialView
 )
 from django.urls import path, include
 from rest_framework import routers
@@ -45,7 +44,6 @@ schema_view = get_schema_view(
     ),
     public=True,
 )
-
 
 urlpatterns = [
     path('api/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
@@ -86,6 +84,9 @@ urlpatterns = [
     path('blogs/author/<slug:author_name>/', authornameview.as_view(),name='authorname'),
     path('blogs/all/author/<slug:author_name>/', BlogbyauthorView.as_view(),name='blogbyauthorauthorname'),
     path('author/<slug:author_name>/', authordetailsView.as_view(),name='authordetails'),
+    path('slider1/', UserHomepageSlidersection1View.as_view(),name='authordetails'),
+    path('slider2/', UserHomepageSlidersection2View.as_view(),name='authordetails'),
+    path('review/', UserHomepageReviewView.as_view(),name='authordetails'),
     path('tag/<slug:tag_name>/', tagdetailsView.as_view(),name='tagdetails'),
     # path('homepage/<slug:page_slug>/', servicesview.as_view(),name='servicespages'),
     path('dashboard/subscriberemail/', EmailView.as_view(),name='subscriberemail'),#approved
@@ -96,17 +97,17 @@ urlpatterns = [
     path('dashboard/homepage/<slug:page_slug>/sectionfour/', SectionfourView.as_view(),name='homepagesectionfour'),
     path('dashboard/homepage/<slug:page_slug>/sectionone/', SectiononeView.as_view(),name='homepagesectionone'),
     path('dashboard/homepage/<slug:page_slug>/sectionthree/', SectionthreeView.as_view(),name='homepagesectionthree'),
-    path('dashboard/homepage/<slug:page_slug>/imageslider1/', HomepageSlidersection1View.as_view(),name='HomepageSlidersection1'),
-    path('dashboard/homepage/<slug:page_slug>/imageslider1/<int:image_id>/', HomepageSlidersection1updateView.as_view(), name='HomepageSlidersection1-update'),
-    path('dashboard/homepage/<slug:page_slug>/imageslider2/', HomepageSlidersection2View.as_view(),name='HomepageSlidersection2'),
-    path('dashboard/homepage/<slug:page_slug>/imageslider2/<int:image_id>/', HomepageUpdateSlidersection2View.as_view(), name='HomepageSlidersection2-update'),
+    path('dashboard/imageslider1/', HomepageSlidersection1View.as_view(),name='HomepageSlidersection1'),
+    path('dashboard/imageslider1/<int:image_id>/', HomepageSlidersection1updateView.as_view(), name='HomepageSlidersection1-update'),
+    path('dashboard/imageslider2/', HomepageSlidersection2View.as_view(),name='HomepageSlidersection2'),
+    path('dashboard/imageslider2/<int:image_id>/', HomepageUpdateSlidersection2View.as_view(), name='HomepageSlidersection2-update'),
     path('dashboard/homepage/<slug:page_slug>/details/', DetailsView.as_view(),name='homepagedetailsection'),
     path('dashboard/homepage/<slug:page_slug>/sectionfive/', SectionfiveView.as_view(),name='homepagesectionfive'),
     path('dashboard/homepage/<slug:page_slug>/reviewsingle/', singlereviewView.as_view(),name='homepagesinglereview'),
     path('dashboard/homepage/<slug:page_slug>/sectionsix/', sectionsixView.as_view(),name='homepagesectionsix'),
     path('dashboard/homepage/<slug:page_slug>/details/<int:details_id>/', DetailsUpdateView.as_view(),name='homepagedetailsection-update'),
-    path('dashboard/homepage/<slug:page_slug>/reviews/', HomepageReviewView.as_view(),name='homepagereviewsection'),
-    path('dashboard/homepage/<slug:page_slug>/reviews/<int:review_id>/', HomepageUpdateReviewView.as_view(),name='homepagereviewsection-update'),
+    path('dashboard/reviews/', HomepageReviewView.as_view(),name='homepagereviewsection'),
+    path('dashboard/reviews/<int:review_id>/', HomepageUpdateReviewView.as_view(),name='homepagereviewsection-update'),
     path('dashboard/pricing/', PricingView.as_view(),name='pricing'),
     path('dashboard/pricing/<slug:page_slug>/sectionone/', PricingsectiononeView.as_view(),name='Pricingsectionone'),
     path('dashboard/pricing/<slug:page_slug>/sectiontwo/', PricingsectiontwoView.as_view(),name='Pricingsectiontwo'),
@@ -116,8 +117,8 @@ urlpatterns = [
     path('dashboard/pricing/<slug:page_slug>/pricingdetails/<int:review_id>/', PricingUpdatedetailsView.as_view(),name='Pricingdetails-update'),
     path('dashboard/pricing/<slug:page_slug>/pricingdetails/<int:review_id>/subdetails/', PricingsubdetailsView.as_view(),name='Pricingsubdetails'),
     path('dashboard/pricing/<slug:page_slug>/pricingdetails/<int:review_id>/subdetails/<int:subreview_id>/', PricingUpdatesubdetailsView.as_view(),name='Pricingsubdetails-update'),
-    path('dashboard/pricing/<slug:page_slug>/review/', PricinguserreviewView.as_view(),name='Pricinguserreview'),
-    path('dashboard/pricing/<slug:page_slug>/review/<int:review_id>/', PricinguserUpdatereviewView.as_view(),name='Pricinguserreview-update'),
+    # path('dashboard/pricing/<slug:page_slug>/review/', PricinguserreviewView.as_view(),name='Pricinguserreview'),
+    # path('dashboard/pricing/<slug:page_slug>/review/<int:review_id>/', PricinguserUpdatereviewView.as_view(),name='Pricinguserreview-update'),
     path('dashboard/pricing/<slug:page_slug>/faq/', PricingFaqView.as_view(),name='PricingFaq'),
     path('dashboard/pricing/<slug:page_slug>/faq/<int:review_id>/', PricingUpdateFaqView.as_view(),name='PricingFaq-update'),     
     path('dashboard/whyus/', WhyusView.as_view(),name='whyus'),
@@ -127,8 +128,8 @@ urlpatterns = [
     path('dashboard/whyus/<slug:page_slug>/sectionfour/', WhyussectionfourView.as_view(),name='whyussectionfour'),
     path('dashboard/whyus/<slug:page_slug>/sectionfive/', WhyussectionfiveView.as_view(),name='whyussectionfive'),
     path('dashboard/whyus/<slug:page_slug>/sectionsix/', WhyussectionsixView.as_view(),name='whyussectionsix'),
-    path('dashboard/whyus/<slug:page_slug>/review/', whyusReviewView.as_view(),name='whyusreview'),
-    path('dashboard/whyus/<slug:page_slug>/review/<int:review_id>/', whyusUpdateReviewView.as_view(),name='whyusreview-update'),
+    # path('dashboard/whyus/<slug:page_slug>/review/', whyusReviewView.as_view(),name='whyusreview'),
+    # path('dashboard/whyus/<slug:page_slug>/review/<int:review_id>/', whyusUpdateReviewView.as_view(),name='whyusreview-update'),
     path('dashboard/blogs/', BlogsView.as_view(),name='blogs'),
     path('dashboard/blogs/<slug:page_slug>/sectionone/', BlogssectiononeView.as_view(),name='blogsectionone'),
     path('dashboard/blogs/<slug:page_slug>/sectiontwo/', BlogssectiontwoView.as_view(),name='blogsectiontwo'),
@@ -142,8 +143,8 @@ urlpatterns = [
     path('dashboard/pages/<slug:page_slug>/sectionone/', ServicessectiononeView.as_view(), name='servicessectionone'),
     path('dashboard/pages/<slug:page_slug>/sectiontwo/', ServicessectiontwoView.as_view(), name='servicessectiontwo'),
     path('dashboard/pages/<slug:page_slug>/sectionthree/', ServicessectionThreeView.as_view(), name='servicessectionthree'),
-    path('dashboard/pages/<slug:page_slug>/reviews/', ServicesreviewView.as_view(), name='servicessectionreviews'),
-    path('dashboard/pages/<slug:page_slug>/reviews/<int:review_id>/', ServicesreviewUpdateView.as_view(), name='servicessectionreviews-update'),
+    # path('dashboard/pages/<slug:page_slug>/reviews/', ServicesreviewView.as_view(), name='servicessectionreviews'),
+    # path('dashboard/pages/<slug:page_slug>/reviews/<int:review_id>/', ServicesreviewUpdateView.as_view(), name='servicessectionreviews-update'),
     path('dashboard/pages/<slug:page_slug>/faq/', FaqView.as_view(), name='servicessectionfaq'),
     path('dashboard/pages/<slug:page_slug>/faq/<int:faq_id>/', FaqUpdateView.as_view(), name='servicessectionfaq-update'),
     path('dashboard/pages/<slug:page_slug>/sectionsix/', ServicessectionsixView.as_view(), name='servicessectionsix'),
@@ -152,8 +153,8 @@ urlpatterns = [
     path('dashboard/pages/<slug:page_slug>/ourwork/', OurworkprojectView.as_view(), name='servicesourwork'),
     path('dashboard/pages/<slug:page_slug>/ourwork/<slug:work_slug>/', ServicessingleOurworkView.as_view(), name='servicesourwork-update'),
     path('dashboard/pages/<slug:page_slug>/sectionseven/', ServicessectionsevenView.as_view(), name='servicessectionseven'),
-    path('dashboard/pages/<slug:page_slug>/sliderimage/', SlidersectionView.as_view(), name='sliderimage'),
-    path('dashboard/pages/<slug:page_slug>/sliderimage/<int:image_id>/', SlidersectionUpdateView.as_view(), name='sliderimage-update'),
+    # path('dashboard/pages/<slug:page_slug>/sliderimage/', SlidersectionView.as_view(), name='sliderimage'),
+    # path('dashboard/pages/<slug:page_slug>/sliderimage/<int:image_id>/', SlidersectionUpdateView.as_view(), name='sliderimage-update'),
     path('dashboard/blogauthors/', BlogauthorView.as_view(), name='addblogauthor'),#approved
     path('dashboard/blogauthors/<int:author_id>/', BlogauthorUpdateView.as_view(), name='addblogauthor-update'),#approved
     path('dashboard/blogtags/', TagView.as_view(), name='blogtags'),#approved
@@ -161,10 +162,10 @@ urlpatterns = [
     path('dashboard/bookacall/', BookacallView.as_view(),name='bookacalldashboard'),
     path('dashboard/bookacall/<slug:page_slug>/sectionone/', BookacallsectiononeView.as_view(), name='bookacallsection1'),
     path('dashboard/bookacall/<slug:page_slug>/sectiontwo/', BookacallsectiontwoView.as_view(), name='bookacallsection2'),
-    path('dashboard/bookacall/<slug:page_slug>/sectionthree/', BookacallSlidersection1View.as_view(), name='bookacallslider1section'),
-    path('dashboard/bookacall/<slug:page_slug>/sectionthree/<int:image_id>/', BookacallUpdateSlidersection1View.as_view(), name='bookacallslider1section-update'),
-    path('dashboard/bookacall/<slug:page_slug>/sectionfour/', BookacallSlidersection2View.as_view(), name='bookacallslider2section'),
-    path('dashboard/bookacall/<slug:page_slug>/sectionfour/<int:image_id>/', BookacallUpdateSlidersection2View.as_view(), name='bookacallslider2section-update'),
+    # path('dashboard/bookacall/<slug:page_slug>/sectionthree/', BookacallSlidersection1View.as_view(), name='bookacallslider1section'),
+    # path('dashboard/bookacall/<slug:page_slug>/sectionthree/<int:image_id>/', BookacallUpdateSlidersection1View.as_view(), name='bookacallslider1section-update'),
+    # path('dashboard/bookacall/<slug:page_slug>/sectionfour/', BookacallSlidersection2View.as_view(), name='bookacallslider2section'),
+    # path('dashboard/bookacall/<slug:page_slug>/sectionfour/<int:image_id>/', BookacallUpdateSlidersection2View.as_view(), name='bookacallslider2section-update'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 
 

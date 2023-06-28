@@ -210,28 +210,27 @@ class Details(models.Model):
          return f'Details'
 
 
-
-class HomepageReview(models.Model):
+class CommonReview(models.Model):
       username = models.TextField()
       userdesignation = models.TextField()
       userreview = models.TextField()
       userphoto = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='userphoto')
-      page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagereview')
+      # page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagereview')
 
       def __str__(self):
          return f'Homepagereview'
 
-class HomepageSlidersection1(models.Model):
+class CommonSlidersection1(models.Model):
       sliderimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='homepagesliderimagesection1')
-      page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSlidersection1')
+      # page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSlidersection1')
 
       def __str__(self):
          return f'HomepageSlidersection1'
 
 
-class HomepageSlidersection2(models.Model):
+class CommonSlidersection2(models.Model):
       sliderimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='homepagesliderimagesection2')
-      page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSlidersection2')
+      # page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSlidersection2')
 
       def __str__(self):
          return f'HomepageSlidersection2'
@@ -407,15 +406,15 @@ class ServicessectionThree(models.Model):
       def __str__(self):
          return f'ServicessectionThree'
 
-class Servicesreview(models.Model):
-      username = models.TextField()
-      userdesignation = models.TextField()
-      userreview = models.TextField()
-      userphoto = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='servicesuserphoto')
-      page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='servicesreviewpage')
+# class Servicesreview(models.Model):
+#       username = models.TextField()
+#       userdesignation = models.TextField()
+#       userreview = models.TextField()
+#       userphoto = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='servicesuserphoto')
+#       # page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='servicesreviewpage')
 
-      def __str__(self):
-         return f'Servicesreview'
+#       def __str__(self):
+#          return f'Servicesreview'
 
 class Faq(models.Model):
       question = models.TextField()
@@ -470,12 +469,12 @@ class Servicessectionseven(models.Model):
 
 
 
-class Slidersection(models.Model):
-      sliderimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='sliderimage')
-      page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='slidersection')
+# class Slidersection(models.Model):
+#       sliderimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='sliderimage')
+#       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='slidersection')
 
-      def __str__(self):
-         return f'Slidersection'
+#       def __str__(self):
+#          return f'Slidersection'
 
 
 # class Ourwork(models.Model):
@@ -673,15 +672,15 @@ class Whyussectiontwo(models.Model):
       def __str__(self):
           return f'Whyussectiontwo'
 
-class whyusreview(models.Model):
-      username = models.TextField()
-      userdesignation = models.TextField()
-      userreview = models.TextField()
-      userphoto = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='whyusreviewuserphoto')
-      page = models.ForeignKey(Whyus, on_delete=models.CASCADE,null=True,blank=True,related_name='whyusreview')
+# class whyusreview(models.Model):
+#       username = models.TextField()
+#       userdesignation = models.TextField()
+#       userreview = models.TextField()
+#       userphoto = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='whyusreviewuserphoto')
+#       page = models.ForeignKey(Whyus, on_delete=models.CASCADE,null=True,blank=True,related_name='whyusreview')
 
-      def __str__(self):
-         return f'whyusreview'
+#       def __str__(self):
+#          return f'whyusreview'
 
 
 
@@ -752,15 +751,15 @@ class Pricingsectionthree(models.Model):
          return f'Pricingsectionthree'
 
 
-class Pricinguserreview(models.Model):
-      username = models.TextField()
-      userdesignation = models.TextField()
-      userreview = models.TextField()
-      userphoto = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='pricinguserphoto')
-      page = models.ForeignKey(Pricing, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricinguserreview')
+# class Pricinguserreview(models.Model):
+#       username = models.TextField()
+#       userdesignation = models.TextField()
+#       userreview = models.TextField()
+#       userphoto = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='pricinguserphoto')
+#       page = models.ForeignKey(Pricing, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricinguserreview')
 
-      def __str__(self):
-         return f'Pricinguserreview'
+#       def __str__(self):
+#          return f'Pricinguserreview'
 
 class PricingFaq(models.Model):
       question = models.TextField()
@@ -966,20 +965,20 @@ class Bookacallsectiontwo(models.Model):
           return f'Bookacallsectiontwo'
 
 
-class BookacallSlidersection1(models.Model):
-      sliderimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='bookacallsliderimagesection1')
-      page = models.ForeignKey(Bookacall, on_delete=models.CASCADE,null=True,blank=True,related_name='BookacallSlidersection1')
+# class BookacallSlidersection1(models.Model):
+#       sliderimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='bookacallsliderimagesection1')
+#       page = models.ForeignKey(Bookacall, on_delete=models.CASCADE,null=True,blank=True,related_name='BookacallSlidersection1')
 
-      def __str__(self):
-         return f'BookacallSlidersection1'
+#       def __str__(self):
+#          return f'BookacallSlidersection1'
 
 
-class BookacallSlidersection2(models.Model):
-      sliderimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='bookacallsliderimagesection2')
-      page = models.ForeignKey(Bookacall, on_delete=models.CASCADE,null=True,blank=True,related_name='BookacallSlidersection2')
+# class BookacallSlidersection2(models.Model):
+#       sliderimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='bookacallsliderimagesection2')
+#       page = models.ForeignKey(Bookacall, on_delete=models.CASCADE,null=True,blank=True,related_name='BookacallSlidersection2')
 
-      def __str__(self):
-         return f'BookacallSlidersection2'
+#       def __str__(self):
+#          return f'BookacallSlidersection2'
 
 class Emailinput(models.Model):
       email = models.TextField(unique=True)
