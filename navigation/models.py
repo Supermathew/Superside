@@ -19,6 +19,9 @@ class MediaBucket(models.Model):
 class Menu(models.Model):
       url = models.CharField(max_length=200,null=True,blank=True)
       name = models.CharField(max_length=200)
+      menu_isbtn = models.BooleanField(default=False)
+
+
 
 
       def __(self):
@@ -42,19 +45,19 @@ class Header(models.Model):
          return str(self.id)
 
 class Footer(models.Model):
-      text1 = models.TextField(null=True,blank=True)
-      text2 = models.TextField(null=True,blank=True)
-      text3 = models.TextField(null=True,blank=True)
-      text4 = models.TextField(null=True,blank=True)
-      text5 = models.TextField(null=True,blank=True)
-      text6 = models.TextField(null=True,blank=True)
-      text7 = models.TextField(null=True,blank=True)
-      text8 = models.TextField(null=True,blank=True)
-      text9 = models.TextField(null=True,blank=True)
-      text10 = models.TextField(null=True,blank=True)
-      text11 = models.TextField(null=True,blank=True)
-      text12 = models.TextField(null=True,blank=True)
-      text13 = models.TextField(null=True,blank=True)
+      Footerheading = models.TextField(null=True,blank=True)
+      footerdiscrip = models.TextField(null=True,blank=True)
+      footeremailpageholder = models.TextField(null=True,blank=True)
+      footersubscription = models.TextField(null=True,blank=True)
+      footersmalldisbold = models.TextField(null=True,blank=True)
+      footersmalldis = models.TextField(null=True,blank=True)
+      footercopyrighttext = models.TextField(null=True,blank=True)
+      footerprivacy = models.TextField(null=True,blank=True)
+      footerprivacylink = models.TextField(null=True,blank=True)
+      footerterms = models.TextField(null=True,blank=True)
+      footertermsofuselink = models.TextField(null=True,blank=True)
+      footerstatuspage = models.TextField(null=True,blank=True)
+      footerstatuspagelink = models.TextField(null=True,blank=True)
       text14 = models.TextField(null=True,blank=True)
       text15 = models.TextField(null=True,blank=True)
 
