@@ -39,7 +39,7 @@ from navigation.models import (
     Bookacall,Bookacallsectionone,Bookacallsectiontwo,BookacallSlidersection1,BookacallSlidersection2,HomepageSlidersection1,HomepageSlidersection2,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Servicesreview,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,
     Slidersection,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,
-    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionfour,Whyussectionthree,Whyussectionfour,Whyussectionthree,Homepage,
+    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionfour,Whyussectionthree,Whyussectionfour,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,
     Whyussectiontwo,whyusreview,PricingFaq,Pricinguserreview,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,BlogPost,Ourworkproject
 )
 
@@ -50,7 +50,8 @@ from .serializers import (
     BookacallSerializer,BookacallsectiononeSerializer,BookacallsectiontwoSerializer,BookacallSlidersection1Serializer,
     BookacallSlidersection2Serializer,PageblogSerializer,BlogTimepassUserSerializer,authordetailsSerializer,
     PageSerializer,ServicessectiononeSerializer,ServicessectiontwoSerializer,PageDashboardSerializer,
-    ServicessectionThreeSerializer,ServicesreviewSerializer,FaqSerializer,EmailSerializer,
+    ServicessectionThreeSerializer,ServicesreviewSerializer,FaqSerializer,EmailSerializer,SectionsixSerializer,SectionfiveSerializer,singlereviewSerializer,
+
     ServicessectionsixSerializer,ServicessectionsevenSerializer,SlidersectionSerializer,
     OurworkSerializer,OurworksectiononeSerializer,OurworksectiontwoSerializer,
     BlogsSerializer,BlogsectiononeSerializer,BlogsectiontwoSerializer,
@@ -157,6 +158,17 @@ class HeaderView(GenericAPIView):
 
 
 
+
+
+class UsernavbarView(GenericAPIView):
+
+    # permission_classes = [IsAuthenticated]
+    serializer_class = MenuSerializer
+
+    def get(self, request):
+        menus = Menu.objects.all()
+        serializer = MenuSerializer(menus, many=True)
+        return Response(serializer.data)
 
 
 class MenuView(GenericAPIView):
@@ -387,6 +399,104 @@ class SectionfourView(GenericAPIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class SectionfiveView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = SectionfiveSerializer
+
+    def get(self, request, page_slug):
+        try:
+            section1 = Sectionfive.objects.get(page__slug=page_slug)
+        except Sectionfive.DoesNotExist:
+            try:
+                page = Homepage.objects.get(slug=page_slug)
+            except Homepage.DoesNotExist:
+                return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+            section1 = Sectionfive.objects.create(page=page)
+            # Perform any additional initialization for the newly created section1 object
+
+        serializer = SectionfiveSerializer(section1)
+        return Response(serializer.data)
+
+    def put(self, request, page_slug):
+        try:
+            section1 = Sectionfive.objects.get(page__slug=page_slug)
+        except Sectionfive.DoesNotExist:
+            return Response({'error': 'Sectionfive object not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = SectionfiveSerializer(section1, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class sectionsixView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = SectionsixSerializer
+
+    def get(self, request, page_slug):
+        try:
+            section1 = Sectionsix.objects.get(page__slug=page_slug)
+        except Sectionsix.DoesNotExist:
+            try:
+                page = Homepage.objects.get(slug=page_slug)
+            except Homepage.DoesNotExist:
+                return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+            section1 = Sectionsix.objects.create(page=page)
+            # Perform any additional initialization for the newly created section1 object
+
+        serializer = SectionsixSerializer(section1)
+        return Response(serializer.data)
+
+    def put(self, request, page_slug):
+        try:
+            section1 = Sectionsix.objects.get(page__slug=page_slug)
+        except Sectionsix.DoesNotExist:
+            return Response({'error': 'Sectionsix object not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = SectionsixSerializer(section1, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class singlereviewView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = singlereviewSerializer
+
+    def get(self, request, page_slug):
+        try:
+            section1 = Singlereview.objects.get(page__slug=page_slug)
+        except Singlereview.DoesNotExist:
+            try:
+                page = Homepage.objects.get(slug=page_slug)
+            except Homepage.DoesNotExist:
+                return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+            section1 = Singlereview.objects.create(page=page)
+            # Perform any additional initialization for the newly created section1 object
+
+        serializer = singlereviewSerializer(section1)
+        return Response(serializer.data)
+
+    def put(self, request, page_slug):
+        try:
+            section1 = Singlereview.objects.get(page__slug=page_slug)
+        except Singlereview.DoesNotExist:
+            return Response({'error': 'Singlereview object not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = singlereviewSerializer(section1, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class SectiononeView(GenericAPIView):

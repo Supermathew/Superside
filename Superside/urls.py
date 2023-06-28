@@ -22,8 +22,8 @@ import navigation.signals
 from navigation.api.views import (
     ImageUploadView, HeaderView, MenuView, SubMenuView, FooterView, SectiontwoView, SectionfourView,OurworkuserView,OurworkresultsingleView,ServicesUserpageView,BookacallUpdateSlidersection2View,PricingUpdateFaqView,whyusUpdateReviewView,authordetailsView,
     SectiononeView, VideoUploadView, SectionthreeView, DetailsView, HomepageReviewView, PageView,WhyususerView,OurworkallresultView,bookacalluserView,BookacallUpdateSlidersection1View,HomepageUpdateSlidersection2View,ServicesreviewUpdateView,authornameview,ImageUpdateUploadView,
-    PagelistView, ServicessectiononeView, ServicessectiontwoView, ServicessectionThreeView,homepageView,homeView,BloguserView,SingleblogView,BlogbycategoryView,PricingUpdatedetailsView,DetailsUpdateView,PricingUpdatesubdetailsView,allBloguserView,BlogbytagView,
-    ServicesreviewView, FaqView, ServicessectionsixView, ServicessectionsevenView, SlidersectionView,servicesview,OurworkresultView,HomepageSlidersection1updateView,PricinguserUpdatereviewView,HomepageUpdateReviewView,FaqUpdateView,SocialupdateView,tagdetailsView,UserFooterView,
+    PagelistView, ServicessectiononeView, ServicessectiontwoView, ServicessectionThreeView,homepageView,homeView,BloguserView,SingleblogView,BlogbycategoryView,PricingUpdatedetailsView,DetailsUpdateView,PricingUpdatesubdetailsView,allBloguserView,BlogbytagView,SectionfiveView,singlereviewView,sectionsixView,
+    ServicesreviewView, FaqView, ServicessectionsixView, ServicessectionsevenView, SlidersectionView,servicesview,OurworkresultView,HomepageSlidersection1updateView,PricinguserUpdatereviewView,HomepageUpdateReviewView,FaqUpdateView,SocialupdateView,tagdetailsView,UserFooterView,UsernavbarView,
     BookacallView,BookacallsectiononeView,BookacallsectiontwoView,BookacallSlidersection1View,BookacallSlidersection2View,HomepageSlidersection1View,HomepageSlidersection2View,OurworkresultsinglepreviousView,OurworkresultsinglenextAPIView,BlogbyauthorView,UserHeaderView,
     OurworksectiononeView, OurworksectiontwoView, OurworkView, BlogsView, BlogssectiononeView,OurworkprojectView,ServicessingleOurworkView,BlogauthorView,BlogauthorUpdateView,TagView,TagUpdateView,pricingView,SlidersectionUpdateView,EmailView,VideoUpdateUploadView,
     BlogssectiontwoView, BlogssectionthreeView, BlogssectionfourView, WhyussectiontwoView,WhyussectionthreeView,WhyussectionfourView,WhyussectionfiveView,WhyussectionsixView,whyusReviewView,WhyusView,WhyussectionsevenView,SocialView,MenuUpdateView,SubMenuUpdateView,
@@ -58,6 +58,7 @@ urlpatterns = [
     path('upload/video/', VideoUploadView.as_view(), name='video-upload'),
     path('upload/video/<int:video_id>/', VideoUpdateUploadView.as_view(), name='Video-delete'),
     path('header/', UserHeaderView.as_view()),
+    path('navbar/', UsernavbarView.as_view()),
     path('footer/', UserFooterView.as_view()),
     path('social/', UserSocialView.as_view()),##approved
     path('dashboard/header/', HeaderView.as_view()),
@@ -100,6 +101,9 @@ urlpatterns = [
     path('dashboard/homepage/<slug:page_slug>/imageslider2/', HomepageSlidersection2View.as_view(),name='HomepageSlidersection2'),
     path('dashboard/homepage/<slug:page_slug>/imageslider2/<int:image_id>/', HomepageUpdateSlidersection2View.as_view(), name='HomepageSlidersection2-update'),
     path('dashboard/homepage/<slug:page_slug>/details/', DetailsView.as_view(),name='homepagedetailsection'),
+    path('dashboard/homepage/<slug:page_slug>/sectionfive/', SectionfiveView.as_view(),name='homepagesectionfive'),
+    path('dashboard/homepage/<slug:page_slug>/reviewsingle/', singlereviewView.as_view(),name='homepagesinglereview'),
+    path('dashboard/homepage/<slug:page_slug>/sectionsix/', sectionsixView.as_view(),name='homepagesectionsix'),
     path('dashboard/homepage/<slug:page_slug>/details/<int:details_id>/', DetailsUpdateView.as_view(),name='homepagedetailsection-update'),
     path('dashboard/homepage/<slug:page_slug>/reviews/', HomepageReviewView.as_view(),name='homepagereviewsection'),
     path('dashboard/homepage/<slug:page_slug>/reviews/<int:review_id>/', HomepageUpdateReviewView.as_view(),name='homepagereviewsection-update'),

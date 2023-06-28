@@ -104,31 +104,54 @@ class Sectiontwo(models.Model):
 
 
 class Sectionfour(models.Model):
-      sectionfourtext1 = models.TextField(null=True,blank=True)
-      Sectionfourtext2 = models.TextField(null=True,blank=True)
-      Sectionfourtext3 = models.TextField(null=True,blank=True)
-      Sectionfourtext4 = models.TextField(null=True,blank=True)
-      sectionfourtext5 = models.TextField(null=True,blank=True)
-      sectionfourtext6 = models.TextField(null=True,blank=True)
-      sectionfourtext7 = models.TextField(null=True,blank=True)
-      sectionfourtext8 = models.TextField(null=True,blank=True)
-      sectionfourtext9 = models.TextField(null=True,blank=True)
-      sectionfourtext10 = models.TextField(null=True,blank=True)
-      sectionfourtext11 = models.TextField(null=True,blank=True)
-      sectionfourtext12 = models.TextField(null=True,blank=True)
-      sectionfourtext13 = models.TextField(null=True,blank=True)
-      sectionfourtext14 = models.TextField(null=True,blank=True)
-      sectionfourtext15 = models.TextField(null=True,blank=True)
-      sectionfourimage1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionfourimage1')
-      sectionfourimage2 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionfourimage2')
-      sectionfourimage3 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionfourimage3')
-      sectionfourimage4 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionfourimage4')
-      sectionfourimage5 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionfourimage5')
-      page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectionfour')
+      sectionfourtitle = models.TextField(null=True,blank=True)
+      Sectionfourdiscription = models.TextField(null=True,blank=True)
+      Sectionfourbtntext = models.TextField(null=True,blank=True)
+      Sectionfourbtnurl = models.TextField(null=True,blank=True)
+      sectionfoursubdiscription = models.TextField(null=True,blank=True)
+      page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSectionfour')
 
 
       def __str__(self):
          return f'Sectionfour'
+
+class Sectionfive(models.Model):
+      sectionfiveheading = models.TextField(null=True,blank=True)
+      sectionfivesubheading = models.TextField(null=True,blank=True)
+      sectionfiveimage1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectionfiveimage1')
+      sectionfiveimage1details = models.TextField(null=True,blank=True)
+      sectionfiveimage2 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectionfiveimage2')
+      sectionfiveimage2details = models.TextField(null=True,blank=True)
+      sectionfiveimage3 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectionfiveimage3')
+      sectionfiveimage3details = models.TextField(null=True,blank=True)
+      sectionfiveimage4 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectionfiveimage4')
+      sectionfiveimage4details = models.TextField(null=True,blank=True)
+      page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSectionfive')
+
+      def __str__(self):
+         return f'Sectionfive'
+
+class Singlereview(models.Model):
+      Singlereviewtext = models.TextField(null=True,blank=True)
+      page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSinglereview')
+
+      def __str__(self):
+         return f'singlereview'
+
+
+class Sectionsix(models.Model):
+      sectionsixsubtitle = models.TextField(null=True,blank=True)
+      sectionsixtitle = models.TextField(null=True,blank=True)
+      sectionsixdisc = models.TextField(null=True,blank=True)
+      sectionsixbtntext = models.TextField(null=True,blank=True)
+      sectionsixbtnurl = models.TextField(null=True,blank=True)
+      sectionsixbgurl = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectionsiximage1')
+      sectionsixmobileimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectionsiximage2')
+      page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSectionsix')
+
+
+      def __str__(self):
+         return f'Sectionsix'
   
 class Sectionone(models.Model):
       sectiononeheading = models.TextField(null=True,blank=True)
