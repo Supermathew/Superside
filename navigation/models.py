@@ -85,6 +85,12 @@ class Sectiontwo(models.Model):
       text1 = models.TextField(null=True,blank=True)
       text2 = models.TextField(null=True,blank=True)
       text3 = models.TextField(null=True,blank=True)
+      page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectiontwo')
+
+      def __str__(self):
+         return f'Sectiontwo'
+
+class Facts(models.Model):
       text4 = models.TextField(null=True,blank=True)
       text5 = models.TextField(null=True,blank=True)
       text6 = models.TextField(null=True,blank=True)
@@ -97,10 +103,9 @@ class Sectiontwo(models.Model):
       text13 = models.TextField(null=True,blank=True)
       text14 = models.TextField(null=True,blank=True)
       text15 = models.TextField(null=True,blank=True)
-      page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectiontwo')
 
       def __str__(self):
-         return f'Sectiontwo'
+         return f'Facts'
 
 
 class Sectionfour(models.Model):

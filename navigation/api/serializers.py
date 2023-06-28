@@ -5,7 +5,7 @@ from navigation.models import (
     MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Emailinput,Social,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,
     Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionfour,Whyussectionthree,Whyussectionfour,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,
-    Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,
+    Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,
     Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,Ourworkproject
 )
 
@@ -78,12 +78,50 @@ class FooterSerializer(serializers.ModelSerializer):
 class SectiontwoSerializer(serializers.ModelSerializer):
 
 
+        # def to_representation(self, instance):
+        #     representation = super().to_representation(instance)
+        #     data_dict = {
+        #         "text1": representation.get("text1"),
+        #         "text2": representation.get("text2"),
+        #         "text3": representation.get("text3"),
+        #         "Factcontent": [
+        #             {
+        #                 "subTitle1": representation.get("text4"),
+        #                 "title1": representation.get("text5"),
+        #                 "desc1": representation.get("text6"),
+        #             },
+        #             {
+        #                 "subTitle2": representation.get("text7"),
+        #                 "title2": representation.get("text8"),
+        #                 "desc2": representation.get("text9"),
+        #             },
+        #             {
+        #                 "subTitle3": representation.get("text10"),
+        #                 "title3": representation.get("text11"),
+        #                 "desc3": representation.get("text12"),
+        #             },
+        #             {
+        #                 "subTitle4": representation.get("text13"),
+        #                 "title4": representation.get("text14"),
+        #                 "desc4": representation.get("text15"),
+        #             },
+        #         ],
+        #     }
+        #     return data_dict
+
+
+        class Meta:
+            model = Sectiontwo
+            fields = '__all__'
+
+
+
+
+class FactsSerializer(serializers.ModelSerializer):
+
         def to_representation(self, instance):
             representation = super().to_representation(instance)
             data_dict = {
-                "text1": representation.get("text1"),
-                "text2": representation.get("text2"),
-                "text3": representation.get("text3"),
                 "Factcontent": [
                     {
                         "subTitle1": representation.get("text4"),
@@ -109,10 +147,10 @@ class SectiontwoSerializer(serializers.ModelSerializer):
             }
             return data_dict
 
-
         class Meta:
-            model = Sectiontwo
+            model = Facts
             fields = '__all__'
+
 
 
 
@@ -683,7 +721,7 @@ class HomepageSerializer(serializers.ModelSerializer):
     section6_url = serializers.SerializerMethodField()
     sectiondetails_url = serializers.SerializerMethodField()
     singlereview_url = serializers.SerializerMethodField()
-    sectionreview_url = serializers.SerializerMethodField()
+    # sectionreview_url = serializers.SerializerMethodField()
     # sectionimageslider1_url = serializers.SerializerMethodField()
     # sectionimageslider2_url = serializers.SerializerMethodField()
 
@@ -749,10 +787,10 @@ class HomepageSerializer(serializers.ModelSerializer):
             return reverse('homepagesinglereview',args=[Homepage.slug])
         return None
 
-    def get_sectionreview_url(self, Homepage):
-        if Homepage.slug:
-            return reverse('homepagereviewsection',args=[Homepage.slug])
-        return None
+    # def get_sectionreview_url(self, Homepage):
+    #     if Homepage.slug:
+    #         return reverse('homepagereviewsection',args=[Homepage.slug])
+    #     return None
 
 
 

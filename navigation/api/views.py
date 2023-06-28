@@ -36,7 +36,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from navigation.models import ( 
     MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,Emailinput,Social,
-    Bookacall,Bookacallsectionone,Bookacallsectiontwo,
+    Bookacall,Bookacallsectionone,Bookacallsectiontwo,Facts,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,CommonSlidersection2,CommonReview,CommonSlidersection1,
     Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionfour,Whyussectionthree,Whyussectionfour,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,
     Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,BlogPost,Ourworkproject
@@ -50,7 +50,7 @@ from .serializers import (
     PageSerializer,ServicessectiononeSerializer,ServicessectiontwoSerializer,PageDashboardSerializer,
     ServicessectionThreeSerializer,FaqSerializer,EmailSerializer,SectionsixSerializer,SectionfiveSerializer,singlereviewSerializer,
 HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,HomepageReviewSerializer,
-    ServicessectionsixSerializer,ServicessectionsevenSerializer,
+    ServicessectionsixSerializer,ServicessectionsevenSerializer,FactsSerializer,
     OurworkSerializer,OurworksectiononeSerializer,OurworksectiontwoSerializer,
     BlogsSerializer,BlogsectiononeSerializer,BlogsectiontwoSerializer,
     BlogsectionthreeSerializer,BlogsectionfourSerializer,WhyusSerializer,
@@ -364,6 +364,51 @@ class SectiontwoView(GenericAPIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class Factsview(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = FactsSerializer
+
+    def get(self, request):
+        try:
+            facts = Facts.objects.filter()[:1].filter()  # Get the first object if exists
+        except Facts.DoesNotExist:
+             facts = Facts.objects.create()
+            # Perform any additional initialization for the newly created facts object
+
+        serializer = FactsSerializer(facts)
+        return Response(serializer.data)
+
+    def put(self, request):
+        try:
+            ourwork = Facts.objects.filter()[:1].get()
+        except Facts.DoesNotExist:
+            return Response({'error': 'Facts page is not created'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = FactsSerializer(ourwork, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    
+
+class UserFactsview(GenericAPIView):
+
+    # permission_classes = [IsAuthenticated]
+    serializer_class = FactsSerializer
+
+    def get(self, request):
+        try:
+            facts = Facts.objects.filter()[:1].filter()  # Get the first object if exists
+        except Facts.DoesNotExist:
+             facts = Facts.objects.create()
+            # Perform any additional initialization for the newly created facts object
+
+        serializer = FactsSerializer(facts)
+        return Response(serializer.data)
 
 class SectionfourView(GenericAPIView):
 
