@@ -91,18 +91,18 @@ class Sectiontwo(models.Model):
          return f'Sectiontwo'
 
 class Facts(models.Model):
-      text4 = models.TextField(null=True,blank=True)
-      text5 = models.TextField(null=True,blank=True)
-      text6 = models.TextField(null=True,blank=True)
-      text7 = models.TextField(null=True,blank=True)
-      text8 = models.TextField(null=True,blank=True)
-      text9 = models.TextField(null=True,blank=True)
-      text10 = models.TextField(null=True,blank=True)
-      text11 = models.TextField(null=True,blank=True)
-      text12 = models.TextField(null=True,blank=True)
-      text13 = models.TextField(null=True,blank=True)
-      text14 = models.TextField(null=True,blank=True)
-      text15 = models.TextField(null=True,blank=True)
+      subTitle1 = models.TextField(null=True,blank=True)
+      title1 = models.TextField(null=True,blank=True)
+      desc1 = models.TextField(null=True,blank=True)
+      subTitle2 = models.TextField(null=True,blank=True)
+      title2 = models.TextField(null=True,blank=True)
+      desc2 = models.TextField(null=True,blank=True)
+      subTitle3 = models.TextField(null=True,blank=True)
+      title3 = models.TextField(null=True,blank=True)
+      desc3 = models.TextField(null=True,blank=True)
+      subTitle4 = models.TextField(null=True,blank=True)
+      title4 = models.TextField(null=True,blank=True)
+      desc4 = models.TextField(null=True,blank=True)
 
       def __str__(self):
          return f'Facts'

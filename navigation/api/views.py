@@ -372,7 +372,8 @@ class Factsview(GenericAPIView):
 
     def get(self, request):
         try:
-            facts = Facts.objects.filter()[:1].filter()  # Get the first object if exists
+            # facts = Facts.objects.filter()[:1].filter()  # Get the first object if exists
+            facts = Facts.objects.first()
         except Facts.DoesNotExist:
              facts = Facts.objects.create()
             # Perform any additional initialization for the newly created facts object
@@ -382,7 +383,7 @@ class Factsview(GenericAPIView):
 
     def put(self, request):
         try:
-            ourwork = Facts.objects.filter()[:1].get()
+            ourwork = Facts.objects.first()
         except Facts.DoesNotExist:
             return Response({'error': 'Facts page is not created'}, status=status.HTTP_404_NOT_FOUND)
 

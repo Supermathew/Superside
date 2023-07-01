@@ -119,37 +119,42 @@ class SectiontwoSerializer(serializers.ModelSerializer):
 
 class FactsSerializer(serializers.ModelSerializer):
 
-        def to_representation(self, instance):
-            representation = super().to_representation(instance)
-            data_dict = {
-                "Factcontent": [
-                    {
-                        "subTitle1": representation.get("text4"),
-                        "title1": representation.get("text5"),
-                        "desc1": representation.get("text6"),
-                    },
-                    {
-                        "subTitle2": representation.get("text7"),
-                        "title2": representation.get("text8"),
-                        "desc2": representation.get("text9"),
-                    },
-                    {
-                        "subTitle3": representation.get("text10"),
-                        "title3": representation.get("text11"),
-                        "desc3": representation.get("text12"),
-                    },
-                    {
-                        "subTitle4": representation.get("text13"),
-                        "title4": representation.get("text14"),
-                        "desc4": representation.get("text15"),
-                    },
-                ],
-            }
-            return data_dict
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        data_dict = {
+            "content": [
+                {
+                    "subTitle1": representation.get("subTitle1"),
+                    "title1": representation.get("title1"),
+                    "desc1": representation.get("desc1"),
 
-        class Meta:
-            model = Facts
-            fields = '__all__'
+                },
+                {
+                    "subTitle2": representation.get("subTitle2"),
+                    "title2": representation.get("title2"),
+                    "desc2": representation.get("desc2"),
+
+                },
+                {
+                    "subTitle3": representation.get("subTitle3"),
+                    "title3": representation.get("title3"),
+                    "desc3": representation.get("desc3"),
+
+                },
+                {
+                    "subTitle4": representation.get("subTitle4"),
+                    "title4": representation.get("title4"),
+                    "desc4": representation.get("desc4"),
+
+                },
+            ],
+        }
+        return data_dict
+
+
+    class Meta:
+        model = Facts
+        fields = '__all__'
 
 
 
@@ -295,14 +300,14 @@ class SectionsixSerializer(serializers.ModelSerializer):
 
 
 
-    def get_sectionfiveimage1_path(self, obj):
-        if obj.sectionfiveimage1:
-            return obj.sectionfiveimage1.image.url
+    def get_sectionsiximage1_path(self, obj):
+        if obj.sectionsixbgurl:
+            return obj.sectionsixbgurl.image.url
         return None
 
-    def get_sectionfiveimage2_path(self, obj):
-        if obj.sectionfiveimage2:
-            return obj.sectionfiveimage2.image.url
+    def get_sectionsiximage2_path(self, obj):
+        if obj.sectionsixmobileimg:
+            return obj.sectionsixmobileimg.image.url
         return None
 
 
