@@ -66,6 +66,7 @@ HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,HomepageReview
 class ImageUploadView(GenericAPIView):
     
     permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FileUploadParser)
     serializer_class = MediaBucketSerializer
 
     def get(self, request):
@@ -73,12 +74,22 @@ class ImageUploadView(GenericAPIView):
         serializer = MediaBucketSerializer(images, many=True)
         return Response(serializer.data)
 
-    def post(self, request):
-        serializer = MediaBucketSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, format=None):
+        files = request.data.getlist('image', None)
+
+        serialized_files = []
+        print(files)
+        for file in files:
+            data = {'image': file}
+            serializer = MediaBucketSerializer(data=data)
+
+            if serializer.is_valid():
+                serializer.save()
+                serialized_files.append(serializer.data)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(serialized_files, status=status.HTTP_201_CREATED)
 
 
 class ImageUpdateUploadView(GenericAPIView):
@@ -117,17 +128,13 @@ class ImageUpdateUploadView(GenericAPIView):
 #     serializer_class = MediaBucketSerializer
 
 
-#     def post(self, request, *args, **kwargs):
-#         # serializer = MediaBucketSerializer(data=request.data, many=True)
+#     def post(self, request, format=None):
+#         files = request.data.getlist('image', None)
 
-
-
-#         files = request.data.getlist('image',None)
-#         print(files)
 #         serialized_files = []
-
+#         print(files)
 #         for file in files:
-#             data = {'file': file}
+#             data = {'image': file}
 #             serializer = MediaBucketSerializer(data=data)
 
 #             if serializer.is_valid():
@@ -137,6 +144,25 @@ class ImageUpdateUploadView(GenericAPIView):
 #                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #         return Response(serialized_files, status=status.HTTP_201_CREATED)
+#         # serializer = MediaBucketSerializer(data=request.data, many=True)
+
+
+
+#         # files = request.FILES.getlist('image',None)
+#         # print(files)
+#         # serialized_files = []
+
+#         # for file in files:
+#         #     data = {'file': file}
+#         #     serializer = MediaBucketSerializer(data=data)
+
+#         #     if serializer.is_valid():
+#         #         serializer.save()
+#         #         serialized_files.append(serializer.data)
+#         #     else:
+#         #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#         # return Response(serialized_files, status=status.HTTP_201_CREATED)
 
 #     def get(self, request, *args, **kwargs):
 #         uploaded_files = MediaBucket.objects.all()

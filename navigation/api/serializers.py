@@ -15,6 +15,18 @@ class MediaBucketSerializer(serializers.ModelSerializer):
         model = MediaBucket
         fields = '__all__'
 
+
+    # def create(self, validated_data):
+    #     images = self.context['request'].FILES.getlist('image')
+
+    #     image = list(images)
+    #     print(image)
+    #     for image_data in images_data:
+    #         image = Image(image=image_data)
+    #         image.save()
+    #         images.append(image)
+    #     return images
+
 class SubMenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubMenu
