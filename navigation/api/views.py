@@ -49,7 +49,7 @@ from .serializers import (
     BookacallSerializer,BookacallsectiononeSerializer,BookacallsectiontwoSerializer,PageblogSerializer,BlogTimepassUserSerializer,authordetailsSerializer,
     PageSerializer,ServicessectiononeSerializer,ServicessectiontwoSerializer,PageDashboardSerializer,
     ServicessectionThreeSerializer,FaqSerializer,EmailSerializer,SectionsixSerializer,SectionfiveSerializer,singlereviewSerializer,
-HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,HomepageReviewSerializer,
+HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,HomepageReviewSerializer,PricingctaSerializer,
     ServicessectionsixSerializer,ServicessectionsevenSerializer,FactsSerializer,
     OurworkSerializer,OurworksectiononeSerializer,OurworksectiontwoSerializer,
     BlogsSerializer,BlogsectiononeSerializer,BlogsectiontwoSerializer,
@@ -2266,7 +2266,37 @@ class PricingsectionfourView(GenericAPIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class PricingctaView(GenericAPIView):
 
+    permission_classes = [IsAuthenticated]
+    serializer_class = PricingctaSerializer
+
+
+    def get(self, request, page_slug):
+        try:
+            section2 = Pricingcta.objects.get(page__slug=page_slug)
+        except Pricingcta.DoesNotExist:
+            try:
+                page = Pricing.objects.get(slug=page_slug)
+            except Pricing.DoesNotExist:
+                return Response({'error': 'Pricing Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+            section2 = Pricingcta.objects.create(page=page)
+
+        serializer = PricingctaSerializer(section2)
+        return Response(serializer.data)
+
+    def put(self, request, page_slug):
+        try:
+            section1 = Pricingcta.objects.get(page__slug=page_slug)
+        except Pricingcta.DoesNotExist:
+            return Response({'error': 'Pricingcta page not created'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = PricingctaSerializer(section1, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class PricinguserreviewView(GenericAPIView):

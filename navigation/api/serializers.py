@@ -5,7 +5,7 @@ from navigation.models import (
     MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Emailinput,Social,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,
     Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,
-    Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,
+    Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,Pricingcta,
     Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,Ourworkproject
 )
 
@@ -1322,21 +1322,53 @@ class WhyusSerializer(serializers.ModelSerializer):
 
 class WhyussectionsevenSerializer(serializers.ModelSerializer):
     photo_url = serializers.SerializerMethodField()
+    phoneimgphoto_url = serializers.SerializerMethodField()
+
     # video_url = serializers.SerializerMethodField()
 
     # def get_video_url(self, Ourworksectionone):
     #       if Ourworksectionone.sectiontwovideo:
     #          return obj.sectiontwovideo.video.url
     #       return None
-
-
     def get_photo_url(self, Whyussectionseven):
         if Whyussectionseven.sectionsevenimg:
             return Whyussectionseven.sectionsevenimg.image.url
         return None
 
+    def get_phoneimgphoto_url(self, Whyussectionseven):
+        if Whyussectionseven.sectionsevenmobileimg:
+            return Whyussectionseven.sectionsevenmobileimg.image.url
+        return None
+
     class Meta:
         model = Whyussectionseven
+        fields = '__all__'
+
+
+
+
+class PricingctaSerializer(serializers.ModelSerializer):
+    photo_url = serializers.SerializerMethodField()
+    phoneimgphoto_url = serializers.SerializerMethodField()
+
+    # video_url = serializers.SerializerMethodField()
+
+    # def get_video_url(self, Ourworksectionone):
+    #       if Ourworksectionone.sectiontwovideo:
+    #          return obj.sectiontwovideo.video.url
+    #       return None
+    def get_photo_url(self, Pricingcta):
+        if Pricingcta.Pricingctaimg:
+            return Pricingcta.Pricingctaimg.image.url
+        return None
+
+    def get_phoneimgphoto_url(self, Pricingcta):
+        if Pricingcta.Pricingctamobileimg:
+            return Pricingcta.Pricingctamobileimg.image.url
+        return None
+
+    class Meta:
+        model = Pricingcta
         fields = '__all__'
 
 
@@ -1590,7 +1622,7 @@ class PricingSerializer(serializers.ModelSerializer):
     section3_url = serializers.SerializerMethodField()
     section4_url = serializers.SerializerMethodField()
     section5_url = serializers.SerializerMethodField()
-    # section6_url = serializers.SerializerMethodField()
+    sectioncta_url = serializers.SerializerMethodField()
     section7_url = serializers.SerializerMethodField()
     page_url = serializers.SerializerMethodField()
 
@@ -1624,10 +1656,10 @@ class PricingSerializer(serializers.ModelSerializer):
             return reverse('Pricingdetails',args=[Pricing.slug])
         return None
 
-    # def get_section6_url(self, Pricing):
-    #     if Pricing.slug:
-    #         return reverse('Pricinguserreview',args=[Pricing.slug])
-    #     return None
+    def get_sectioncta_url(self, Pricing):
+        if Pricing.slug:
+            return reverse('pricingcta',args=[Pricing.slug])
+        return None
 
     def get_section7_url(self, Pricing):
         if Whyus.slug:
@@ -1788,7 +1820,7 @@ class PricingUserSerializer(serializers.ModelSerializer):
     Pricingsectiontwo = PricingsectiontwoSerializer(many=True,read_only=True)
     Pricingsectionthree = PricingsectionthreeSerializer(many=True, read_only=True)
     Pricingsectionfour = PricingsectionfourSerializer(many=True, read_only=True)
-    # Pricinguserreview = PricinguserreviewSerializer(many=True, read_only=True)
+    Pricingcta = PricingctaSerializer(many=True, read_only=True)
     PricingFaq = PricingFaqSerializer(many=True, read_only=True)
     Pricingservicepages = PageSerializer(many=True, read_only=True)
 

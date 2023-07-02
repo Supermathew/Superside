@@ -589,7 +589,7 @@ class Whyussectionseven(models.Model):
       sectionsevenbtntext = models.TextField(null=True,blank=True)
       sectionsevenbtnurl = models.TextField(null=True,blank=True)
       sectionsevenimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsevenimg')
-      sectionsixmobileimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsevenimage2')
+      sectionsevenmobileimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsevenimagemobileimg')
       page = models.ForeignKey(Whyus, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionseven')
 
       def __str__(self):
@@ -804,27 +804,17 @@ class Pricingsubdetails(models.Model):
          return f'Pricingsubdetails'
 
 
-# class BlogPost(models.Model):
+class Pricingcta(models.Model):
+      Pricingctaheading = models.TextField(null=True,blank=True)
+      Pricingctasubheading = models.TextField(null=True,blank=True)
+      Pricingctabtntext = models.TextField(null=True,blank=True)
+      Pricingctabtnurl = models.TextField(null=True,blank=True)
+      Pricingctaimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='pricingctaimg')
+      Pricingctamobileimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='pricingctaimage2')
+      page = models.ForeignKey(Pricing, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricingcta')
 
-#       # def remove_numbers(value):
-#       #     return re.sub(r'\d', '', value)
-
-#       Position = models.TextField()
-#       name = models.CharField(max_length=800)
-#       title = models.CharField(max_length=800,unique=True)
-#       slug = AutoSlugField(populate_from='title', unique=True)
-#       category = models.CharField(max_length=800,null=True,blank=True)
-#       thumbnail = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='blogpostthumbnail')
-#       body = RichTextUploadingField()
-#       summary = models.TextField()
-#       created = models.DateTimeField(auto_now_add=True)
-#       tag = models.TextField()
-#       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='servicesBlogPost')
-#       profilephoto = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='profilephoto')
-
-
-      # def __str__(self):
-      #     return f'mathew'
+      def __str__(self):
+          return f'Pricingcta'
 
 class Blogauthor(models.Model):
     profilephoto = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='profilephoto')

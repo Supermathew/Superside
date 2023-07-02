@@ -21,7 +21,7 @@ from django.conf import settings
 import navigation.signals
 from navigation.api.views import (
     ImageUploadView, HeaderView, MenuView, SubMenuView, FooterView, SectiontwoView, SectionfourView,OurworkuserView,OurworkresultsingleView,ServicesUserpageView,PricingUpdateFaqView,authordetailsView,UsersinglereviewView,
-    SectiononeView, VideoUploadView, SectionthreeView, DetailsView, HomepageReviewView, PageView,WhyususerView,OurworkallresultView,bookacalluserView,HomepageUpdateSlidersection2View,authornameview,ImageUpdateUploadView,UserFactsview,
+    SectiononeView, VideoUploadView, SectionthreeView, DetailsView, HomepageReviewView, PageView,WhyususerView,OurworkallresultView,bookacalluserView,HomepageUpdateSlidersection2View,authornameview,ImageUpdateUploadView,UserFactsview,PricingctaView,
     PagelistView, ServicessectiononeView, ServicessectiontwoView, ServicessectionThreeView,homepageView,homeView,BloguserView,SingleblogView,BlogbycategoryView,PricingUpdatedetailsView,DetailsUpdateView,PricingUpdatesubdetailsView,allBloguserView,BlogbytagView,SectionfiveView,singlereviewView,sectionsixView, FaqView, ServicessectionsixView, ServicessectionsevenView,servicesview,OurworkresultView,HomepageSlidersection1updateView,HomepageUpdateReviewView,FaqUpdateView,SocialupdateView,tagdetailsView,UserFooterView,UsernavbarView,
     BookacallView,BookacallsectiononeView,BookacallsectiontwoView,HomepageSlidersection1View,HomepageSlidersection2View,OurworkresultsinglepreviousView,OurworkresultsinglenextAPIView,BlogbyauthorView,UserHeaderView,UserHomepageSlidersection1View,UserHomepageSlidersection2View,UserHomepageReviewView,
     OurworksectiononeView, OurworksectiontwoView, OurworkView, BlogsView, BlogssectiononeView,OurworkprojectView,ServicessingleOurworkView,BlogauthorView,BlogauthorUpdateView,TagView,TagUpdateView,pricingView,EmailView,VideoUpdateUploadView,Factsview,
@@ -117,6 +117,7 @@ urlpatterns = [
     path('dashboard/pricing/<slug:page_slug>/sectiontwo/', PricingsectiontwoView.as_view(),name='Pricingsectiontwo'),
     path('dashboard/pricing/<slug:page_slug>/sectionthree/', PricingsectionthreeView.as_view(),name='Pricingsectionthree'),
     path('dashboard/pricing/<slug:page_slug>/sectionfour/', PricingsectionfourView.as_view(),name='Pricingsectionfour'),
+    path('dashboard/pricing/<slug:page_slug>/pricingcta/', PricingctaView.as_view(),name='pricingcta'),
     path('dashboard/pricing/<slug:page_slug>/pricingdetails/', PricingdetailsView.as_view(),name='Pricingdetails'),
     path('dashboard/pricing/<slug:page_slug>/pricingdetails/<int:review_id>/', PricingUpdatedetailsView.as_view(),name='Pricingdetails-update'),
     path('dashboard/pricing/<slug:page_slug>/pricingdetails/<int:review_id>/subdetails/', PricingsubdetailsView.as_view(),name='Pricingsubdetails'),
