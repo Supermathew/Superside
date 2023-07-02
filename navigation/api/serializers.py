@@ -271,18 +271,22 @@ class SectionfiveSerializer(serializers.ModelSerializer):
             "content": [
                 {
                     "sectionfiveimage1": self.get_sectionfiveimage1_path(instance),
+                    "sectionfiveimageid":representation.get("sectionfiveimage1"),
                     "sectionfiveimage1details": representation.get("sectionfiveimage1details"),
                 },
                 {
                     "sectionfiveimage2": self.get_sectionfiveimage2_path(instance),
+                    "sectionfiveimageid":representation.get("sectionfiveimage2"),
                     "sectionfiveimage2details": representation.get("sectionfiveimage2details"),
                 },
                 {
                     "sectionfiveimage3": self.get_sectionfiveimage3_path(instance),
+                    "sectionfiveimageid":representation.get("sectionfiveimage3"),
                     "sectionfiveimage3details": representation.get("sectionfiveimage3details"),
                 },
                 {
                     "sectionfiveimage4": self.get_sectionfiveimage4_path(instance),
+                    "sectionfiveimageid":representation.get("sectionfiveimage4"),
                     "sectionfiveimage4details": representation.get("sectionfiveimage4details"),
                 },
             ],
