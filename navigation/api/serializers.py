@@ -4,7 +4,7 @@ from django.urls import reverse
 from navigation.models import ( 
     MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Emailinput,Social,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,
-    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionfour,Whyussectionthree,Whyussectionfour,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,
+    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,
     Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,
     Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,Ourworkproject
 )
@@ -534,7 +534,6 @@ class HomeSerializer(serializers.ModelSerializer):
     # Homepagereview = HomepageReviewSerializer(many=True, read_only=True)
     HomepageSectionsix = SectionsixSerializer(many=True, read_only=True)
     HomepageSectionfive = SectionfiveSerializer(many=True, read_only=True)
-    HomepageSinglereview = singlereviewSerializer(many=True, read_only=True)
 
 
 
@@ -729,7 +728,6 @@ class HomepageSerializer(serializers.ModelSerializer):
     section5_url = serializers.SerializerMethodField()
     section6_url = serializers.SerializerMethodField()
     sectiondetails_url = serializers.SerializerMethodField()
-    singlereview_url = serializers.SerializerMethodField()
     # sectionreview_url = serializers.SerializerMethodField()
     # sectionimageslider1_url = serializers.SerializerMethodField()
     # sectionimageslider2_url = serializers.SerializerMethodField()
@@ -791,10 +789,6 @@ class HomepageSerializer(serializers.ModelSerializer):
             return reverse('homepagedetailsection',args=[Homepage.slug])
         return None
 
-    def get_singlereview_url(self, Homepage):
-        if Homepage.slug:
-            return reverse('homepagesinglereview',args=[Homepage.slug])
-        return None
 
     # def get_sectionreview_url(self, Homepage):
     #     if Homepage.slug:
@@ -1289,10 +1283,7 @@ class WhyusSerializer(serializers.ModelSerializer):
             return reverse('whyussectionthree',args=[Whyus.slug])
         return None
 
-    def get_section4_url(self, Whyus):
-        if Whyus.slug:
-            return reverse('whyussectionfour',args=[Whyus.slug])
-        return None
+
 
     def get_section5_url(self, Whyus):
         if Whyus.slug:
@@ -1338,45 +1329,92 @@ class WhyussectionsevenSerializer(serializers.ModelSerializer):
 
 
 class WhyussectionsixSerializer(serializers.ModelSerializer):
-    sectiononeimage1_path = serializers.SerializerMethodField()
-    sectiononeimage2_path = serializers.SerializerMethodField()
-    sectiononeimage3_path = serializers.SerializerMethodField()
-    sectiononeimage4_path = serializers.SerializerMethodField()
-    sectiononeimage5_path = serializers.SerializerMethodField()
-    sectiononeimage6_path = serializers.SerializerMethodField()
+    sectionsiximage1_path = serializers.SerializerMethodField()
+    sectionsiximage2_path = serializers.SerializerMethodField()
+    sectionsiximage3_path = serializers.SerializerMethodField()
+    sectionsiximage4_path = serializers.SerializerMethodField()
+    sectionsiximage5_path = serializers.SerializerMethodField()
+    sectionsiximage6_path = serializers.SerializerMethodField()
 
 
 
-    def get_sectiononeimage1_path(self, obj):
+    def get_sectionsiximage1_path(self, obj):
         if obj.sectionsiximage1:
             return obj.sectionsiximage1.image.url
         return None
 
-    def get_sectiononeimage2_path(self, obj):
+    def get_sectionsiximage2_path(self, obj):
         if obj.sectionsiximage2:
             return obj.sectionsiximage2.image.url
         return None
 
-    def get_sectiononeimage3_path(self, obj):
+    def get_sectionsiximage3_path(self, obj):
         if obj.sectionsiximage3:
             return obj.sectionsiximage3.image.url
         return None
 
-    def get_sectiononeimage4_path(self, obj):
+    def get_sectionsiximage4_path(self, obj):
         if obj.sectionsiximage4:
             return obj.sectionsiximage4.image.url
         return None
 
-    def get_sectiononeimage5_path(self, obj):
+    def get_sectionsiximage5_path(self, obj):
         if obj.sectionsiximage5:
             return obj.sectionsiximage5.image.url
         return None
     
-    def get_sectiononeimage6_path(self, obj):
+    def get_sectionsiximage6_path(self, obj):
         if obj.sectionsiximage6:
             return obj.sectionsiximage6.image.url
         return None
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        data_dict = {
+            "sectionsixheading": representation.get("sectionsixheading"),
+            "sectionsixsubheading": representation.get("sectionsixsubheading"),
+            "sectionsixbtntext": representation.get("sectionsixbtntext"),
+            "sectionsixbtnurl": representation.get("sectionsixbtnurl"),
+            "content": [
+                {
+                    "sectionsiximage1details": representation.get("sectionsiximage1details"),
+                    "sectionsiximage1":representation.get("sectionsiximage1"),
+                    "sectionsiximage1path":self.get_sectionsiximage1_path(instance),
+                },
+                {
+                    "sectionsiximage2details": representation.get("sectionsiximage2details"),
+                    "sectionsiximage2path": self.get_sectionsiximage2_path(instance),
+                    "sectionsiximage2":representation.get("sectionsiximage2"),
+                },
+                {
+                    "sectionsiximage3details": representation.get("sectionsiximage3details"),
+                    "sectionsiximage3path": self.get_sectionsiximage3_path(instance),
+                    "sectionsiximage3":representation.get("sectionsiximage3"),
+                },
+                {
+                    "sectionsiximage4details": representation.get("sectionsiximage4details"),
+                    "sectionsiximage4path": self.get_sectionsiximage4_path(instance),
+                    "sectionsiximage4":representation.get("sectionsiximage4"),
+                },
+                {
+                    "sectionsiximage5details": representation.get("sectionsiximage5details"),
+                    "sectionsiximage5path": self.get_sectionsiximage5_path(instance),
+                    "sectionsiximage5":representation.get("sectionsiximage5"),
+                },
+                {
+                    "sectionsiximage6details": representation.get("sectionsiximage6details"),
+                    "sectionsiximage6path": self.get_sectionsiximage6_path(instance),
+                    "sectionsiximage6":representation.get("sectionsiximage6"),
+                },
+                
+            ],
+        }
+        return data_dict
+
+
+    class Meta:
+        model = Sectionfive
+        fields = '__all__'
     class Meta:
         model = Whyussectionsix
         fields = '__all__'
@@ -1403,18 +1441,43 @@ class WhyussectionfiveSerializer(serializers.ModelSerializer):
             return obj.sectionfiveimage3.image.url
         return None
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        data_dict = {
+            "sectionfivetopheading": representation.get("sectionfivetopheading"),
+            "sectionfivesubheading": representation.get("sectionfivesubheading"),
+            "sectionfivediscription": representation.get("sectionfivediscription"),
+            "sectionfiveheading": representation.get("sectionfiveheading"),
+            "sectionfivetopsubheading": representation.get("sectionfivetopsubheading"),
+            "sectionfivecolourtext": representation.get("sectionfivecolourtext"),
+            "content": [
+                {
+                    "sectionfiveimage1": self.get_sectiononeimage1_path(instance),
+                    "sectionfiveimage1details":representation.get("sectionfiveimage1details"),
+                    "sectionfiveimage1id":representation.get("sectionfiveimage1"),
+                },
+                {
+                    "sectionfiveimage2": self.get_sectiononeimage2_path(instance),
+                    "sectionfiveimage2details":representation.get("sectionfiveimage2details"),
+                    "sectionfiveimage2id":representation.get("sectionfiveimage2"),
+                },
+                {
+                    "sectionfiveimage3": self.get_sectiononeimage3_path(instance),
+                    "sectionfiveimage3details":representation.get("sectionfiveimage3details"),
+                    "sectionfiveimage3id":representation.get("sectionfiveimage3"),
+                },
+            ],
+        }
+        return data_dict
+
+
     class Meta:
         model = Whyussectionfive
         fields = '__all__'
 
 
 
-class WhyussectionfourSerializer(serializers.ModelSerializer):
 
-
-    class Meta:
-        model = Whyussectionfour
-        fields = '__all__'
 
 
 class WhyussectionthreeSerializer(serializers.ModelSerializer):
@@ -1473,7 +1536,6 @@ class WhyusUserSerializer(serializers.ModelSerializer):
     whyussectionseven = WhyussectionsevenSerializer(many=True, read_only=True)
     Whyussectiontwo = WhyussectiontwoSerializer(many=True, read_only=True)
     Whyussectionthree = WhyussectionthreeSerializer(many=True, read_only=True)
-    Whyussectionfour = WhyussectionfourSerializer(many=True, read_only=True)
     Whyussectionfive = WhyussectionfiveSerializer(many=True, read_only=True)
     Whyussectionsix = WhyussectionsixSerializer(many=True, read_only=True)
     # whyusreview = whyusreviewSerializer(many=True, read_only=True)

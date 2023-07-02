@@ -138,7 +138,6 @@ class Sectionfive(models.Model):
 
 class Singlereview(models.Model):
       Singlereviewtext = models.TextField(null=True,blank=True)
-      page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSinglereview')
 
       def __str__(self):
          return f'singlereview'
@@ -587,9 +586,10 @@ class Blogsectionfour(models.Model):
 class Whyussectionseven(models.Model):
       sectionsevenheading = models.TextField(null=True,blank=True)
       sectionsevensubheading = models.TextField(null=True,blank=True)
-      sectionsevendiscription = models.TextField(null=True,blank=True)
+      sectionsevenbtntext = models.TextField(null=True,blank=True)
       sectionsevenbtnurl = models.TextField(null=True,blank=True)
       sectionsevenimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsevenimg')
+      sectionsixmobileimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsevenimage2')
       page = models.ForeignKey(Whyus, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionseven')
 
       def __str__(self):
@@ -598,14 +598,14 @@ class Whyussectionseven(models.Model):
 class Whyussectionsix(models.Model):
       sectionsixheading = models.TextField(null=True,blank=True)
       sectionsixsubheading = models.TextField(null=True,blank=True)
-      sectionsixdiscription = models.TextField(null=True,blank=True)
-      sectionsixheading = models.TextField(null=True,blank=True)
-      sectionsixsubheading = models.TextField(null=True,blank=True)
-      sectionsixparagraph = models.TextField(null=True,blank=True)
-      sectionsixpoint1 = models.TextField(null=True,blank=True)
-      sectionsixpoint2 = models.TextField(null=True,blank=True)
       sectionsixbtntext = models.TextField(null=True,blank=True)
       sectionsixbtnurl = models.TextField(null=True,blank=True)
+      sectionsiximage1details = models.TextField(null=True,blank=True)
+      sectionsiximage2details = models.TextField(null=True,blank=True)
+      sectionsiximage3details = models.TextField(null=True,blank=True)
+      sectionsiximage4details = models.TextField(null=True,blank=True)
+      sectionsiximage5details = models.TextField(null=True,blank=True)
+      sectionsiximage6details = models.TextField(null=True,blank=True)
       sectionsiximage1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsiximage1')
       sectionsiximage2 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsiximage2')
       sectionsiximage3 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsiximage3')
@@ -618,13 +618,15 @@ class Whyussectionsix(models.Model):
           return f'Whyussectionsix'
 
 class Whyussectionfive(models.Model):
-      sectionfiveheading = models.TextField(null=True,blank=True)
+      sectionfivetopheading = models.TextField(null=True,blank=True)
       sectionfivesubheading = models.TextField(null=True,blank=True)
       sectionfivediscription = models.TextField(null=True,blank=True)
       sectionfiveheading = models.TextField(null=True,blank=True)
-      sectionfivesubheading = models.TextField(null=True,blank=True)
-      sectionfiveparagraph = models.TextField(null=True,blank=True)
-      sectionfivepoint1 = models.TextField(null=True,blank=True)
+      sectionfivetopsubheading = models.TextField(null=True,blank=True)
+      sectionfivecolourtext = models.TextField(null=True,blank=True)
+      sectionfiveimage1details = models.TextField(null=True,blank=True)
+      sectionfiveimage2details= models.TextField(null=True,blank=True)
+      sectionfiveimage3details = models.TextField(null=True,blank=True)
       sectionfiveimage1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionfiveimage1')
       sectionfiveimage2 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionfiveimage2')
       sectionfiveimage3 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionfiveimage3')
@@ -634,24 +636,6 @@ class Whyussectionfive(models.Model):
           return f'Whyussectionfive'
 
 
-class Whyussectionfour(models.Model):
-      sectionfourtext1 = models.TextField(null=True,blank=True)
-      sectionfournumber1 = models.TextField(null=True,blank=True)
-      sectionfourdiscription1 = models.TextField(null=True,blank=True)
-      sectionfourtext2 = models.TextField(null=True,blank=True)
-      sectionfournumber2 = models.TextField(null=True,blank=True)
-      sectionfourdiscription2 = models.TextField(null=True,blank=True)
-      sectionfourtext3 = models.TextField(null=True,blank=True)
-      sectionfournumber3 = models.TextField(null=True,blank=True)
-      sectionfourdiscription3 = models.TextField(null=True,blank=True)
-      sectionfournumber4 = models.TextField(null=True,blank=True)
-      sectionfournumber4 = models.TextField(null=True,blank=True)
-      sectionfourdiscription4 = models.TextField(null=True,blank=True)
-      sectionfourtext = models.TextField(null=True,blank=True)
-      page = models.ForeignKey(Whyus, on_delete=models.CASCADE,null=True,blank=True,related_name='Whyussectionfour')
-
-      def __str__(self):
-          return f'Whyussectionfour'
 
 class Whyussectionthree(models.Model):
       sectiononeheading = models.TextField(null=True,blank=True)

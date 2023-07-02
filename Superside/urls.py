@@ -20,12 +20,12 @@ from django.conf.urls.static import static
 from django.conf import settings
 import navigation.signals
 from navigation.api.views import (
-    ImageUploadView, HeaderView, MenuView, SubMenuView, FooterView, SectiontwoView, SectionfourView,OurworkuserView,OurworkresultsingleView,ServicesUserpageView,PricingUpdateFaqView,authordetailsView,
+    ImageUploadView, HeaderView, MenuView, SubMenuView, FooterView, SectiontwoView, SectionfourView,OurworkuserView,OurworkresultsingleView,ServicesUserpageView,PricingUpdateFaqView,authordetailsView,UsersinglereviewView,
     SectiononeView, VideoUploadView, SectionthreeView, DetailsView, HomepageReviewView, PageView,WhyususerView,OurworkallresultView,bookacalluserView,HomepageUpdateSlidersection2View,authornameview,ImageUpdateUploadView,UserFactsview,
     PagelistView, ServicessectiononeView, ServicessectiontwoView, ServicessectionThreeView,homepageView,homeView,BloguserView,SingleblogView,BlogbycategoryView,PricingUpdatedetailsView,DetailsUpdateView,PricingUpdatesubdetailsView,allBloguserView,BlogbytagView,SectionfiveView,singlereviewView,sectionsixView, FaqView, ServicessectionsixView, ServicessectionsevenView,servicesview,OurworkresultView,HomepageSlidersection1updateView,HomepageUpdateReviewView,FaqUpdateView,SocialupdateView,tagdetailsView,UserFooterView,UsernavbarView,
     BookacallView,BookacallsectiononeView,BookacallsectiontwoView,HomepageSlidersection1View,HomepageSlidersection2View,OurworkresultsinglepreviousView,OurworkresultsinglenextAPIView,BlogbyauthorView,UserHeaderView,UserHomepageSlidersection1View,UserHomepageSlidersection2View,UserHomepageReviewView,
     OurworksectiononeView, OurworksectiontwoView, OurworkView, BlogsView, BlogssectiononeView,OurworkprojectView,ServicessingleOurworkView,BlogauthorView,BlogauthorUpdateView,TagView,TagUpdateView,pricingView,EmailView,VideoUpdateUploadView,Factsview,
-    BlogssectiontwoView, BlogssectionthreeView, BlogssectionfourView, WhyussectiontwoView,WhyussectionthreeView,WhyussectionfourView,WhyussectionfiveView,WhyussectionsixView,WhyusView,WhyussectionsevenView,SocialView,MenuUpdateView,SubMenuUpdateView,
+    BlogssectiontwoView, BlogssectionthreeView, BlogssectionfourView, WhyussectiontwoView,WhyussectionthreeView,WhyussectionfiveView,WhyussectionsixView,WhyusView,WhyussectionsevenView,SocialView,MenuUpdateView,SubMenuUpdateView,
     PricingdetailsView,PricingFaqView,PricingsectionfourView,PricingsectionthreeView,PricingView,PricingsectiontwoView,PricingsectiononeView,PricingsubdetailsView,ServicesBlogPostView,ServicessingleBlogPostView,UserSocialView
 )
 from django.urls import path, include
@@ -88,8 +88,10 @@ urlpatterns = [
     path('slider1/', UserHomepageSlidersection1View.as_view(),name='authordetails'),
     path('slider2/', UserHomepageSlidersection2View.as_view(),name='authordetails'),
     path('review/', UserHomepageReviewView.as_view(),name='authordetails'),
+    path('singlereview/', UsersinglereviewView.as_view(),name='userreviewsingle'),
     path('tag/<slug:tag_name>/', tagdetailsView.as_view(),name='tagdetails'),
     # path('homepage/<slug:page_slug>/', servicesview.as_view(),name='servicespages'),
+    # path('dashboard/multiplefile/', multiplefileView.as_view(),name='multiplefile'),#approved
     path('dashboard/subscriberemail/', EmailView.as_view(),name='subscriberemail'),#approved
     path('dashboard/social/', SocialView.as_view(),name='socialmedia'),##approved
     path('dashboard/social/<int:social_id>/', SocialupdateView.as_view(),name='socialmedia-update'),#approved
@@ -104,7 +106,7 @@ urlpatterns = [
     path('dashboard/imageslider2/<int:image_id>/', HomepageUpdateSlidersection2View.as_view(), name='HomepageSlidersection2-update'),
     path('dashboard/homepage/<slug:page_slug>/details/', DetailsView.as_view(),name='homepagedetailsection'),
     path('dashboard/homepage/<slug:page_slug>/sectionfive/', SectionfiveView.as_view(),name='homepagesectionfive'),
-    path('dashboard/homepage/<slug:page_slug>/reviewsingle/', singlereviewView.as_view(),name='homepagesinglereview'),
+    path('dashboard/reviewsingle/', singlereviewView.as_view(),name='singlereview'),
     path('dashboard/homepage/<slug:page_slug>/sectionsix/', sectionsixView.as_view(),name='homepagesectionsix'),
     path('dashboard/homepage/<slug:page_slug>/details/<int:details_id>/', DetailsUpdateView.as_view(),name='homepagedetailsection-update'),
     path('dashboard/reviews/', HomepageReviewView.as_view(),name='homepagereviewsection'),
@@ -127,7 +129,7 @@ urlpatterns = [
     path('dashboard/whyus/<slug:page_slug>/sectionone/', WhyussectionsevenView.as_view(),name='whyussectionone'),
     path('dashboard/whyus/<slug:page_slug>/sectiontwo/', WhyussectiontwoView.as_view(),name='whyussectiontwo'),
     path('dashboard/whyus/<slug:page_slug>/sectionthree/', WhyussectionthreeView.as_view(),name='whyussectionthree'),
-    path('dashboard/whyus/<slug:page_slug>/sectionfour/', WhyussectionfourView.as_view(),name='whyussectionfour'),
+    # path('dashboard/whyus/<slug:page_slug>/sectionfour/', WhyussectionfourView.as_view(),name='whyussectionfour'),
     path('dashboard/whyus/<slug:page_slug>/sectionfive/', WhyussectionfiveView.as_view(),name='whyussectionfive'),
     path('dashboard/whyus/<slug:page_slug>/sectionsix/', WhyussectionsixView.as_view(),name='whyussectionsix'),
     # path('dashboard/whyus/<slug:page_slug>/review/', whyusReviewView.as_view(),name='whyusreview'),

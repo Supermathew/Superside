@@ -30,7 +30,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from navigation.models import Menu, SubMenu
 from .serializers import MenuSerializer
-
+from rest_framework.parsers import MultiPartParser, FileUploadParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -38,7 +38,7 @@ from navigation.models import (
     MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,Emailinput,Social,
     Bookacall,Bookacallsectionone,Bookacallsectiontwo,Facts,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,CommonSlidersection2,CommonReview,CommonSlidersection1,
-    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionfour,Whyussectionthree,Whyussectionfour,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,
+    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,
     Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,BlogPost,Ourworkproject
 )
 
@@ -55,7 +55,7 @@ HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,HomepageReview
     BlogsSerializer,BlogsectiononeSerializer,BlogsectiontwoSerializer,
     BlogsectionthreeSerializer,BlogsectionfourSerializer,WhyusSerializer,
     WhyussectionsevenSerializer,WhyussectionsixSerializer,HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,
-    WhyussectionfiveSerializer,WhyussectionfourSerializer,PricingUserSerializer,
+    WhyussectionfiveSerializer,PricingUserSerializer,
     WhyussectionthreeSerializer,WhyussectiontwoSerializer,HomeSerializer,PricingFaqSerializer,
     PricingsectiononeSerializer,PricingSerializer,PricingsectiontwoSerializer,
     PricingsectionthreeSerializer,PricingsectionfourSerializer,PricingdetailsSerializer,ServicesBlogPostSerializer,OurworkprojectSerializer,
@@ -108,6 +108,40 @@ class ImageUpdateUploadView(GenericAPIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except MediaBucket.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+
+
+# class multiplefileView(GenericAPIView):
+#     parser_classes = (MultiPartParser, FileUploadParser)
+#     serializer_class = MediaBucketSerializer
+
+
+#     def post(self, request, *args, **kwargs):
+#         # serializer = MediaBucketSerializer(data=request.data, many=True)
+
+
+
+#         files = request.data.getlist('image',None)
+#         print(files)
+#         serialized_files = []
+
+#         for file in files:
+#             data = {'file': file}
+#             serializer = MediaBucketSerializer(data=data)
+
+#             if serializer.is_valid():
+#                 serializer.save()
+#                 serialized_files.append(serializer.data)
+#             else:
+#                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#         return Response(serialized_files, status=status.HTTP_201_CREATED)
+
+#     def get(self, request, *args, **kwargs):
+#         uploaded_files = MediaBucket.objects.all()
+#         serializer = MediaBucketSerializer(uploaded_files, many=True)
+#         return Response(serializer.data)    
 
 class UserHeaderView(GenericAPIView):
 
@@ -507,38 +541,49 @@ class sectionsixView(GenericAPIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class UsersinglereviewView(GenericAPIView):
+
+    serializer_class = singlereviewSerializer
+
+    def get(self, request):
+        try:
+            footer = Singlereview.objects.first()  # Retrieve the first and only Header object
+            serializer = singlereviewSerializer(footer)
+            return Response(serializer.data)
+        except Singlereview.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = singlereviewSerializer(section1)
+        return Response(serializer.data)
+
 
 class singlereviewView(GenericAPIView):
 
     permission_classes = [IsAuthenticated]
     serializer_class = singlereviewSerializer
 
-    def get(self, request, page_slug):
+    def get(self, request):
         try:
-            section1 = Singlereview.objects.get(page__slug=page_slug)
+            footer = Singlereview.objects.first()  # Retrieve the first and only Header object
+            serializer = singlereviewSerializer(footer)
+            return Response(serializer.data)
         except Singlereview.DoesNotExist:
-            try:
-                page = Homepage.objects.get(slug=page_slug)
-            except Homepage.DoesNotExist:
-                return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-
-            section1 = Singlereview.objects.create(page=page)
-            # Perform any additional initialization for the newly created section1 object
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
         serializer = singlereviewSerializer(section1)
         return Response(serializer.data)
 
-    def put(self, request, page_slug):
-        try:
-            section1 = Singlereview.objects.get(page__slug=page_slug)
-        except Singlereview.DoesNotExist:
-            return Response({'error': 'Singlereview object not found'}, status=status.HTTP_404_NOT_FOUND)
+    def put(self, request):
 
-        serializer = singlereviewSerializer(section1, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            footer = Singlereview.objects.first()  # Retrieve the first and only Header object
+            serializer = singlereviewSerializer(footer, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Footer.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -1944,36 +1989,36 @@ class WhyussectionfiveView(GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class WhyussectionfourView(GenericAPIView):
+# class WhyussectionfourView(GenericAPIView):
 
-    permission_classes = [IsAuthenticated]
-    serializer_class = WhyussectionfourSerializer
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = WhyussectionfourSerializer
 
-    def get(self, request, page_slug):
-        try:
-            section2 = Whyussectionfour.objects.get(page__slug=page_slug)
-        except Whyussectionfour.DoesNotExist:
-            try:
-                page = Whyus.objects.get(slug=page_slug)
-            except Whyus.DoesNotExist:
-                return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+#     def get(self, request, page_slug):
+#         try:
+#             section2 = Whyussectionfour.objects.get(page__slug=page_slug)
+#         except Whyussectionfour.DoesNotExist:
+#             try:
+#                 page = Whyus.objects.get(slug=page_slug)
+#             except Whyus.DoesNotExist:
+#                 return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
 
-            section2 = Whyussectionfour.objects.create(page=page)
+#             section2 = Whyussectionfour.objects.create(page=page)
 
-        serializer = WhyussectionfourSerializer(section2)
-        return Response(serializer.data)
+#         serializer = WhyussectionfourSerializer(section2)
+#         return Response(serializer.data)
 
-    def put(self, request, page_slug):
-        try:
-            section1 = Whyussectionfour.objects.get(page__slug=page_slug)
-        except Whyussectionfour.DoesNotExist:
-            return Response({'error': 'blogsectionfour page not created'}, status=status.HTTP_404_NOT_FOUND)
+#     def put(self, request, page_slug):
+#         try:
+#             section1 = Whyussectionfour.objects.get(page__slug=page_slug)
+#         except Whyussectionfour.DoesNotExist:
+#             return Response({'error': 'blogsectionfour page not created'}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = WhyussectionfourSerializer(section1, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         serializer = WhyussectionfourSerializer(section1, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class WhyussectionthreeView(GenericAPIView):
