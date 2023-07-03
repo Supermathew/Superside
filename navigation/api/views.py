@@ -36,7 +36,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from navigation.models import ( 
     MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,Emailinput,Social,
-    Bookacall,Bookacallsectionone,Bookacallsectiontwo,Facts,
+    Bookacall,Bookacallsectionone,Bookacallsectiontwo,Facts,Pricingcta,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,CommonSlidersection2,CommonReview,CommonSlidersection1,
     Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,
     Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,BlogPost,Ourworkproject
