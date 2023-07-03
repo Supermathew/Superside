@@ -36,21 +36,21 @@ from rest_framework.response import Response
 from rest_framework import status
 from navigation.models import ( 
     MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,Emailinput,Social,
-    Bookacall,Bookacallsectionone,Bookacallsectiontwo,Facts,Pricingcta,
+    Bookacall,Bookacallsectionone,Bookacallsectiontwo,Facts,Pricingcta,Servicessectionfour,servicescapabilities,Servicescta,Userdata,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,CommonSlidersection2,CommonReview,CommonSlidersection1,
     Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,
     Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,BlogPost,Ourworkproject
 )
 
 from .serializers import (
-    SubMenuSerializer,FooterSerializer,SectiontwoSerializer,HomepageSerializer,OurworkUserSerializer,ServicesuserSerializer,
-    SectionfourSerializer,SectiononeSerializer,VideoBucketSerializer,WhyusUserSerializer,bookcallUserSerializer,SocialSerializer,
+    SubMenuSerializer,FooterSerializer,SectiontwoSerializer,HomepageSerializer,OurworkUserSerializer,ServicesuserSerializer,ServicessectionfourSerializer,ServicesctaSerializer,
+    SectionfourSerializer,SectiononeSerializer,VideoBucketSerializer,WhyusUserSerializer,bookcallUserSerializer,SocialSerializer,capacitySerializer,
     SectionthreeSerializer,DetailsSerializer,HomepageReviewSerializer,BlogUserSerializer,blogsingleSerializer,blogpageauthorSerializer,
     BookacallSerializer,BookacallsectiononeSerializer,BookacallsectiontwoSerializer,PageblogSerializer,BlogTimepassUserSerializer,authordetailsSerializer,
     PageSerializer,ServicessectiononeSerializer,ServicessectiontwoSerializer,PageDashboardSerializer,
     ServicessectionThreeSerializer,FaqSerializer,EmailSerializer,SectionsixSerializer,SectionfiveSerializer,singlereviewSerializer,
 HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,HomepageReviewSerializer,PricingctaSerializer,
-    ServicessectionsixSerializer,ServicessectionsevenSerializer,FactsSerializer,
+    ServicessectionsixSerializer,ServicessectionsevenSerializer,FactsSerializer,userdataSerializer,
     OurworkSerializer,OurworksectiononeSerializer,OurworksectiontwoSerializer,
     BlogsSerializer,BlogsectiononeSerializer,BlogsectiontwoSerializer,
     BlogsectionthreeSerializer,BlogsectionfourSerializer,WhyusSerializer,
@@ -682,6 +682,35 @@ class VideoUpdateUploadView(GenericAPIView):
         except VideoBucket.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+class clientUserdataView(GenericAPIView):
+
+        serializer_class = userdataSerializer
+
+
+        def post(self, request, page_slug):
+            
+            serializer = userdataSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save(page=page_slug)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserdataView(GenericAPIView):
+
+        permission_classes = [IsAuthenticated]
+        serializer_class = userdataSerializer
+
+        def get(self, request):
+            try:
+                section1 = Userdata.objects.all()
+            except Userdata.DoesNotExist:
+                return Response({'error': 'Userdata not found'}, status=status.HTTP_404_NOT_FOUND)
+                # Perform any additional initialization for the newly created section1 object
+
+            serializer = userdataSerializer(section1,many=True)
+            return Response(serializer.data)
+
 
 class SectionthreeView(GenericAPIView):
 
@@ -1298,6 +1327,39 @@ class ServicessectionThreeView(GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+
+class ServicessectionfourView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = ServicessectionfourSerializer
+
+    def get(self, request, page_slug):
+        try:
+            section1 = Servicessectionfour.objects.get(page__slug=page_slug)
+        except Servicessectionfour.DoesNotExist:
+            try:
+                page = Page.objects.get(slug=page_slug)
+            except Page.DoesNotExist:
+                return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+            section1 = Servicessectionfour.objects.create(page=page)
+            # Perform any additional initialization for the newly created section1 object
+
+        serializer = ServicessectionfourSerializer(section1)
+        return Response(serializer.data)
+
+    def put(self, request, page_slug):
+        try:
+            section1 = Servicessectionfour.objects.get(page__slug=page_slug)
+        except Servicessectionfour.DoesNotExist:
+            return Response({'error': 'Servicessectionfour object not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = ServicessectionfourSerializer(section1, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # class ServicesreviewView(GenericAPIView):
 
 #     permission_classes = [IsAuthenticated]
@@ -1383,7 +1445,84 @@ class ServicessectionThreeView(GenericAPIView):
 #         review.delete()
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class CapacityView(GenericAPIView):
 
+    permission_classes = [IsAuthenticated]
+    serializer_class = capacitySerializer
+
+
+    
+    def get(self, request, page_slug):
+        try:
+            page = Page.objects.get(slug=page_slug)
+        except Page.DoesNotExist:
+            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        reviews = servicescapabilities.objects.filter(page=page)
+        serializer = capacitySerializer(reviews, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request, page_slug):
+        try:
+            page = Page.objects.get(slug=page_slug)
+        except Page.DoesNotExist:
+            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = capacitySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(page=page)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CapacityUpdateView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = FaqSerializer
+
+    def get_faq(self, faq_id):
+        try:
+            faq = servicescapabilities.objects.get(id=faq_id)
+            return faq
+        except servicescapabilities.DoesNotExist:
+            return None
+    
+    def get(self, request, page_slug, faq_id):
+        try:
+            page = Page.objects.get(slug=page_slug)
+        except Page.DoesNotExist:
+            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        try:
+          reviews = servicescapabilities.objects.get(page=page,id=faq_id)
+        except servicescapabilities.DoesNotExist:
+            return Response({'error': 'Faq not found'}, status=status.HTTP_404_NOT_FOUND)
+            
+        serializer = capacitySerializer(reviews)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request,page_slug, faq_id):
+    
+         faq = self.get_faq(faq_id)
+         if not faq:
+            return Response({'error': 'servicescapabilities not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+         serializer = capacitySerializer(faq, data=request.data)
+         if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request,page_slug, faq_id):
+        try:
+         faq = self.get_faq(faq_id)
+        except faq.DoesNotExist:
+            return Response({'error': 'Faq not found'}, status=status.HTTP_404_NOT_FOUND)
+        faq.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class FaqView(GenericAPIView):
 
@@ -2368,7 +2507,37 @@ class PricingctaView(GenericAPIView):
 #         except Pricinguserreview.DoesNotExist:
 #             return Response(status=status.HTTP_404_NOT_FOUND)
 
+class ServicesctaView(GenericAPIView):
 
+    permission_classes = [IsAuthenticated]
+    serializer_class = ServicesctaSerializer
+
+
+    def get(self, request, page_slug):
+        try:
+            section2 = Servicescta.objects.get(page__slug=page_slug)
+        except Servicescta.DoesNotExist:
+            try:
+                page = Page.objects.get(slug=page_slug)
+            except Page.DoesNotExist:
+                return Response({'error': 'Pricing Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+            section2 = Servicescta.objects.create(page=page)
+
+        serializer = ServicesctaSerializer(section2)
+        return Response(serializer.data)
+
+    def put(self, request, page_slug):
+        try:
+            section1 = Servicescta.objects.get(page__slug=page_slug)
+        except Servicescta.DoesNotExist:
+            return Response({'error': 'Servicescta page not created'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = ServicesctaSerializer(section1, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PricingFaqView(GenericAPIView):
     

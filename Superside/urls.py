@@ -20,13 +20,25 @@ from django.conf.urls.static import static
 from django.conf import settings
 import navigation.signals
 from navigation.api.views import (
-    ImageUploadView, HeaderView, MenuView, SubMenuView, FooterView, SectiontwoView, SectionfourView,OurworkuserView,OurworkresultsingleView,ServicesUserpageView,PricingUpdateFaqView,authordetailsView,UsersinglereviewView,
-    SectiononeView, VideoUploadView, SectionthreeView, DetailsView, HomepageReviewView, PageView,WhyususerView,OurworkallresultView,bookacalluserView,HomepageUpdateSlidersection2View,authornameview,ImageUpdateUploadView,UserFactsview,PricingctaView,
-    PagelistView, ServicessectiononeView, ServicessectiontwoView, ServicessectionThreeView,homepageView,homeView,BloguserView,SingleblogView,BlogbycategoryView,PricingUpdatedetailsView,DetailsUpdateView,PricingUpdatesubdetailsView,allBloguserView,BlogbytagView,SectionfiveView,singlereviewView,sectionsixView, FaqView, ServicessectionsixView, ServicessectionsevenView,servicesview,OurworkresultView,HomepageSlidersection1updateView,HomepageUpdateReviewView,FaqUpdateView,SocialupdateView,tagdetailsView,UserFooterView,UsernavbarView,
-    BookacallView,BookacallsectiononeView,BookacallsectiontwoView,HomepageSlidersection1View,HomepageSlidersection2View,OurworkresultsinglepreviousView,OurworkresultsinglenextAPIView,BlogbyauthorView,UserHeaderView,UserHomepageSlidersection1View,UserHomepageSlidersection2View,UserHomepageReviewView,
-    OurworksectiononeView, OurworksectiontwoView, OurworkView, BlogsView, BlogssectiononeView,OurworkprojectView,ServicessingleOurworkView,BlogauthorView,BlogauthorUpdateView,TagView,TagUpdateView,pricingView,EmailView,VideoUpdateUploadView,Factsview,
-    BlogssectiontwoView, BlogssectionthreeView, BlogssectionfourView, WhyussectiontwoView,WhyussectionthreeView,WhyussectionfiveView,WhyussectionsixView,WhyusView,WhyussectionsevenView,SocialView,MenuUpdateView,SubMenuUpdateView,
-    PricingdetailsView,PricingFaqView,PricingsectionfourView,PricingsectionthreeView,PricingView,PricingsectiontwoView,PricingsectiononeView,PricingsubdetailsView,ServicesBlogPostView,ServicessingleBlogPostView,UserSocialView
+    ImageUploadView, HeaderView, MenuView, SubMenuView, FooterView, SectiontwoView, SectionfourView,OurworkuserView,OurworkresultsingleView,ServicesUserpageView,
+    PricingUpdateFaqView,authordetailsView,UsersinglereviewView,CapacityView,CapacityUpdateView,ServicesctaView,
+    SectiononeView, VideoUploadView, SectionthreeView, DetailsView, HomepageReviewView, PageView,WhyususerView,OurworkallresultView,bookacalluserView,HomepageUpdateSlidersection2View,authornameview,
+    ImageUpdateUploadView,UserFactsview,PricingctaView,ServicessectionfourView,
+    PagelistView, ServicessectiononeView, ServicessectiontwoView, ServicessectionThreeView,homepageView,homeView,BloguserView,
+    SingleblogView,BlogbycategoryView,UserdataView,clientUserdataView,
+    PricingUpdatedetailsView,DetailsUpdateView,PricingUpdatesubdetailsView,
+    allBloguserView,BlogbytagView,SectionfiveView,singlereviewView,
+    sectionsixView, FaqView, ServicessectionsixView, ServicessectionsevenView,
+    servicesview,OurworkresultView,HomepageSlidersection1updateView,HomepageUpdateReviewView,FaqUpdateView,
+    SocialupdateView,tagdetailsView,UserFooterView,UsernavbarView,
+    BookacallView,BookacallsectiononeView,BookacallsectiontwoView,HomepageSlidersection1View,HomepageSlidersection2View,OurworkresultsinglepreviousView,
+    OurworkresultsinglenextAPIView,BlogbyauthorView,UserHeaderView,UserHomepageSlidersection1View,UserHomepageSlidersection2View,UserHomepageReviewView,
+    OurworksectiononeView, OurworksectiontwoView, OurworkView, BlogsView, BlogssectiononeView,OurworkprojectView,ServicessingleOurworkView,BlogauthorView,
+    BlogauthorUpdateView,TagView,TagUpdateView,pricingView,EmailView,VideoUpdateUploadView,Factsview,
+    BlogssectiontwoView, BlogssectionthreeView, BlogssectionfourView, WhyussectiontwoView,WhyussectionthreeView,WhyussectionfiveView,WhyussectionsixView,WhyusView,
+    WhyussectionsevenView,SocialView,MenuUpdateView,SubMenuUpdateView,
+    PricingdetailsView,PricingFaqView,PricingsectionfourView,PricingsectionthreeView,PricingView,PricingsectiontwoView,PricingsectiononeView,PricingsubdetailsView,
+    ServicesBlogPostView,ServicessingleBlogPostView,UserSocialView
 )
 from django.urls import path, include
 from rest_framework import routers
@@ -78,6 +90,8 @@ urlpatterns = [
     path('ourwork/all/<slug:page_slug>/<slug:work_slug>/next', OurworkresultsinglenextAPIView.as_view(),name='ourworksingle-next'),
     path('ourwork/all/<slug:page_slug>/<slug:work_slug>/previous', OurworkresultsinglepreviousView.as_view(),name='ourworksingle-previous'),
     path('blogs/', BloguserView.as_view()),
+    path('userdata/', UserdataView.as_view()),
+    path('userdata/<slug:page_slug>/', clientUserdataView.as_view()),
     path('blogs/all/', allBloguserView.as_view()),
     path('blogs/category/<slug:page_slug>/', BlogbycategoryView.as_view(),name='blogbycategory'),
     path('blogs/tags/<slug:tag_slug>/', BlogbytagView.as_view(),name='blogbytag'),
@@ -148,6 +162,9 @@ urlpatterns = [
     path('dashboard/pages/<slug:page_slug>/sectionone/', ServicessectiononeView.as_view(), name='servicessectionone'),
     path('dashboard/pages/<slug:page_slug>/sectiontwo/', ServicessectiontwoView.as_view(), name='servicessectiontwo'),
     path('dashboard/pages/<slug:page_slug>/sectionthree/', ServicessectionThreeView.as_view(), name='servicessectionthree'),
+    path('dashboard/pages/<slug:page_slug>/sectionfour/', ServicessectionfourView.as_view(), name='servicessectionfour'),
+    path('dashboard/pages/<slug:page_slug>/sectionfive/', CapacityView.as_view(), name='servicessectionfive'),
+    path('dashboard/pages/<slug:page_slug>/sectionfive/<int:faq_id>/', CapacityUpdateView.as_view(), name='CapacityUpdateView-update'),
     # path('dashboard/pages/<slug:page_slug>/reviews/', ServicesreviewView.as_view(), name='servicessectionreviews'),
     # path('dashboard/pages/<slug:page_slug>/reviews/<int:review_id>/', ServicesreviewUpdateView.as_view(), name='servicessectionreviews-update'),
     path('dashboard/pages/<slug:page_slug>/faq/', FaqView.as_view(), name='servicessectionfaq'),
@@ -158,7 +175,7 @@ urlpatterns = [
     path('dashboard/pages/<slug:page_slug>/ourwork/', OurworkprojectView.as_view(), name='servicesourwork'),
     path('dashboard/pages/<slug:page_slug>/ourwork/<slug:work_slug>/', ServicessingleOurworkView.as_view(), name='servicesourwork-update'),
     path('dashboard/pages/<slug:page_slug>/sectionseven/', ServicessectionsevenView.as_view(), name='servicessectionseven'),
-    # path('dashboard/pages/<slug:page_slug>/sliderimage/', SlidersectionView.as_view(), name='sliderimage'),
+    path('dashboard/pages/<slug:page_slug>/servicescta/', ServicesctaView.as_view(), name='servicescta'),
     # path('dashboard/pages/<slug:page_slug>/sliderimage/<int:image_id>/', SlidersectionUpdateView.as_view(), name='sliderimage-update'),
     path('dashboard/blogauthors/', BlogauthorView.as_view(), name='addblogauthor'),#approved
     path('dashboard/blogauthors/<int:author_id>/', BlogauthorUpdateView.as_view(), name='addblogauthor-update'),#approved

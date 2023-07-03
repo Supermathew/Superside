@@ -368,7 +368,7 @@ class Servicessectionone(models.Model):
 
 class Servicessectiontwo(models.Model):
       sectiontwoheading = models.TextField(null=True,blank=True)
-      sectiontwosubheading = models.TextField(null=True,blank=True)
+      sectiontwocolourtext = models.TextField(null=True,blank=True)
       sectiontwodiscription = models.TextField(null=True,blank=True)
       sectiontwobtntext = models.TextField(null=True,blank=True)
       sectiontwobtnurl = models.TextField(null=True,blank=True)
@@ -376,8 +376,6 @@ class Servicessectiontwo(models.Model):
       sectiontwoheading1 = models.TextField(null=True,blank=True)
       sectiontwoheadin2 = models.TextField(null=True,blank=True)
       sectiontwosubheading2 = models.TextField(null=True,blank=True)
-      sectiontwourl1 = models.TextField(null=True,blank=True)
-      sectiontwourl2 = models.TextField(null=True,blank=True)
       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiontwoservices')
       sectiontwovideo = models.ForeignKey(VideoBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiontwovideo')
       sectiontwoimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiontwoimage')
@@ -391,34 +389,32 @@ class Servicessectiontwo(models.Model):
 class ServicessectionThree(models.Model):
       sectionthreeheading = models.TextField(null=True,blank=True)
       sectionthreesubheading = models.TextField(null=True,blank=True)
-      sectionthreetext1 = models.TextField(null=True,blank=True)
-      sectionthreetext1number = models.TextField(null=True,blank=True)
-      sectionthreetext1discription = models.TextField(null=True,blank=True)
-      sectionthreetext2 = models.TextField(null=True,blank=True)
-      sectionthreetext2number = models.TextField(null=True,blank=True)
-      sectionthreetext2discription = models.TextField(null=True,blank=True)
-      sectionthreetext3 = models.TextField(null=True,blank=True)
-      sectionthreetext3number = models.TextField(null=True,blank=True)
-      sectionthreetext3discription = models.TextField(null=True,blank=True)
-      sectionthreetext4 = models.TextField(null=True,blank=True)
-      sectionthreetext4number = models.TextField(null=True,blank=True)
-      sectionthreetext4discription = models.TextField(null=True,blank=True)
+      sectionthreecolourtext = models.TextField(null=True,blank=True)
+      sectionthreetextheading = models.TextField(null=True,blank=True)
+      sectionthreetextdiscription = models.TextField(null=True,blank=True)
+      sectionthreeimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='servicessectionthreeimage')
       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionthreeservices')
 
+class Servicessectionfour(models.Model):
+      sectiontfourheading = models.TextField(null=True,blank=True)
+      sectiontfourdesigntext = models.TextField(null=True,blank=True)
+      sectiontfourfaq = models.TextField(null=True,blank=True)
+      sectiontfourfaqtext = models.TextField(null=True,blank=True)
+      page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionfourservices')
 
 
       def __str__(self):
-         return f'ServicessectionThree'
+         return f'Servicessectionfour'
 
-# class Servicesreview(models.Model):
-#       username = models.TextField()
-#       userdesignation = models.TextField()
-#       userreview = models.TextField()
-#       userphoto = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='servicesuserphoto')
-#       # page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='servicesreviewpage')
 
-#       def __str__(self):
-#          return f'Servicesreview'
+class servicescapabilities(models.Model):
+      servicestext = models.TextField(null=True,blank=True)
+      servicessubheading = models.TextField(null=True,blank=True)
+      servicesimg = models.ForeignKey(MediaBucket,null=True,blank=True, on_delete=models.CASCADE,related_name='servicesimg')
+      page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='servicescapability')
+
+      def __str__(self):
+         return f'servicescapabilities'
 
 class Faq(models.Model):
       question = models.TextField()
@@ -431,25 +427,30 @@ class Faq(models.Model):
 
 
 class Servicessectionsix(models.Model):
-      sectionthreeheading = models.TextField(null=True,blank=True)
-      sectionthreesubheading = models.TextField(null=True,blank=True)
+      sectionsixheading = models.TextField(null=True,blank=True)
+      sectionsixcolourtext = models.TextField(null=True,blank=True)
+      sectionsixsubheading = models.TextField(null=True,blank=True)
       sectionsixparagraph = models.TextField(null=True,blank=True)
+      sectionsixsubparagraph = models.TextField(null=True,blank=True)
       sectionsixbtntext = models.TextField(null=True,blank=True)
       sectionsixbtnurl = models.TextField(null=True,blank=True)
-      sectionsixreviewheading = models.TextField(null=True,blank=True)
-      sectionsixquestiontext = models.TextField(null=True,blank=True)
-      sectionsixquestiondescription = models.TextField(null=True,blank=True)
-      sectionsixquestiondescriptiontext = models.TextField(null=True,blank=True)
-      sectionsixbtn2text = models.TextField(null=True,blank=True)
-      sectionsixbtn2texturl = models.TextField(null=True,blank=True)
-      sectionsixfaqheading = models.TextField(null=True,blank=True)
-      sectionsixfaqsubheading = models.TextField(null=True,blank=True)
       sectionsiximage1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionsiximage1')
-      sectionsiximage2 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionsiximage2')
       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionsixservices')
 
       def __str__(self):
          return f'Servicessectionsix'
+
+class Userdata(models.Model):
+      name = models.TextField()
+      lastname = models.TextField()
+      email = models.TextField()
+      comapanyname = models.TextField()
+      reasontocontact = models.TextField()
+      phonenumber = models.IntegerField()
+      page = models.TextField(null=True,blank=True)
+
+      def __str__(self):
+         return f'Userdata'
 
 
 class Servicessectionseven(models.Model):
@@ -472,34 +473,17 @@ class Servicessectionseven(models.Model):
          return f'Servicessectionseven'
 
 
+class Servicescta(models.Model):
+      Servicesctaheading = models.TextField(null=True,blank=True)
+      Servicesctasubheading = models.TextField(null=True,blank=True)
+      Servicesctabtntext = models.TextField(null=True,blank=True)
+      Servicesctabtnurl = models.TextField(null=True,blank=True)
+      Servicesctaimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Servicesctaimg')
+      Servicesctamobileimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Servicesctaimage2')
+      page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='Servicescta')
 
-# class Slidersection(models.Model):
-#       sliderimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='sliderimage')
-#       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='slidersection')
-
-#       def __str__(self):
-#          return f'Slidersection'
-
-
-# class Ourwork(models.Model):
-
-#       # def remove_numbers(value):
-#       #     return re.sub(r'\d', '', value)
-
-
-#       title = models.TextField(null=True,blank=True,unique=True)
-#       slug = AutoSlugField(populate_from='title', unique=True)
-
-
-
-
-#       def __str__(self):
-#           return self.title
-
-#       def save(self, *args, **kwargs):
-#             if self.title != self.slug:  # Only update the slug if the title has changed
-#                   self.slug = slugify(self.title)
-#             super().save(*args, **kwargs)
+      def __str__(self):
+          return f'Servicescta'
 
 
 class Ourworksectionone(models.Model):

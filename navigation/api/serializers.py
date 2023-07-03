@@ -4,8 +4,8 @@ from django.urls import reverse
 from navigation.models import ( 
     MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Emailinput,Social,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,
-    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,
-    Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,Pricingcta,
+    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Servicessectionfour,servicescapabilities,
+    Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,Pricingcta,Servicessectionone,Servicescta,Userdata,
     Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,Ourworkproject
 )
 
@@ -391,6 +391,11 @@ class SectionthreeSerializer(serializers.ModelSerializer):
         model = Sectionthree
         fields = '__all__'
 
+class userdataSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Userdata
+        fields = '__all__'
 
 class DetailsSerializer(serializers.ModelSerializer):
     photo_url = serializers.SerializerMethodField()
@@ -612,10 +617,26 @@ class ServicessectiontwoSerializer(serializers.ModelSerializer):
 
 class ServicessectionThreeSerializer(serializers.ModelSerializer):
 
+      image_url = serializers.SerializerMethodField()
+
+      def get_image_url(self, obj):
+          if obj.sectionthreeimage:
+             return obj.sectionthreeimage.image.url
+          return None
 
       class Meta:
          model = ServicessectionThree
          fields = '__all__'
+
+
+class ServicessectionfourSerializer(serializers.ModelSerializer):
+
+
+
+      class Meta:
+         model = Servicessectionfour
+         fields = '__all__'
+
 
 # class ServicesreviewSerializer(serializers.ModelSerializer):
 #     photo_url = serializers.SerializerMethodField()
@@ -630,6 +651,22 @@ class ServicessectionThreeSerializer(serializers.ModelSerializer):
 #         fields = '__all__'
 
 
+
+class capacitySerializer(serializers.ModelSerializer):
+
+    image1_path = serializers.SerializerMethodField()
+
+    def get_image1_path(self, obj):
+         if obj.servicesimg:
+            return obj.servicesimg.image.url
+         return None
+
+
+    class Meta:
+        model = servicescapabilities
+        fields = '__all__'
+
+
 class FaqSerializer(serializers.ModelSerializer):
 
 
@@ -639,7 +676,6 @@ class FaqSerializer(serializers.ModelSerializer):
 
 class ServicessectionsixSerializer(serializers.ModelSerializer):
       sectiontwoimage1_path = serializers.SerializerMethodField()
-      sectiontwoimage2_path = serializers.SerializerMethodField()
 
 
 
@@ -648,10 +684,6 @@ class ServicessectionsixSerializer(serializers.ModelSerializer):
             return obj.sectionsiximage1.image.url
          return None
 
-      def get_sectiontwoimage2_path(self, obj):
-         if obj.sectionsiximage2:
-            return obj.sectionsiximage2.image.url
-         return None
 
 
       class Meta:
@@ -836,9 +868,10 @@ class PageDashboardSerializer(serializers.ModelSerializer):
     section3_url = serializers.SerializerMethodField()
     section4_url = serializers.SerializerMethodField()
     section5_url = serializers.SerializerMethodField()
+    sectionfaq_url = serializers.SerializerMethodField()
     section6_url = serializers.SerializerMethodField()
     section7_url = serializers.SerializerMethodField()
-    section8_url = serializers.SerializerMethodField()
+    servicescta_url = serializers.SerializerMethodField()
     blogsection_url = serializers.SerializerMethodField()
     ourwork_url = serializers.SerializerMethodField()
     pagethumbnail_path = serializers.SerializerMethodField()
@@ -866,10 +899,15 @@ class PageDashboardSerializer(serializers.ModelSerializer):
 
     def get_section4_url(self, Page):
         if Page.slug:
-            return reverse('servicessectionreviews',args=[Page.slug])
+            return reverse('servicessectionfour',args=[Page.slug])
+        return None
+    
+    def get_section5_url(self, Page):
+        if Page.slug:
+            return reverse('servicessectionfive',args=[Page.slug])
         return None
 
-    def get_section5_url(self, Page):
+    def get_sectionfaq_url(self, Page):
         if Page.slug:
             return reverse('servicessectionfaq',args=[Page.slug])
         return None
@@ -884,10 +922,11 @@ class PageDashboardSerializer(serializers.ModelSerializer):
             return reverse('servicessectionseven',args=[Page.slug])
         return None
 
-    def get_section8_url(self, Page):
+    def get_servicescta_url(self, Page):
         if Page.slug:
-            return reverse('sliderimage',args=[Page.slug])
+            return reverse('servicescta',args=[Page.slug])
         return None
+
 
     def get_blogsection_url(self, Page):
         if Page.slug:
@@ -1344,7 +1383,29 @@ class WhyussectionsevenSerializer(serializers.ModelSerializer):
         model = Whyussectionseven
         fields = '__all__'
 
+class ServicesctaSerializer(serializers.ModelSerializer):
+    photo_url = serializers.SerializerMethodField()
+    phoneimgphoto_url = serializers.SerializerMethodField()
 
+    # video_url = serializers.SerializerMethodField()
+
+    # def get_video_url(self, Ourworksectionone):
+    #       if Ourworksectionone.sectiontwovideo:
+    #          return obj.sectiontwovideo.video.url
+    #       return None
+    def get_photo_url(self, Servicescta):
+        if Servicescta.Servicesctaimg:
+            return Servicescta.Servicesctaimg.image.url
+        return None
+
+    def get_phoneimgphoto_url(self, Servicescta):
+        if Servicescta.Servicesctamobileimg:
+            return Servicescta.Servicesctamobileimg.image.url
+        return None
+
+    class Meta:
+        model = Servicescta
+        fields = '__all__'
 
 
 class PricingctaSerializer(serializers.ModelSerializer):
@@ -1862,10 +1923,12 @@ class ServicesuserSerializer(serializers.ModelSerializer):
     sectiononeservices = ServicessectiononeSerializer(many=True, read_only=True)
     sectiontwoservices = ServicessectiontwoSerializer(read_only=True,many=True)
     sectionthreeservices = ServicessectionThreeSerializer(many=True, read_only=True)
-    # servicesreviewpage = ServicesreviewSerializer(many=True, read_only=True)
+    sectionfourservices = ServicessectionfourSerializer(many=True, read_only=True)
+    servicescapability = capacitySerializer(many=True, read_only=True)
     servicesfaq = FaqSerializer(many=True, read_only=True)
     sectionsixservices = ServicessectionsixSerializer(many=True, read_only=True)
     sectionsevenservices = ServicessectionsevenSerializer(many=True, read_only=True)
+    Servicescta = ServicesctaSerializer(many=True, read_only=True)
     # slidersection = SlidersectionSerializer(many=True, read_only=True)
 
         
