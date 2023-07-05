@@ -14,7 +14,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import environ
-
+import dj_database_url
 
 env = environ.Env()
 environ.Env.read_env()
@@ -195,15 +195,7 @@ REST_FRAMEWORK = {
 }
 
 DATABASES ={
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'URL': env("DATABASE_URL"),
-        'NAME': env("PGDATABASE"),
-        'USER': env("PGUSER"),
-        'PASSWORD': env("PGPASSWORD"),
-        'HOST': env("PGHOST"),
-        'PORT': env("PGPORT"),
-    }
+    "default": dj_database_url.parse(env("DATABASE_URL"))
 }
 
 
