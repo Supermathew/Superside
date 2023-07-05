@@ -38,7 +38,7 @@ DEBUG = env("DJANGO_DEBUG")
 ALLOWED_HOSTS = ["localhost","127.0.0.1","superside.onrender.com","http://superside.onrender.com","https://superside.onrender.com"]
 
 
-CSRF_TRUSTED_ORIGINS = ["https://superside.onrender.com/"]
+CSRF_TRUSTED_ORIGINS = ["https://superside.onrender.com"]
 
 
 # Application definition
@@ -77,8 +77,8 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_ALLOW_ALL = env.bool("DJANGO_CORS_ORGIN_ALLOW")
 CORS_ALLOWED_ORIGINS = [
-    "http://superside.onrender.com/",
-    "https://superside.onrender.com/",
+    "http://superside.onrender.com",
+    "https://superside.onrender.com",
     "http://localhost:3000",
     "http://localhost:3001",
     "http://localhost:3002",
@@ -202,7 +202,7 @@ REST_FRAMEWORK = {
 DATABASES ={
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'URL': env("DATABASE_URL"),
+        'URL': dj_database_url.parse(env("DATABASE_URL")),
         'NAME': env("PGDATABASE"),
         'USER': env("PGUSER"),
         'PASSWORD': env("PGPASSWORD"),
