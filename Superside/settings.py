@@ -195,10 +195,21 @@ REST_FRAMEWORK = {
 
 }
 
-DATABASES ={
-    "default": dj_database_url.parse(env("DATABASE_URL"))
-}
+# DATABASES ={
+#     "default": dj_database_url.parse(env("DATABASE_URL"))
+# }
 
+DATABASES ={
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'URL': env("DATABASE_URL"),
+        'NAME': env("PGDATABASE"),
+        'USER': env("PGUSER"),
+        'PASSWORD': env("PGPASSWORD"),
+        'HOST': env("PGHOST"),
+        'PORT': env("PGPORT"),
+    }
+}
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
