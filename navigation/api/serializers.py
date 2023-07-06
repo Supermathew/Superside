@@ -1308,7 +1308,7 @@ class WhyusSerializer(serializers.ModelSerializer):
     section1_url = serializers.SerializerMethodField()
     section2_url = serializers.SerializerMethodField()
     section3_url = serializers.SerializerMethodField()
-    section4_url = serializers.SerializerMethodField()
+    # section4_url = serializers.SerializerMethodField()
     section5_url = serializers.SerializerMethodField()
     section6_url = serializers.SerializerMethodField()
     # section7_url = serializers.SerializerMethodField()
