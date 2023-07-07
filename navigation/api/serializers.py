@@ -6,7 +6,7 @@ from navigation.models import (
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Emailinput,Social,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,
     Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Servicessectionfour,servicescapabilities,
     Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,Pricingcta,Servicessectionone,Servicescta,Userdata,
-    Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,Ourworkproject
+    Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,Ourworkproject,Blogsectionfive
 )
 
 
@@ -875,7 +875,13 @@ class PageDashboardSerializer(serializers.ModelSerializer):
     blogsection_url = serializers.SerializerMethodField()
     ourwork_url = serializers.SerializerMethodField()
     pagethumbnail_path = serializers.SerializerMethodField()
+    pageicon_path = serializers.SerializerMethodField()
+    pageblogimage_path = serializers.SerializerMethodField()
     page_url = serializers.SerializerMethodField()
+    blogiconimage_path = serializers.SerializerMethodField()
+
+    # blogimgsection = serializers.SerializerMethodField()
+    
 
     def get_page_url(self, Page):
         if Page.slug:
@@ -938,10 +944,31 @@ class PageDashboardSerializer(serializers.ModelSerializer):
             return reverse('servicesourwork',args=[Page.slug])
         return None
 
+    # def get_blogimgsection(self, Page):
+    #     if Page.slug:
+    #         return reverse('blogimgsection',args=[Page.slug])
+    #     return None
+
     def get_pagethumbnail_path(self, Page):
         if Page.pageimg:
             return Page.pageimg.image.url
         return None
+
+    def get_pageicon_path(self, Page):
+        if Page.pageicon:
+            return Page.pageicon.image.url
+        return None
+
+    def get_pageblogimage_path(self, Page):
+        if Page.blogimage:
+            return Page.blogimage.image.url
+        return None
+
+    def get_blogiconimage_path(self, Page):
+        if Page.blogicon:
+            return Page.blogicon.image.url
+        return None
+
 
     class Meta:
         model = Page
@@ -1046,10 +1073,15 @@ class OurworksectiononeSerializer(serializers.ModelSerializer):
 
 class OurworksectiontwoSerializer(serializers.ModelSerializer):
     photo_url = serializers.SerializerMethodField()
-
+    mobilephoto_url = serializers.SerializerMethodField()
     def get_photo_url(self, Ourworksectiontwo):
         if Ourworksectiontwo.sectiontwoimg:
             return Ourworksectiontwo.sectiontwoimg.image.url
+        return None
+
+    def get_mobilephoto_url(self, Ourworksectiontwo):
+        if Ourworksectiontwo.sectiontwoimgmobile:
+            return Ourworksectiontwo.sectiontwoimgmobile.image.url
         return None
 
     class Meta:
@@ -1101,6 +1133,7 @@ class BlogsSerializer(serializers.ModelSerializer):
     section2_url = serializers.SerializerMethodField()
     section3_url = serializers.SerializerMethodField()
     section4_url = serializers.SerializerMethodField()
+    section5_url = serializers.SerializerMethodField()
     page_url = serializers.SerializerMethodField()
 
     def get_page_url(self, Blogs):
@@ -1128,6 +1161,10 @@ class BlogsSerializer(serializers.ModelSerializer):
             return reverse('blogsectionfour',args=[Blogs.slug])
         return None
 
+    def get_section5_url(self, Blogs):
+        if Blogs.slug:
+            return reverse('Blogsectionfive',args=[Blogs.slug])
+        return None
 
 
     class Meta:
@@ -1172,6 +1209,15 @@ class BlogsectionfourSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blogsectionfour
         fields = '__all__'
+
+class BlogsectionfiveSerializer(serializers.ModelSerializer):
+ 
+
+    class Meta:
+        model = Blogsectionfive
+        fields = '__all__'
+
+
 
 
 class blogsingleSerializer(serializers.ModelSerializer):

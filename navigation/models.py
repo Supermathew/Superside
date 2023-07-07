@@ -332,7 +332,11 @@ class Page(models.Model):
     blog = models.ForeignKey(Blogs, on_delete=models.CASCADE, null=True,blank=True,related_name='Blogsservicepages')
     pricing = models.ForeignKey(Pricing, on_delete=models.CASCADE, null=True,blank=True,related_name='Pricingservicepages')
     homepage = models.ForeignKey(Homepage, on_delete=models.CASCADE, null=True,blank=True,related_name='Homepageservicepages')
-    pageimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='pageimage')
+    pageimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE, null=True,blank=True,related_name='pageimage')
+    pageicon = models.ForeignKey(MediaBucket, on_delete=models.CASCADE, null=True,blank=True,related_name='pageicon')
+    blogimage = models.ForeignKey(MediaBucket,  on_delete=models.CASCADE, null=True,blank=True,related_name='blogimage')
+    blogicon = models.ForeignKey(MediaBucket, on_delete=models.CASCADE, null=True,blank=True,related_name='blogiconimage')
+
 
 
 
@@ -476,6 +480,7 @@ class Servicessectionseven(models.Model):
 class Servicescta(models.Model):
       Servicesctaheading = models.TextField(null=True,blank=True)
       Servicesctasubheading = models.TextField(null=True,blank=True)
+      Servicesctadiscription = models.TextField(null=True,blank=True)
       Servicesctabtntext = models.TextField(null=True,blank=True)
       Servicesctabtnurl = models.TextField(null=True,blank=True)
       Servicesctaimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Servicesctaimg')
@@ -491,6 +496,7 @@ class Ourworksectionone(models.Model):
       sectiononesubheading = models.TextField(null=True,blank=True)
       sectiononediscription = models.TextField(null=True,blank=True)
       sectiononetext = models.TextField(null=True,blank=True)
+      sectiononecolourtext = models.TextField(null=True,blank=True)
       sectiononeimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='ourworksectiononeimg')
       page = models.ForeignKey(Ourwork, on_delete=models.CASCADE,null=True,blank=True,related_name='ourworksectionone')
       sectiontwovideo = models.ForeignKey(VideoBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='ourworksectiontwovideo')
@@ -507,6 +513,7 @@ class Ourworksectiontwo(models.Model):
       sectiontwobtntext = models.TextField(null=True,blank=True)
       sectiontwobtnurl = models.TextField(null=True,blank=True)
       sectiontwoimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='ourworksectiontwoimg')
+      sectiontwoimgmobile = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='ourworksectiontwoimgmobile')
       page = models.ForeignKey(Ourwork, on_delete=models.CASCADE,null=True,blank=True,related_name='ourworksectiontwo')
 
       def __str__(self):
@@ -532,6 +539,8 @@ class Blogsectiontwo(models.Model):
       sectiontwotext = models.TextField(null=True,blank=True)
       sectiontwobtntext = models.TextField(null=True,blank=True)
       sectiontwobtnurl = models.TextField(null=True,blank=True)
+      sectiontwoimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='blogsectiontwoimg')
+      sectiontwoimgmobile = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='blogsectiontwoimgmobile')
       page = models.ForeignKey(Blogs, on_delete=models.CASCADE,null=True,blank=True,related_name='blogsectiontwo')
 
       def __str__(self):
@@ -546,6 +555,7 @@ class Blogsectionthree(models.Model):
       sectionthreebtntext = models.TextField(null=True,blank=True)
       sectionthreebtnurl = models.TextField(null=True,blank=True)
       sectionthreeimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='blogsectionthreeimg')
+      sectionthreeimgmobile = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='blogsectionthreeimgmobile')
       page = models.ForeignKey(Blogs, on_delete=models.CASCADE,null=True,blank=True,related_name='Blogsectionthree')
 
       def __str__(self):
@@ -558,10 +568,23 @@ class Blogsectionfour(models.Model):
       sectionfourtext = models.TextField(null=True,blank=True)
       sectionfourbtnurl = models.TextField(null=True,blank=True)
       sectionfourimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='blogsectionfourimg')
+      sectionfourctaimgmobile = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionfourctaimgmobile')
       page = models.ForeignKey(Blogs, on_delete=models.CASCADE,null=True,blank=True,related_name='Blogsectionfour')
 
       def __str__(self):
-          return f'Blogsectionfour'    
+          return f'Blogsectionfour'   
+
+class Blogsectionfive(models.Model):
+      sectionfiveheading = models.TextField(null=True,blank=True)
+      sectionfivesubheading = models.TextField(null=True,blank=True)
+      sectionfivediscription = models.TextField(null=True,blank=True)
+      sectionfiveemailplaceholder = models.TextField(null=True,blank=True)
+      sectionfivetext = models.TextField(null=True,blank=True)
+      sectionfivebtnurl = models.TextField(null=True,blank=True)
+      page = models.ForeignKey(Blogs, on_delete=models.CASCADE,null=True,blank=True,related_name='Blogsectionfive')
+
+      def __str__(self):
+          return f'Blogsectionfive'  
 
 
 

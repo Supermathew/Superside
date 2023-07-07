@@ -38,7 +38,7 @@ from navigation.models import (
     MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,Emailinput,Social,
     Bookacall,Bookacallsectionone,Bookacallsectiontwo,Facts,Pricingcta,Servicessectionfour,servicescapabilities,Servicescta,Userdata,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,CommonSlidersection2,CommonReview,CommonSlidersection1,
-    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,
+    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Blogsectionfive,
     Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,BlogPost,Ourworkproject
 )
 
@@ -47,7 +47,7 @@ from .serializers import (
     SectionfourSerializer,SectiononeSerializer,VideoBucketSerializer,WhyusUserSerializer,bookcallUserSerializer,SocialSerializer,capacitySerializer,
     SectionthreeSerializer,DetailsSerializer,HomepageReviewSerializer,BlogUserSerializer,blogsingleSerializer,blogpageauthorSerializer,
     BookacallSerializer,BookacallsectiononeSerializer,BookacallsectiontwoSerializer,PageblogSerializer,BlogTimepassUserSerializer,authordetailsSerializer,
-    PageSerializer,ServicessectiononeSerializer,ServicessectiontwoSerializer,PageDashboardSerializer,
+    PageSerializer,ServicessectiononeSerializer,ServicessectiontwoSerializer,PageDashboardSerializer,BlogsectionfiveSerializer,
     ServicessectionThreeSerializer,FaqSerializer,EmailSerializer,SectionsixSerializer,SectionfiveSerializer,singlereviewSerializer,
 HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,HomepageReviewSerializer,PricingctaSerializer,
     ServicessectionsixSerializer,ServicessectionsevenSerializer,FactsSerializer,userdataSerializer,
@@ -2028,6 +2028,38 @@ class BlogssectionfourView(GenericAPIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class BlogsectionfiveView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = BlogsectionfiveSerializer
+
+    def get(self, request, page_slug):
+        try:
+            section2 = Blogsectionfive.objects.get(page__slug=page_slug)
+        except Blogsectionfive.DoesNotExist:
+            try:
+                page = Blogs.objects.get(slug=page_slug)
+            except Blogs.DoesNotExist:
+                return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+            section2 = Blogsectionfive.objects.create(page=page)
+
+        serializer = BlogsectionfiveSerializer(section2)
+        return Response(serializer.data)
+
+    def put(self, request, page_slug):
+        try:
+            section1 = Blogsectionfive.objects.get(page__slug=page_slug)
+        except Blogsectionfive.DoesNotExist:
+            return Response({'error': 'Blogsectionfive page not created'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = BlogsectionfiveSerializer(section1, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class WhyusView(GenericAPIView):
