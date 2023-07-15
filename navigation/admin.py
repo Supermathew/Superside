@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MediaBucket,Facts,SubMenu,Menu,Header,Page,Blogs,Pricingsectionone,BlogPost,Ourwork,Pricing,Homepage,Whyus,Ourworkproject,Blogauthor,Tag
+from .models import MediaBucket,Facts,SubMenu,Menu,Header,Page,Blogs,Pricingsectionone,BlogPost,Ourwork,Pricing,Homepage,Whyus,Ourworkproject,Blogauthor,Tag,Details
 
 
 # Register your models here.
@@ -7,6 +7,8 @@ from .models import MediaBucket,Facts,SubMenu,Menu,Header,Page,Blogs,Pricingsect
 admin.site.register(MediaBucket)
 admin.site.register(SubMenu)
 admin.site.register(Menu)
+admin.site.register(Details)
+
 
 admin.site.register(Header)
 admin.site.register(Page)

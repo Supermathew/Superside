@@ -207,11 +207,30 @@ class Sectionthree(models.Model):
 class Details(models.Model):
       detailsheading = models.TextField(null=True,blank=True)
       detailsdiscription = models.TextField(null=True,blank=True)
-      detailsimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='detailsimage')
-      page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagedetails')
+      detailsimage = models.ForeignKey(MediaBucket,null=True,blank=True,on_delete=models.CASCADE,related_name='detailsimage')
+      page = models.ForeignKey(Homepage,null=True,blank=True,on_delete=models.CASCADE,related_name='Homepagedetails')
 
       def __str__(self):
          return f'Details'
+
+class Homepagemeta(models.Model):
+      metakey = models.TextField()
+      metavalue = models.TextField()
+      page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagemeta')
+
+      def __str__(self):
+         return f'Homepagemeta'
+
+
+
+
+
+
+
+
+
+
+
 
 
 class CommonReview(models.Model):
@@ -261,6 +280,15 @@ class Whyus(models.Model):
                   self.slug = slugify(self.title)
             super().save(*args, **kwargs)
 
+
+class Whyusmeta(models.Model):
+      metakey = models.TextField()
+      metavalue = models.TextField()
+      page = models.ForeignKey(Whyus, on_delete=models.CASCADE,null=True,blank=True,related_name='Whyusmeta')
+
+      def __str__(self):
+         return f'Whyusmeta'
+
 class Ourwork(models.Model):
 
       # def remove_numbers(value):
@@ -280,6 +308,14 @@ class Ourwork(models.Model):
             if self.title != self.slug:  # Only update the slug if the title has changed
                   self.slug = slugify(self.title)
             super().save(*args, **kwargs)
+
+class Ourworkmeta(models.Model):
+      metakey = models.TextField()
+      metavalue = models.TextField()
+      page = models.ForeignKey(Ourwork, on_delete=models.CASCADE,null=True,blank=True,related_name='Ourworkmeta')
+
+      def __str__(self):
+         return f'Ourworkmeta'
       
 class Blogs(models.Model):
 
@@ -301,6 +337,13 @@ class Blogs(models.Model):
                   self.slug = slugify(self.title)
             super().save(*args, **kwargs)
 
+class Blogsmeta(models.Model):
+      metakey = models.TextField()
+      metavalue = models.TextField()
+      page = models.ForeignKey(Blogs, on_delete=models.CASCADE,null=True,blank=True,related_name='Blogsmeta')
+
+      def __str__(self):
+         return f'Blogsmeta'
 
 class Pricing(models.Model):
 
@@ -318,6 +361,13 @@ class Pricing(models.Model):
                   self.slug = slugify(self.title)
             super().save(*args, **kwargs)
 
+class Pricingmeta(models.Model):
+      metakey = models.TextField()
+      metavalue = models.TextField()
+      page = models.ForeignKey(Pricing, on_delete=models.CASCADE,null=True,blank=True,related_name='pricingmeta')
+
+      def __str__(self):
+         return f'pricingmeta'
 
 class Page(models.Model):
 #     @staticmethod
@@ -351,6 +401,13 @@ class Page(models.Model):
         super().save(*args, **kwargs)
 
  
+class Servicesmeta(models.Model):
+      metakey = models.TextField()
+      metavalue = models.TextField()
+      page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='Servicesmeta')
+
+      def __str__(self):
+         return f'Servicesmeta'
 
 
 class Servicessectionone(models.Model):

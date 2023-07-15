@@ -4,9 +4,9 @@ from django.urls import reverse
 from navigation.models import ( 
     MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Emailinput,Social,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,
-    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Servicessectionfour,servicescapabilities,
-    Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,Pricingcta,Servicessectionone,Servicescta,Userdata,
-    Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,Ourworkproject,Blogsectionfive
+    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Servicessectionfour,servicescapabilities,Ourworkmeta,
+    Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,Pricingcta,Servicessectionone,Servicescta,Userdata,Homepagemeta,Servicesmeta,
+    Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,Ourworkproject,Blogsectionfive,Pricingmeta,Whyusmeta,Blogsmeta,
 )
 
 
@@ -397,6 +397,54 @@ class userdataSerializer(serializers.ModelSerializer):
         model = Userdata
         fields = '__all__'
 
+
+class HomepagemetaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Homepagemeta
+        fields = '__all__'
+
+
+class PricingmetaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Pricingmeta
+        fields = '__all__'
+
+class whyusmetaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Whyusmeta
+        fields = '__all__'
+
+class blogmetaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Blogsmeta
+        fields = '__all__'
+
+class ourworkmetaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Ourworkmeta
+        fields = '__all__'
+
+class servicesmetaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Servicesmeta
+        fields = '__all__'
+
+
+
+
+
+
+
+
+
+
+
 class DetailsSerializer(serializers.ModelSerializer):
     photo_url = serializers.SerializerMethodField()
 
@@ -541,7 +589,8 @@ class PageSerializer(serializers.ModelSerializer):
 class HomeSerializer(serializers.ModelSerializer):
 
     Homepagesectionone = SectiononeSerializer(many=True, read_only=True)
-    Homepagesectiontwo = SectiontwoSerializer(read_only=True)
+    Homepagesectiontwo = SectiontwoSerializer(many=True,read_only=True)
+    Homepagemeta = HomepagemetaSerializer(many=True,read_only=True)
     # HomepageSlidersection1 = HomepageSlidersection1Serializer(many=True,read_only=True)
     # HomepageSlidersection2 = HomepageSlidersection2Serializer(many=True,read_only=True)
     Homepagesectionthree = SectionthreeSerializer(many=True, read_only=True)
@@ -771,6 +820,7 @@ class HomepageSerializer(serializers.ModelSerializer):
     section4_url = serializers.SerializerMethodField()
     section5_url = serializers.SerializerMethodField()
     section6_url = serializers.SerializerMethodField()
+    sectionmetadetails_url = serializers.SerializerMethodField()
     sectiondetails_url = serializers.SerializerMethodField()
     # sectionreview_url = serializers.SerializerMethodField()
     # sectionimageslider1_url = serializers.SerializerMethodField()
@@ -828,6 +878,11 @@ class HomepageSerializer(serializers.ModelSerializer):
             return reverse('homepagesectionsix',args=[Homepage.slug])
         return None
 
+    def get_sectionmetadetails_url(self, Homepage):
+        if Homepage.slug:
+            return reverse('homepagemetadetails',args=[Homepage.slug])
+        return None
+
     def get_sectiondetails_url(self, Homepage):
         if Homepage.slug:
             return reverse('homepagedetailsection',args=[Homepage.slug])
@@ -864,6 +919,7 @@ class PageDashboardSerializer(serializers.ModelSerializer):
 
 
     section1_url = serializers.SerializerMethodField()
+    sectionmetadetails_url = serializers.SerializerMethodField()
     section2_url = serializers.SerializerMethodField()
     section3_url = serializers.SerializerMethodField()
     section4_url = serializers.SerializerMethodField()
@@ -891,6 +947,11 @@ class PageDashboardSerializer(serializers.ModelSerializer):
     def get_section1_url(self, Page):
         if Page.slug:
             return reverse('servicessectionone',args=[Page.slug])
+        return None
+
+    def get_sectionmetadetails_url(self, Page):
+        if Page.slug:
+            return reverse('servicesmetadetails',args=[Page.slug])
         return None
 
     def get_section2_url(self, Page):
@@ -1024,6 +1085,7 @@ class OurworkSerializer(serializers.ModelSerializer):
 
 
     section1_url = serializers.SerializerMethodField()
+    ourworkmeta_url = serializers.SerializerMethodField()
     section2_url = serializers.SerializerMethodField()
 
 
@@ -1037,6 +1099,11 @@ class OurworkSerializer(serializers.ModelSerializer):
     def get_section1_url(self, Ourwork):
         if Ourwork.slug:
             return reverse('ourworksectionone',args=[Ourwork.slug])
+        return None
+
+    def get_ourworkmeta_url(self, Ourwork):
+        if Ourwork.slug:
+            return reverse('ourworkmetadetails',args=[Ourwork.slug])
         return None
 
     def get_section2_url(self, Ourwork):
@@ -1111,6 +1178,7 @@ class PageourworkSerializer(serializers.ModelSerializer):
 class OurworkUserSerializer(serializers.ModelSerializer):
 
     ourworksectionone = OurworksectiononeSerializer(many=True, read_only=True)
+    Ourworkmeta = ourworkmetaSerializer(many=True, read_only=True)
     ourworksectiontwo = OurworksectiontwoSerializer(many=True, read_only=True)
     Ourworkservicepages = PageourworkSerializer(many=True, read_only=True)
 
@@ -1130,6 +1198,8 @@ class BlogsSerializer(serializers.ModelSerializer):
 
 
     section1_url = serializers.SerializerMethodField()
+    blogmetadetails_url = serializers.SerializerMethodField()
+
     section2_url = serializers.SerializerMethodField()
     section3_url = serializers.SerializerMethodField()
     section4_url = serializers.SerializerMethodField()
@@ -1144,6 +1214,11 @@ class BlogsSerializer(serializers.ModelSerializer):
     def get_section1_url(self, Blogs):
         if Blogs.slug:
             return reverse('blogsectionone',args=[Blogs.slug])
+        return None
+
+    def get_blogmetadetails_url(self, Blogs):
+        if Blogs.slug:
+            return reverse('blogmetadetails',args=[Blogs.slug])
         return None
 
     def get_section2_url(self, Blogs):
@@ -1319,6 +1394,7 @@ class PageHomeblogSerializer(serializers.ModelSerializer):
 class BlogUserSerializer(serializers.ModelSerializer):
 
     blogsectionone = BlogsectiononeSerializer(many=True, read_only=True)
+    Blogsmeta = blogmetaSerializer(many=True, read_only=True)
     Blogsservicepages = PageblogSerializer(many=True, read_only=True)
     blogsectiontwo = BlogsectiontwoSerializer(many=True, read_only=True)
     Blogsectionthree = BlogsectionthreeSerializer(many=True, read_only=True)
@@ -1352,6 +1428,7 @@ class WhyusSerializer(serializers.ModelSerializer):
     # sectiontwoourwork = ServicessectiontwoSerializer(many=True, read_only=True)
 
     section1_url = serializers.SerializerMethodField()
+    whyusmetadetails_url = serializers.SerializerMethodField()
     section2_url = serializers.SerializerMethodField()
     section3_url = serializers.SerializerMethodField()
     # section4_url = serializers.SerializerMethodField()
@@ -1369,6 +1446,12 @@ class WhyusSerializer(serializers.ModelSerializer):
         if Whyus.slug:
             return reverse('whyussectionone',args=[Whyus.slug])
         return None
+
+    def get_whyusmetadetails_url(self, Whyus):
+        if Whyus.slug:
+            return reverse('whyusmetadetails',args=[Whyus.slug])
+        return None
+
 
     def get_section2_url(self, Whyus):
         if Whyus.slug:
@@ -1685,6 +1768,7 @@ class WhyussectiontwoSerializer(serializers.ModelSerializer):
 class WhyusUserSerializer(serializers.ModelSerializer):
 
     whyussectionseven = WhyussectionsevenSerializer(many=True, read_only=True)
+    Whyusmeta = whyusmetaSerializer(many=True, read_only=True)
     Whyussectiontwo = WhyussectiontwoSerializer(many=True, read_only=True)
     Whyussectionthree = WhyussectionthreeSerializer(many=True, read_only=True)
     Whyussectionfive = WhyussectionfiveSerializer(many=True, read_only=True)
@@ -1725,6 +1809,7 @@ class PricingsectiononeSerializer(serializers.ModelSerializer):
 class PricingSerializer(serializers.ModelSerializer):
 
     section1_url = serializers.SerializerMethodField()
+    metadetails_url = serializers.SerializerMethodField()
     section2_url = serializers.SerializerMethodField()
     section3_url = serializers.SerializerMethodField()
     section4_url = serializers.SerializerMethodField()
@@ -1741,6 +1826,11 @@ class PricingSerializer(serializers.ModelSerializer):
     def get_section1_url(self, Pricing):
         if Pricing.slug:
             return reverse('Pricingsectionone',args=[Pricing.slug])
+        return None
+
+    def get_metadetails_url(self, Pricing):
+        if Pricing.slug:
+            return reverse('Pricingmetadetails',args=[Pricing.slug])
         return None
 
     def get_section2_url(self, Pricing):
@@ -1923,6 +2013,7 @@ class PricingdetailsSerializer(serializers.ModelSerializer):
 class PricingUserSerializer(serializers.ModelSerializer):
 
     Pricingsectionone = PricingsectiononeSerializer(many=True, read_only=True)
+    pricingmeta = PricingmetaSerializer(many=True, read_only=True)
     Pricingdetails = PricingdetailsSerializer(many=True, read_only=True)
     Pricingsectiontwo = PricingsectiontwoSerializer(many=True,read_only=True)
     Pricingsectionthree = PricingsectionthreeSerializer(many=True, read_only=True)
