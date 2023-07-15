@@ -5,8 +5,10 @@ from rest_framework import status
 # from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.generics import GenericAPIView 
 from accounts import models
-
+import environ
 from rest_framework import authentication, permissions
+env = environ.Env()
+environ.Env.read_env()
 
 # @api_view(['POST',])
 # def logout_view(request):
@@ -23,9 +25,6 @@ class logout_view(GenericAPIView):
     def post(self, request):
 
         User =  request.user
-        # user = User.objects.filter(email=email).first()
-
-        # if User is not None and user.check_password(password):
         created = Token.objects.get(user=User)
         created.delete()
         return Response(status=status.HTTP_200_OK)
@@ -76,10 +75,12 @@ class ForgotPasswordView(GenericAPIView):
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = default_token_generator.make_token(user)
 
+            backendurl = env("BACKEND_URL")
+            
             # Compose password reset email
             subject = 'Reset Your Password'
             message = f"Click the following link to reset your password:\n\n" \
-                      f"Reset Password Link: http://yourdomain.com/reset-password/{uid}/{token}\n\n" \
+                      f"backendurl/{uid}/{token}\n\n" \
                       f"If you didn't request this, please ignore this email."
             to_email = email
             send_email = EmailMessage(subject, message, to=[to_email])
