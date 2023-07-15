@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView 
 from accounts import models
 import environ
+from accounts.api.serializers import  UserSerializer
 from rest_framework import authentication, permissions
 env = environ.Env()
 environ.Env.read_env()
@@ -38,7 +39,7 @@ from rest_framework.views import APIView
 class CreateTokenView(GenericAPIView):
 
     # permission_classes = [IsAuthenticated]
-    # serializer_class = MediaBucketSerializer
+    serializer_class = UserSerializer
     def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')
@@ -63,6 +64,8 @@ from rest_framework.views import APIView
 from accounts.models import Account
 
 class ForgotPasswordView(GenericAPIView):
+
+    serializer_class = UserSerializer
     def post(self, request):
         email = request.data.get('email')
         print(email)
@@ -76,7 +79,7 @@ class ForgotPasswordView(GenericAPIView):
             token = default_token_generator.make_token(user)
 
             backendurl = env("BACKEND_URL")
-            
+
             # Compose password reset email
             subject = 'Reset Your Password'
             message = f"Click the following link to reset your password:\n\n" \
@@ -99,6 +102,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 class ResetPasswordValidateView(GenericAPIView):
+
+    serializer_class = UserSerializer
+
     def get(self, request, uidb64, token):
         try:
             uid = urlsafe_base64_decode(uidb64).decode()
@@ -120,6 +126,7 @@ from rest_framework.views import APIView
 
 class ResetPasswordView(GenericAPIView):
     permission_classes = [AllowAny]
+    serializer_class = UserSerializer
 
     def post(self, request):
         password = request.data.get('password')
