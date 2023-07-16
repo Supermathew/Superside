@@ -1315,6 +1315,7 @@ class blogsingleSerializer(serializers.ModelSerializer):
     page_url = serializers.SerializerMethodField()
     blogthumbnailimg_path = serializers.SerializerMethodField()
     blogpage_slug = serializers.SerializerMethodField()
+    blogservicepage_slug = serializers.SerializerMethodField()
     Postauthor = BlogauthorSerializer(read_only=True)
     tag = TagSerializer(many=True,read_only=True)
 
@@ -1328,6 +1329,11 @@ class blogsingleSerializer(serializers.ModelSerializer):
     def get_blogpage_slug(self, BlogPost):
         if BlogPost.slug:
             return BlogPost.slug
+        return None
+    
+    def get_blogservicepage_slug(self, BlogPost):
+        if BlogPost.page:
+            return BlogPost.page.slug
         return None
 
     def get_page_url(self, BlogPost):
@@ -2054,6 +2060,8 @@ class WorkresultSerializer(serializers.ModelSerializer):
     page_url = serializers.SerializerMethodField()
     sectiononeimage1_path = serializers.SerializerMethodField()
     work_slug = serializers.SerializerMethodField()
+    servicepage_slug = serializers.SerializerMethodField()
+
 
 
     def get_page_url(self, Ourworkproject):
@@ -2069,6 +2077,11 @@ class WorkresultSerializer(serializers.ModelSerializer):
     def get_work_slug(self, obj):
         if obj.slug:
             return obj.slug
+        return None
+
+    def get_servicepage_slug(self, obj):
+        if obj.page:
+            return obj.page.slug
         return None
         
     class Meta:
@@ -2254,6 +2267,7 @@ class blogpageauthorSerializer(serializers.ModelSerializer):
     blogpostauthor = blogsingleSerializer(read_only=True,many=True)
     blogauthordp_path = serializers.SerializerMethodField()
     authorblog_path = serializers.SerializerMethodField()
+
     # blogpostauthor = serializers.SerializerMethodField()
 
 
