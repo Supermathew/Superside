@@ -920,6 +920,7 @@ class BlogPost(models.Model):
       summary = models.TextField()
       created = models.DateTimeField(auto_now_add=True)
       tag = models.ManyToManyField(Tag, related_name='blogposts')
+      jsondata = models.TextField(null=True,blank=True)
       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='servicesBlogPost')
 
 
@@ -942,6 +943,7 @@ class Ourworkproject(models.Model):
       body = RichTextUploadingField()
       created = models.DateTimeField(auto_now_add=True)
       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='servicesourwork')
+      jsondata = models.TextField(null=True,blank=True)
 
 
       def __str__(self):
