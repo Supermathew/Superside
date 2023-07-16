@@ -530,6 +530,8 @@ class TagSerializer(serializers.ModelSerializer):
 
 class ServicesBlogPostSerializer(serializers.ModelSerializer):
       blogthumbnailimg_path = serializers.SerializerMethodField()
+      blogpage_slug = serializers.SerializerMethodField()
+
 
       Postauthor = BlogauthorSerializer(read_only=True)
       tag = TagSerializer(many=True,read_only=True)
@@ -537,6 +539,12 @@ class ServicesBlogPostSerializer(serializers.ModelSerializer):
 
 
       def get_blogthumbnailimg_path(self, BlogPost):
+          if BlogPost.page:
+              return BlogPost.page.slug
+          return None
+
+
+      def get_blogpage_slug(self, BlogPost):
           if BlogPost.thumbnail:
               return BlogPost.thumbnail.image.url
           return None
@@ -553,12 +561,18 @@ class ServicesBlogPostSerializer(serializers.ModelSerializer):
 
 class OurworkprojectSerializer(serializers.ModelSerializer):
       projectthumbnail_path = serializers.SerializerMethodField()
+      ourworkpage_slug = serializers.SerializerMethodField()
 
 
 
       def get_projectthumbnail_path(self, obj):
           if obj.projectthumbnail:
               return obj.projectthumbnail.image.url
+          return None
+
+      def get_ourworkpage_slug(self, obj):
+          if obj.page:
+              return obj.page.slug
           return None
 
       class Meta:
