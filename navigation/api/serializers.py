@@ -539,14 +539,14 @@ class ServicesBlogPostSerializer(serializers.ModelSerializer):
 
 
       def get_blogthumbnailimg_path(self, BlogPost):
-          if BlogPost.page:
-              return BlogPost.page.slug
+          if BlogPost.thumbnail:
+              return BlogPost.thumbnail.image.url
           return None
 
 
       def get_blogpage_slug(self, BlogPost):
-          if BlogPost.thumbnail:
-              return BlogPost.thumbnail.image.url
+          if BlogPost.page:
+              return BlogPost.page.slug
           return None
       
 
@@ -557,6 +557,7 @@ class ServicesBlogPostSerializer(serializers.ModelSerializer):
       class Meta:
         model = BlogPost
         fields = '__all__'
+    
 
 
 class OurworkprojectSerializer(serializers.ModelSerializer):

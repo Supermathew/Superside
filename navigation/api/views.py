@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework import generics
 # from rest_framework.generics import APIView
 from rest_framework.generics import GenericAPIView 
+import json
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -3337,6 +3338,7 @@ class PricingUpdatesubdetailsView(GenericAPIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
+
 class ServicesBlogPostView(GenericAPIView):
 
     permission_classes = [IsAuthenticated]
@@ -3364,11 +3366,18 @@ class ServicesBlogPostView(GenericAPIView):
             page = Page.objects.get(slug=page_slug)
         except Page.DoesNotExist:
             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        
+        data = request.data.copy()  # Create a mutable copy of the request data
         serializer = ServicesBlogPostSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(page=page)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+           postauthor_id = request.data.get('Postauthor')
+           blog_post = serializer.save(page=page, Postauthor_id=postauthor_id)
+           tag_ids = request.data.get('tag', [])  # Get tag IDs from the request data
+           array = json.loads(tag_ids)
+           tags = Tag.objects.filter(id__in=array)  # Get the Tag objects based on IDs
+           blog_post.tag.set(tags)  # Set the tags for the blog post
+        
+           serializer_with_tags = ServicesBlogPostSerializer(blog_post)
+           return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -3405,11 +3414,21 @@ class ServicessingleBlogPostView(GenericAPIView):
         review = self.get_blogpost(blog_slug)
         if not review:
             return Response({'error': 'BlogPost not found'}, status=status.HTTP_404_NOT_FOUND)
-
+        try:
+            page = Page.objects.get(slug=page_slug)
+        except Page.DoesNotExist:
+            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+        data = request.data.copy()  # Create a mutable copy of the request data
         serializer = ServicesBlogPostSerializer(review, data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+           postauthor_id = request.data.get('Postauthor')
+           blog_post = serializer.save(page=page, Postauthor_id=postauthor_id)
+           tag_ids = request.data.get('tag', [])  # Get tag IDs from the request data
+           array = json.loads(tag_ids)
+           tags = Tag.objects.filter(id__in=array)  # Get the Tag objects based on IDs
+           blog_post.tag.set(tags)  # Set the tags for the blog post        
+           serializer_with_tags = ServicesBlogPostSerializer(blog_post)
+           return Response(serializer.data, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
