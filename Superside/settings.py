@@ -211,6 +211,9 @@ DATABASES ={
     }
 }
 
+database_url = os.environ.get("DATABASE_URL")
+DATABASES["default"] = dj_database_url.parse(database_url)
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 # STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles_build','staticfiles')

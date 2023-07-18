@@ -38,7 +38,7 @@ from navigation.api.views import (
     BlogssectiontwoView, BlogssectionthreeView, BlogssectionfourView, WhyussectiontwoView,WhyussectionthreeView,WhyussectionfiveView,WhyussectionsixView,WhyusView,
     WhyussectionsevenView,SocialView,MenuUpdateView,SubMenuUpdateView,ourworkmetaView,ourworkmetaUpdateView,servicesmetaView,servicesmetaUpdateView,
     PricingdetailsView,PricingFaqView,PricingsectionfourView,PricingsectionthreeView,PricingView,PricingsectiontwoView,PricingsectiononeView,PricingsubdetailsView,
-    ServicesBlogPostView,ServicessingleBlogPostView,UserSocialView,BlogPostCreateView
+    ServicesBlogPostView,ServicessingleBlogPostView,UserSocialView
 )
 from django.urls import path, include
 from rest_framework import routers
