@@ -35,7 +35,7 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 DEBUG = env("DJANGO_DEBUG")
 
 
-ALLOWED_HOSTS = ["localhost","127.0.0.1","superside.onrender.com","http://superside.onrender.com","https://superside.onrender.com"]
+ALLOWED_HOSTS = ["localhost","127.0.0.1","superside.onrender.com","http://superside.onrender.com","https://superside.onrender.com",".vercel.app", ".now.sh"]
 
 
 CSRF_TRUSTED_ORIGINS = ["https://superside.onrender.com"]
@@ -213,7 +213,7 @@ DATABASES ={
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles_build','staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # SIMPLE_JWT = {
 #     'ROTATE_REFRESH_TOKENS' : True,
