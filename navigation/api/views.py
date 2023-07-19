@@ -3367,7 +3367,7 @@ class ServicesBlogPostView(GenericAPIView):
         except Page.DoesNotExist:
             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
         data = request.data.copy()  # Create a mutable copy of the request data
-        tag_ids = request.data.get('tag', [])  # Get tag IDs from the request data
+        tag_ids = request.data.get('tag')  # Get tag IDs from the request data
         postauthor_id = request.data.get('Postauthor')
         if postauthor_id is None:
             return Response({'error': 'please enter author'}, status=status.HTTP_404_NOT_FOUND)
