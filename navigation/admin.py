@@ -1,29 +1,16 @@
 from django.contrib import admin
-from .models import MediaBucket,Facts,SubMenu,Menu,Header,Page,Blogs,Pricingsectionone,BlogPost,Ourwork,Pricing,Homepage,Whyus,Ourworkproject,Blogauthor,Tag,Details
+from .models import *
 
 
+model_list = [ MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,Emailinput,Social,
+    Bookacall,Bookacallsectionone,Bookacallsectiontwo,Facts,Pricingcta,Servicessectionfour,servicescapabilities,Servicescta,Userdata,Homepagemeta,Pricingmeta,Whyusmeta,Ourworkmeta,Blogsmeta,Servicesmeta,
+    Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,CommonSlidersection2,CommonReview,CommonSlidersection1,
+    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Blogsectionfive,
+    Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,Tag,Blogauthor,BlogPost,Ourworkproject]
 # Register your models here.
 
-admin.site.register(MediaBucket)
-admin.site.register(SubMenu)
-admin.site.register(Menu)
-admin.site.register(Details)
-
-
-admin.site.register(Header)
-admin.site.register(Page)
-admin.site.register(Blogs)
-admin.site.register(Pricingsectionone)
-admin.site.register(BlogPost)
-admin.site.register(Ourwork)
-admin.site.register(Pricing)
-admin.site.register(Homepage)
-admin.site.register(Whyus)
-admin.site.register(Ourworkproject)
-admin.site.register(Blogauthor)
-admin.site.register(Tag)
-admin.site.register(Facts)
-
+for model in model_list:
+    admin.site.register(model)
 
 
 

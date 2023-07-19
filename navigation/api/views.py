@@ -3367,11 +3367,16 @@ class ServicesBlogPostView(GenericAPIView):
         except Page.DoesNotExist:
             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
         data = request.data.copy()  # Create a mutable copy of the request data
+        tag_ids = request.data.get('tag', [])  # Get tag IDs from the request data
+        postauthor_id = request.data.get('Postauthor')
+        if postauthor_id is None:
+            return Response({'error': 'please enter author'}, status=status.HTTP_404_NOT_FOUND)
+        if len(tag_ids) == 0:
+            return Response({'error': 'please enter tag'}, status=status.HTTP_404_NOT_FOUND)
         serializer = ServicesBlogPostSerializer(data=request.data)
         if serializer.is_valid():
            postauthor_id = request.data.get('Postauthor')
            blog_post = serializer.save(page=page, Postauthor_id=postauthor_id)
-           tag_ids = request.data.get('tag', [])  # Get tag IDs from the request data
            array = json.loads(tag_ids)
            tags = Tag.objects.filter(id__in=array)  # Get the Tag objects based on IDs
            blog_post.tag.set(tags)  # Set the tags for the blog post
