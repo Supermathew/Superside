@@ -6,7 +6,7 @@ from navigation.models import (
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Emailinput,Social,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,
     Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Servicessectionfour,servicescapabilities,Ourworkmeta,
     Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,Pricingcta,Servicessectionone,Servicescta,Userdata,Homepagemeta,Servicesmeta,
-    Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,Ourworkproject,Blogsectionfive,Pricingmeta,Whyusmeta,Blogsmeta,
+    Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,Ourworkproject,Blogsectionfive,Pricingmeta,Whyusmeta,Blogsmeta,Adminpanellogo
 )
 
 
@@ -1274,6 +1274,20 @@ class BlogsectiononeSerializer(serializers.ModelSerializer):
 
 class BlogsectiontwoSerializer(serializers.ModelSerializer):
 
+    photo_url = serializers.SerializerMethodField()
+    image_url = serializers.SerializerMethodField()
+
+
+    def get_photo_url(self, Blogsectiontwo):
+        if Blogsectiontwo.sectiontwoimg:
+            return Blogsectiontwo.sectiontwoimg.image.url
+        return None
+
+    def get_image_url(self, Blogsectiontwo):
+        if Blogsectiontwo.sectiontwoimgmobile:
+            return Blogsectiontwo.sectiontwoimgmobile.image.url
+        return None
+
     class Meta:
         model = Blogsectiontwo
         fields = '__all__'
@@ -1292,10 +1306,17 @@ class BlogsectionthreeSerializer(serializers.ModelSerializer):
 
 class BlogsectionfourSerializer(serializers.ModelSerializer):
     photo_url = serializers.SerializerMethodField()
+    image_url = serializers.SerializerMethodField()
+
 
     def get_photo_url(self, Blogsectionfour):
         if Blogsectionfour.sectionfourimg:
             return Blogsectionfour.sectionfourimg.image.url
+        return None
+
+    def get_image_url(self, Blogsectionfour):
+        if Blogsectionfour.sectionfourctaimgmobile:
+            return Blogsectionfour.sectionfourctaimgmobile.image.url
         return None
 
     class Meta:
@@ -2320,3 +2341,24 @@ class authordetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blogauthor
         fields = '__all__'
+
+
+class adminlogoSerializer(serializers.ModelSerializer):
+    blogauthordp_path = serializers.SerializerMethodField()
+    # authorblog_path = serializers.SerializerMethodField()
+
+
+    def get_blogauthordp_path(self, obj):
+        if obj.logo:
+            return obj.logo.image.url
+        return None
+
+    # def get_authorblog_path(self, obj):
+    #     if obj.slug:
+    #         return reverse('authorname',args=[obj.slug])
+    #     return None
+
+    class Meta:
+        model = Adminpanellogo
+        fields = '__all__'
+

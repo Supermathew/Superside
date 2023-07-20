@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from navigation.models import MediaBucket
+from django.contrib.auth.models import User
 
 
 class MyAccountManager(BaseUserManager):
@@ -50,6 +52,7 @@ class Account(AbstractBaseUser):
     is_staff        = models.BooleanField(default=True)
     is_active        = models.BooleanField(default=True)
     is_superadmin        = models.BooleanField(default=False)
+    profiledp =  models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='profiledpjbkjb')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
@@ -67,3 +70,12 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, add_label):
         return True
+
+
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    profiledp =  models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='profiledp')
+    name = models.CharField(max_length=800)
+
+    def __str__(self):
+        return self.name

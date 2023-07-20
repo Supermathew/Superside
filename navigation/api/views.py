@@ -40,7 +40,7 @@ from navigation.models import (
     Bookacall,Bookacallsectionone,Bookacallsectiontwo,Facts,Pricingcta,Servicessectionfour,servicescapabilities,Servicescta,Userdata,Homepagemeta,Pricingmeta,Whyusmeta,Ourworkmeta,Blogsmeta,Servicesmeta,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,CommonSlidersection2,CommonReview,CommonSlidersection1,
     Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Blogsectionfive,
-    Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,BlogPost,Ourworkproject
+    Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,BlogPost,Ourworkproject,Adminpanellogo
 )
 
 from .serializers import (
@@ -51,7 +51,7 @@ from .serializers import (
     PageSerializer,ServicessectiononeSerializer,ServicessectiontwoSerializer,PageDashboardSerializer,BlogsectionfiveSerializer,blogmetaSerializer,ourworkmetaSerializer,
     ServicessectionThreeSerializer,FaqSerializer,EmailSerializer,SectionsixSerializer,SectionfiveSerializer,singlereviewSerializer,servicesmetaSerializer,
 HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,HomepageReviewSerializer,PricingctaSerializer,PricingmetaSerializer,whyusmetaSerializer,
-    ServicessectionsixSerializer,ServicessectionsevenSerializer,FactsSerializer,userdataSerializer,
+    ServicessectionsixSerializer,ServicessectionsevenSerializer,FactsSerializer,userdataSerializer,adminlogoSerializer,
     OurworkSerializer,OurworksectiononeSerializer,OurworksectiontwoSerializer,
     BlogsSerializer,BlogsectiononeSerializer,BlogsectiontwoSerializer,HomepagemetaSerializer,
     BlogsectionthreeSerializer,BlogsectionfourSerializer,WhyusSerializer,
@@ -3110,6 +3110,35 @@ class ServicesctaView(GenericAPIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class adminlogoView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = adminlogoSerializer
+
+
+    def get(self, request):
+        try:
+            section2 = Adminpanellogo.objects.first()
+        except Adminpanellogo.DoesNotExist:
+            section2 = Adminpanellogo.objects.create()
+
+        serializer = adminlogoSerializer(section2)
+        return Response(serializer.data)
+
+    def put(self, request):
+        try:
+            section1 = Adminpanellogo.objects.first()
+        except Adminpanellogo.DoesNotExist:
+            return Response({'error': 'Adminpanellogo page not created'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = adminlogoSerializer(section1, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        
 
 class PricingFaqView(GenericAPIView):
     

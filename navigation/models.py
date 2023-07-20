@@ -1039,3 +1039,9 @@ class Social(models.Model):
       def __str__(self):
          return self.social
 
+class Adminpanellogo(models.Model):
+      logo = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='adminpanellogo')
+      tagline = models.TextField(null=True,blank=True)
+
+      def __str__(self):
+         return self.logo

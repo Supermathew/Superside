@@ -26,7 +26,7 @@ from navigation.api.views import (
     ImageUpdateUploadView,UserFactsview,PricingctaView,ServicessectionfourView,
     PagelistView, ServicessectiononeView, ServicessectiontwoView, ServicessectionThreeView,homepageView,homeView,BloguserView,
     SingleblogView,BlogbycategoryView,UserdataView,clientUserdataView,BlogsectionfiveView,
-    PricingUpdatedetailsView,DetailsUpdateView,PricingUpdatesubdetailsView,
+    PricingUpdatedetailsView,DetailsUpdateView,PricingUpdatesubdetailsView,adminlogoView,
     allBloguserView,BlogbytagView,SectionfiveView,singlereviewView,HomepagemetaView,HomepagemetaUpdateView,PricingmetaView,pricingmetaUpdateView,
     sectionsixView, FaqView, ServicessectionsixView, ServicessectionsevenView,
     servicesview,OurworkresultView,HomepageSlidersection1updateView,HomepageUpdateReviewView,FaqUpdateView,whyusmetaView,whyusmetaUpdateView,
@@ -106,6 +106,7 @@ urlpatterns = [
     path('tag/<slug:tag_name>/', tagdetailsView.as_view(),name='tagdetails'),
     # path('homepage/<slug:page_slug>/', servicesview.as_view(),name='servicespages'),
     # path('dashboard/multiplefile/', multiplefileView.as_view(),name='multiplefile'),#approved
+    path('dashboard/logo/', adminlogoView.as_view()),
     path('dashboard/subscriberemail/', EmailView.as_view(),name='subscriberemail'),#approved
     path('dashboard/social/', SocialView.as_view(),name='socialmedia'),##approved
     path('dashboard/social/<int:social_id>/', SocialupdateView.as_view(),name='socialmedia-update'),#approved
