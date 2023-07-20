@@ -38,7 +38,7 @@ class SubMenu(models.Model):
 
 
 class Header(models.Model):
-      headerlogo = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='logo')
+      headerlogo = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='logo')
       menu = models.ForeignKey(Menu, on_delete=models.CASCADE,null=True,blank=True,related_name='header')
 
       def __str__(self):
@@ -123,13 +123,13 @@ class Sectionfour(models.Model):
 class Sectionfive(models.Model):
       sectionfiveheading = models.TextField(null=True,blank=True)
       sectionfivesubheading = models.TextField(null=True,blank=True)
-      sectionfiveimage1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectionfiveimage1')
+      sectionfiveimage1 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Homepagesectionfiveimage1')
       sectionfiveimage1details = models.TextField(null=True,blank=True)
-      sectionfiveimage2 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectionfiveimage2')
+      sectionfiveimage2 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Homepagesectionfiveimage2')
       sectionfiveimage2details = models.TextField(null=True,blank=True)
-      sectionfiveimage3 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectionfiveimage3')
+      sectionfiveimage3 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Homepagesectionfiveimage3')
       sectionfiveimage3details = models.TextField(null=True,blank=True)
-      sectionfiveimage4 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectionfiveimage4')
+      sectionfiveimage4 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Homepagesectionfiveimage4')
       sectionfiveimage4details = models.TextField(null=True,blank=True)
       page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSectionfive')
 
@@ -149,8 +149,8 @@ class Sectionsix(models.Model):
       sectionsixdisc = models.TextField(null=True,blank=True)
       sectionsixbtntext = models.TextField(null=True,blank=True)
       sectionsixbtnurl = models.TextField(null=True,blank=True)
-      sectionsixbgurl = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectionsiximage1')
-      sectionsixmobileimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectionsiximage2')
+      sectionsixbgurl = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Homepagesectionsiximage1')
+      sectionsixmobileimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Homepagesectionsiximage2')
       page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSectionsix')
 
 
@@ -164,11 +164,11 @@ class Sectionone(models.Model):
       sectiononegetstartedbtn = models.TextField(null=True,blank=True)
       sectiononebtnurl = models.TextField(null=True,blank=True)
       sectiononedisplaytext = models.TextField(null=True,blank=True)
-      sectiononeimage1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiononeimage1')
-      sectiononeimage2 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiononeimage2')
-      sectiononeimage3 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiononeimage3')
-      sectiononeimage4 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiononeimage4')
-      sectiononeimage5 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiononeimage5')
+      sectiononeimage1 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectiononeimage1')
+      sectiononeimage2 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectiononeimage2')
+      sectiononeimage3 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectiononeimage3')
+      sectiononeimage4 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectiononeimage4')
+      sectiononeimage5 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectiononeimage5')
       page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagesectionone')
 
       def __str__(self):
@@ -207,7 +207,7 @@ class Sectionthree(models.Model):
 class Details(models.Model):
       detailsheading = models.TextField(null=True,blank=True)
       detailsdiscription = models.TextField(null=True,blank=True)
-      detailsimage = models.ForeignKey(MediaBucket,null=True,blank=True,on_delete=models.CASCADE,related_name='detailsimage')
+      detailsimage = models.ForeignKey(MediaBucket,null=True,blank=True,on_delete=models.SET_NULL,related_name='detailsimage')
       page = models.ForeignKey(Homepage,null=True,blank=True,on_delete=models.CASCADE,related_name='Homepagedetails')
 
       def __str__(self):
@@ -237,14 +237,14 @@ class CommonReview(models.Model):
       username = models.TextField()
       userdesignation = models.TextField()
       userreview = models.TextField()
-      userphoto = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='userphoto')
+      userphoto = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='userphoto')
       # page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagereview')
 
       def __str__(self):
          return f'Homepagereview'
 
 class CommonSlidersection1(models.Model):
-      sliderimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='homepagesliderimagesection1')
+      sliderimage = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='homepagesliderimagesection1')
       # page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSlidersection1')
 
       def __str__(self):
@@ -252,7 +252,7 @@ class CommonSlidersection1(models.Model):
 
 
 class CommonSlidersection2(models.Model):
-      sliderimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='homepagesliderimagesection2')
+      sliderimage = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='homepagesliderimagesection2')
       # page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSlidersection2')
 
       def __str__(self):
@@ -382,10 +382,10 @@ class Page(models.Model):
     blog = models.ForeignKey(Blogs, on_delete=models.CASCADE, null=True,blank=True,related_name='Blogsservicepages')
     pricing = models.ForeignKey(Pricing, on_delete=models.CASCADE, null=True,blank=True,related_name='Pricingservicepages')
     homepage = models.ForeignKey(Homepage, on_delete=models.CASCADE, null=True,blank=True,related_name='Homepageservicepages')
-    pageimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE, null=True,blank=True,related_name='pageimage')
-    pageicon = models.ForeignKey(MediaBucket, on_delete=models.CASCADE, null=True,blank=True,related_name='pageicon')
-    blogimage = models.ForeignKey(MediaBucket,  on_delete=models.CASCADE, null=True,blank=True,related_name='blogimage')
-    blogicon = models.ForeignKey(MediaBucket, on_delete=models.CASCADE, null=True,blank=True,related_name='blogiconimage')
+    pageimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL, null=True,blank=True,related_name='pageimage')
+    pageicon = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL, null=True,blank=True,related_name='pageicon')
+    blogimage = models.ForeignKey(MediaBucket,  on_delete=models.SET_NULL, null=True,blank=True,related_name='blogimage')
+    blogicon = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL, null=True,blank=True,related_name='blogiconimage')
 
 
 
@@ -419,9 +419,9 @@ class Servicessectionone(models.Model):
       sectiontonesimpletext = models.TextField(null=True,blank=True)
       sectiontoneheading1 = models.TextField(null=True,blank=True)
       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiononeservices')
-      sectiontoneimage1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiontoneimage1')
-      sectiontoneimage2 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiontoneimage2')
-      sectiontoneimage3 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiontoneimage3')
+      sectiontoneimage1 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectiontoneimage1')
+      sectiontoneimage2 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectiontoneimage2')
+      sectiontoneimage3 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectiontoneimage3')
 
       def __str__(self):
          return f'Servicessectionone'
@@ -438,9 +438,9 @@ class Servicessectiontwo(models.Model):
       sectiontwoheadin2 = models.TextField(null=True,blank=True)
       sectiontwosubheading2 = models.TextField(null=True,blank=True)
       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiontwoservices')
-      sectiontwovideo = models.ForeignKey(VideoBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiontwovideo')
-      sectiontwoimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiontwoimage')
-      sectiontwocoverimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectiontwocoverimage')
+      sectiontwovideo = models.ForeignKey(VideoBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectiontwovideo')
+      sectiontwoimage = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectiontwoimage')
+      sectiontwocoverimage = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectiontwocoverimage')
 
       def __str__(self):
          return f'Servicessectiontwo'
@@ -453,7 +453,7 @@ class ServicessectionThree(models.Model):
       sectionthreecolourtext = models.TextField(null=True,blank=True)
       sectionthreetextheading = models.TextField(null=True,blank=True)
       sectionthreetextdiscription = models.TextField(null=True,blank=True)
-      sectionthreeimage = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='servicessectionthreeimage')
+      sectionthreeimage = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='servicessectionthreeimage')
       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionthreeservices')
 
 class Servicessectionfour(models.Model):
@@ -471,7 +471,7 @@ class Servicessectionfour(models.Model):
 class servicescapabilities(models.Model):
       servicestext = models.TextField(null=True,blank=True)
       servicessubheading = models.TextField(null=True,blank=True)
-      servicesimg = models.ForeignKey(MediaBucket,null=True,blank=True, on_delete=models.CASCADE,related_name='servicesimg')
+      servicesimg = models.ForeignKey(MediaBucket,null=True,blank=True, on_delete=models.SET_NULL,related_name='servicesimg')
       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='servicescapability')
 
       def __str__(self):
@@ -495,7 +495,7 @@ class Servicessectionsix(models.Model):
       sectionsixsubparagraph = models.TextField(null=True,blank=True)
       sectionsixbtntext = models.TextField(null=True,blank=True)
       sectionsixbtnurl = models.TextField(null=True,blank=True)
-      sectionsiximage1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionsiximage1')
+      sectionsiximage1 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectionsiximage1')
       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionsixservices')
 
       def __str__(self):
@@ -522,12 +522,12 @@ class Servicessectionseven(models.Model):
       sectionsevenpoint2 = models.TextField(null=True,blank=True)
       sectionsevenpoint3 = models.TextField(null=True,blank=True)
       sectionsevenpoint4 = models.TextField(null=True,blank=True)
-      sectionsevenimage1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionsevenimage1')
-      sectionsevenimage2 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionsevenimage2')
-      sectionsevenimage3 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionsevenimage3')
-      sectionsevenimage4 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionsevenimage4')
-      sectionsevenimage5 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionsevenimage5')
-      sectionsevenimage6 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionsevenimage6')
+      sectionsevenimage1 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectionsevenimage1')
+      sectionsevenimage2 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectionsevenimage2')
+      sectionsevenimage3 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectionsevenimage3')
+      sectionsevenimage4 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectionsevenimage4')
+      sectionsevenimage5 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectionsevenimage5')
+      sectionsevenimage6 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectionsevenimage6')
       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionsevenservices')
 
       def __str__(self):
@@ -540,8 +540,8 @@ class Servicescta(models.Model):
       Servicesctadiscription = models.TextField(null=True,blank=True)
       Servicesctabtntext = models.TextField(null=True,blank=True)
       Servicesctabtnurl = models.TextField(null=True,blank=True)
-      Servicesctaimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Servicesctaimg')
-      Servicesctamobileimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Servicesctaimage2')
+      Servicesctaimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Servicesctaimg')
+      Servicesctamobileimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Servicesctaimage2')
       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='Servicescta')
 
       def __str__(self):
@@ -569,8 +569,8 @@ class Ourworksectiontwo(models.Model):
       sectiontwotext = models.TextField(null=True,blank=True)
       sectiontwobtntext = models.TextField(null=True,blank=True)
       sectiontwobtnurl = models.TextField(null=True,blank=True)
-      sectiontwoimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='ourworksectiontwoimg')
-      sectiontwoimgmobile = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='ourworksectiontwoimgmobile')
+      sectiontwoimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='ourworksectiontwoimg')
+      sectiontwoimgmobile = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='ourworksectiontwoimgmobile')
       page = models.ForeignKey(Ourwork, on_delete=models.CASCADE,null=True,blank=True,related_name='ourworksectiontwo')
 
       def __str__(self):
@@ -596,8 +596,8 @@ class Blogsectiontwo(models.Model):
       sectiontwotext = models.TextField(null=True,blank=True)
       sectiontwobtntext = models.TextField(null=True,blank=True)
       sectiontwobtnurl = models.TextField(null=True,blank=True)
-      sectiontwoimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='blogsectiontwoimg')
-      sectiontwoimgmobile = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='blogsectiontwoimgmobile')
+      sectiontwoimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='blogsectiontwoimg')
+      sectiontwoimgmobile = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='blogsectiontwoimgmobile')
       page = models.ForeignKey(Blogs, on_delete=models.CASCADE,null=True,blank=True,related_name='blogsectiontwo')
 
       def __str__(self):
@@ -611,8 +611,8 @@ class Blogsectionthree(models.Model):
       sectionthreetext = models.TextField(null=True,blank=True)
       sectionthreebtntext = models.TextField(null=True,blank=True)
       sectionthreebtnurl = models.TextField(null=True,blank=True)
-      sectionthreeimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='blogsectionthreeimg')
-      sectionthreeimgmobile = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='blogsectionthreeimgmobile')
+      sectionthreeimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='blogsectionthreeimg')
+      sectionthreeimgmobile = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='blogsectionthreeimgmobile')
       page = models.ForeignKey(Blogs, on_delete=models.CASCADE,null=True,blank=True,related_name='Blogsectionthree')
 
       def __str__(self):
@@ -624,8 +624,8 @@ class Blogsectionfour(models.Model):
       sectionfourdiscription = models.TextField(null=True,blank=True)
       sectionfourtext = models.TextField(null=True,blank=True)
       sectionfourbtnurl = models.TextField(null=True,blank=True)
-      sectionfourimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='blogsectionfourimg')
-      sectionfourctaimgmobile = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionfourctaimgmobile')
+      sectionfourimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='blogsectionfourimg')
+      sectionfourctaimgmobile = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectionfourctaimgmobile')
       page = models.ForeignKey(Blogs, on_delete=models.CASCADE,null=True,blank=True,related_name='Blogsectionfour')
 
       def __str__(self):
@@ -652,8 +652,8 @@ class Whyussectionseven(models.Model):
       sectionsevensubheading = models.TextField(null=True,blank=True)
       sectionsevenbtntext = models.TextField(null=True,blank=True)
       sectionsevenbtnurl = models.TextField(null=True,blank=True)
-      sectionsevenimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsevenimg')
-      sectionsevenmobileimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsevenimagemobileimg')
+      sectionsevenimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionsevenimg')
+      sectionsevenmobileimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionsevenimagemobileimg')
       page = models.ForeignKey(Whyus, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionseven')
 
       def __str__(self):
@@ -670,12 +670,12 @@ class Whyussectionsix(models.Model):
       sectionsiximage4details = models.TextField(null=True,blank=True)
       sectionsiximage5details = models.TextField(null=True,blank=True)
       sectionsiximage6details = models.TextField(null=True,blank=True)
-      sectionsiximage1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsiximage1')
-      sectionsiximage2 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsiximage2')
-      sectionsiximage3 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsiximage3')
-      sectionsiximage4 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsiximage4')
-      sectionsiximage5 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsiximage5')
-      sectionsiximage6 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionsiximage6')
+      sectionsiximage1 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionsiximage1')
+      sectionsiximage2 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionsiximage2')
+      sectionsiximage3 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionsiximage3')
+      sectionsiximage4 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionsiximage4')
+      sectionsiximage5 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionsiximage5')
+      sectionsiximage6 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionsiximage6')
       page = models.ForeignKey(Whyus, on_delete=models.CASCADE,null=True,blank=True,related_name='Whyussectionsix')
 
       def __str__(self):
@@ -691,9 +691,9 @@ class Whyussectionfive(models.Model):
       sectionfiveimage1details = models.TextField(null=True,blank=True)
       sectionfiveimage2details= models.TextField(null=True,blank=True)
       sectionfiveimage3details = models.TextField(null=True,blank=True)
-      sectionfiveimage1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionfiveimage1')
-      sectionfiveimage2 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionfiveimage2')
-      sectionfiveimage3 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionfiveimage3')
+      sectionfiveimage1 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionfiveimage1')
+      sectionfiveimage2 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionfiveimage2')
+      sectionfiveimage3 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionfiveimage3')
       page = models.ForeignKey(Whyus, on_delete=models.CASCADE,null=True,blank=True,related_name='Whyussectionfive')
 
       def __str__(self):
@@ -705,8 +705,8 @@ class Whyussectionthree(models.Model):
       sectiononeheading = models.TextField(null=True,blank=True)
       sectiononesubheading = models.TextField(null=True,blank=True)
       sectiononediscription = models.TextField(null=True,blank=True)
-      sectionthreevideoimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionthreevideoimg')
-      sectionthreevideo = models.ForeignKey(VideoBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectionthreevideo')
+      sectionthreevideoimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionthreevideoimg')
+      sectionthreevideo = models.ForeignKey(VideoBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionthreevideo')
       page = models.ForeignKey(Whyus, on_delete=models.CASCADE,null=True,blank=True,related_name='Whyussectionthree')
 
       def __str__(self):
@@ -718,8 +718,8 @@ class Whyussectiontwo(models.Model):
       sectiontwodiscription = models.TextField(null=True,blank=True)
       sectiontwobtntext = models.TextField(null=True,blank=True)
       sectiontwobtnurl = models.TextField(null=True,blank=True)
-      sectiontwoimage1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectiontwoimage1')
-      sectiontwoimage2 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='whyussectiontwoimage2')
+      sectiontwoimage1 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectiontwoimage1')
+      sectiontwoimage2 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectiontwoimage2')
       page = models.ForeignKey(Whyus, on_delete=models.CASCADE,null=True,blank=True,related_name='Whyussectiontwo')
 
       def __str__(self):
@@ -795,7 +795,7 @@ class Pricingsectionthree(models.Model):
       sectionthreetext = models.TextField(null=True,blank=True)
       sectionthreesubheading2 = models.TextField(null=True,blank=True)
       sectionthreeparagraph = models.TextField(null=True,blank=True)
-      sectionthreevideoimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='sectionthreevideoimg')
+      sectionthreevideoimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectionthreevideoimg')
       page = models.ForeignKey(Pricing, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricingsectionthree')
       sectionthreevideo = models.ForeignKey(VideoBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricingsectionthreevideo')
 
@@ -831,12 +831,12 @@ class Pricingsectionfour(models.Model):
       sectionfourpoint2 = models.TextField(null=True,blank=True)
       sectionfourpoint3 = models.TextField(null=True,blank=True)
       sectionfourpoint4 = models.TextField(null=True,blank=True)
-      sectionfourimage1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricingsectionfourimage1')
-      sectionfourimage2 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricingsectionfourimage2')
-      sectionfourimage3 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricingsectionfourimage3')
-      sectionfourimage4 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricingsectionfourimage4')
-      sectionfourimage5 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricingsectionfourimage5')
-      sectionfourimage6 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricingsectionfourimage6')
+      sectionfourimage1 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Pricingsectionfourimage1')
+      sectionfourimage2 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Pricingsectionfourimage2')
+      sectionfourimage3 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Pricingsectionfourimage3')
+      sectionfourimage4 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Pricingsectionfourimage4')
+      sectionfourimage5 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Pricingsectionfourimage5')
+      sectionfourimage6 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Pricingsectionfourimage6')
       page = models.ForeignKey(Pricing, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricingsectionfour')
 
       def __str__(self):
@@ -873,15 +873,15 @@ class Pricingcta(models.Model):
       Pricingctasubheading = models.TextField(null=True,blank=True)
       Pricingctabtntext = models.TextField(null=True,blank=True)
       Pricingctabtnurl = models.TextField(null=True,blank=True)
-      Pricingctaimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='pricingctaimg')
-      Pricingctamobileimg = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='pricingctaimage2')
+      Pricingctaimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='pricingctaimg')
+      Pricingctamobileimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='pricingctaimage2')
       page = models.ForeignKey(Pricing, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricingcta')
 
       def __str__(self):
           return f'Pricingcta'
 
 class Blogauthor(models.Model):
-    profilephoto = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='profilephoto')
+    profilephoto = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='profilephoto')
     bio = models.TextField()
     Position = models.TextField()
     name = models.CharField(max_length=225,unique=True)
@@ -914,8 +914,8 @@ class BlogPost(models.Model):
       title = models.CharField(max_length=800, unique=True)
       slug = AutoSlugField(populate_from='title', unique=True)
       category = models.CharField(max_length=800,null=True,blank=True)
-      thumbnail = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='blogpostthumbnail')
-      Postauthor = models.ForeignKey(Blogauthor, on_delete=models.CASCADE,related_name='blogpostauthor')
+      thumbnail = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='blogpostthumbnail')
+      Postauthor = models.ForeignKey(Blogauthor, on_delete=models.SET_NULL,null=True,blank=True,related_name='blogpostauthor')
       body = RichTextUploadingField()
       summary = models.TextField()
       created = models.DateTimeField(auto_now_add=True)
@@ -939,7 +939,7 @@ class Ourworkproject(models.Model):
       projectsummary = models.TextField()
       year = models.IntegerField()
       industry = models.TextField()
-      projectthumbnail = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,related_name='projectthumbnailourwork')
+      projectthumbnail = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='projectthumbnailourwork')
       body = RichTextUploadingField()
       created = models.DateTimeField(auto_now_add=True)
       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='servicesourwork')
@@ -981,9 +981,9 @@ class Bookacallsectionone(models.Model):
       sectiononeheading = models.TextField(null=True,blank=True)
       sectiononesubheading = models.TextField(null=True,blank=True)
       sectiononediscription = models.TextField(null=True,blank=True)
-      sectiononeimg1 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='bookacallsectiononeimg1')
-      sectiononeimg2 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='bookacallsectiononeimg2')
-      sectiononeimg3 = models.ForeignKey(MediaBucket, on_delete=models.CASCADE,null=True,blank=True,related_name='bookacallsectiononeimg3')
+      sectiononeimg1 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='bookacallsectiononeimg1')
+      sectiononeimg2 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='bookacallsectiononeimg2')
+      sectiononeimg3 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='bookacallsectiononeimg3')
       page = models.ForeignKey(Bookacall, on_delete=models.CASCADE,null=True,blank=True,related_name='Bookacallsectionone')
 
       def __str__(self):
