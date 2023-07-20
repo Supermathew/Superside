@@ -4384,3 +4384,23 @@ class MyAPIView(GenericAPIView):
 
         # Return a response
         return Response({'message': 'Success'})
+
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.generics import ListAPIView
+
+class CustomPagination(PageNumberPagination):
+    page_size = 10
+
+class BlogsListView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+
+    queryset = BlogPost.objects.all()
+    serializer_class = ServicesBlogPostSerializer
+    pagination_class = CustomPagination
+
+class OurworkListView(ListAPIView):
+
+        permission_classes = [IsAuthenticated]
+        queryset = Ourworkproject.objects.all()
+        serializer_class = OurworkprojectSerializer
+        pagination_class = CustomPagination
