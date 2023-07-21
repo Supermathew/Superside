@@ -1595,21 +1595,21 @@ class HomepageSlidersection1updateView(GenericAPIView):
 
     def delete(self, request, image_id):
         try:
-            menu = CommonSlidersection2.objects.get(id=image_id)
+            menu = CommonSlidersection1.objects.get(id=image_id)
             menu.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        except CommonSlidersection2.DoesNotExist:
+        except CommonSlidersection1.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def put(self, request, image_id):
         try:
-            menu = CommonSlidersection2.objects.get(id=image_id)
-            serializer = HomepageSlidersection2Serializer(menu, data=request.data)
+            menu = CommonSlidersection1.objects.get(id=image_id)
+            serializer = HomepageSlidersection1Serializer(menu, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except CommonSlidersection2.DoesNotExist:
+        except CommonSlidersection1.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 class UserHomepageSlidersection2View(GenericAPIView):
@@ -1636,12 +1636,12 @@ class HomepageSlidersection2View(GenericAPIView):
     serializer_class = HomepageSlidersection2Serializer
 
     def get(self, request):
-        menus = CommonSlidersection1.objects.all()
-        serializer = HomepageSlidersection1Serializer(menus, many=True)
+        menus = CommonSlidersection2.objects.all()
+        serializer = HomepageSlidersection2Serializer(menus, many=True)
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = HomepageSlidersection1Serializer(data=request.data)
+        serializer = HomepageSlidersection2Serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
