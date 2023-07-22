@@ -36,7 +36,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from navigation.models import ( 
-    MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,Emailinput,Social,
+    MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,Emailinput,Social,Category,Subcategory,
     Bookacall,Bookacallsectionone,Bookacallsectiontwo,Facts,Pricingcta,Servicessectionfour,servicescapabilities,Servicescta,Userdata,Homepagemeta,Pricingmeta,Whyusmeta,Ourworkmeta,Blogsmeta,Servicesmeta,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,CommonSlidersection2,CommonReview,CommonSlidersection1,
     Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Blogsectionfive,
@@ -52,7 +52,7 @@ from .serializers import (
     ServicessectionThreeSerializer,FaqSerializer,EmailSerializer,SectionsixSerializer,SectionfiveSerializer,singlereviewSerializer,servicesmetaSerializer,
 HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,HomepageReviewSerializer,PricingctaSerializer,PricingmetaSerializer,whyusmetaSerializer,
     ServicessectionsixSerializer,ServicessectionsevenSerializer,FactsSerializer,userdataSerializer,adminlogoSerializer,
-    OurworkSerializer,OurworksectiononeSerializer,OurworksectiontwoSerializer,
+    OurworkSerializer,OurworksectiononeSerializer,OurworksectiontwoSerializer,CategorySerializer,SubcategorySerializer,
     BlogsSerializer,BlogsectiononeSerializer,BlogsectiontwoSerializer,HomepagemetaSerializer,
     BlogsectionthreeSerializer,BlogsectionfourSerializer,WhyusSerializer,
     WhyussectionsevenSerializer,WhyussectionsixSerializer,HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,
@@ -3408,19 +3408,19 @@ class ServicesBlogPostView(GenericAPIView):
     
     def get(self, request, page_slug):
         try:
-            page = Page.objects.get(slug=page_slug)
-        except Page.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+            page = Category.objects.get(slug=page_slug)
+        except Category.DoesNotExist:
+            return Response({'error': 'Category not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        reviews = BlogPost.objects.filter(page=page)
+        reviews = BlogPost.objects.filter(category=page)
         serializer = ServicesBlogPostSerializer(reviews, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, page_slug):
         try:
-            page = Page.objects.get(slug=page_slug)
-        except Page.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+            page = Category.objects.get(slug=page_slug)
+        except Category.DoesNotExist:
+            return Response({'error': 'Category not found'}, status=status.HTTP_404_NOT_FOUND)
         data = request.data.copy()  # Create a mutable copy of the request data
         tag_ids = request.data.get('tag')  # Get tag IDs from the request data
         postauthor_id = request.data.get('Postauthor')
@@ -3431,7 +3431,7 @@ class ServicesBlogPostView(GenericAPIView):
         serializer = ServicesBlogPostSerializer(data=request.data)
         if serializer.is_valid():
            postauthor_id = request.data.get('Postauthor')
-           blog_post = serializer.save(page=page, Postauthor_id=postauthor_id)
+           blog_post = serializer.save(category=page, Postauthor_id=postauthor_id)
            array = json.loads(tag_ids)
            tags = Tag.objects.filter(id__in=array)  # Get the Tag objects based on IDs
            blog_post.tag.set(tags)  # Set the tags for the blog post
@@ -3459,11 +3459,11 @@ class ServicessingleBlogPostView(GenericAPIView):
 
     def get(self, request, page_slug, blog_slug):
         try:
-            page = Page.objects.get(slug=page_slug)
-        except Page.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+            page = Category.objects.get(slug=page_slug)
+        except Category.DoesNotExist:
+            return Response({'error': 'Category not found'}, status=status.HTTP_404_NOT_FOUND)
         try:
-           reviews = BlogPost.objects.get(page=page,slug=blog_slug)
+           reviews = BlogPost.objects.get(category=page,slug=blog_slug)
         except BlogPost.DoesNotExist:
             return Response({'error': 'BlogPost not found'}, status=status.HTTP_404_NOT_FOUND)
         print(reviews)
@@ -3475,14 +3475,14 @@ class ServicessingleBlogPostView(GenericAPIView):
         if not review:
             return Response({'error': 'BlogPost not found'}, status=status.HTTP_404_NOT_FOUND)
         try:
-            page = Page.objects.get(slug=page_slug)
-        except Page.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+            page = Category.objects.get(slug=page_slug)
+        except Category.DoesNotExist:
+            return Response({'error': 'Category not found'}, status=status.HTTP_404_NOT_FOUND)
         data = request.data.copy()  # Create a mutable copy of the request data
         serializer = ServicesBlogPostSerializer(review, data=request.data)
         if serializer.is_valid():
            postauthor_id = request.data.get('Postauthor')
-           blog_post = serializer.save(page=page, Postauthor_id=postauthor_id)
+           blog_post = serializer.save(category=page, Postauthor_id=postauthor_id)
            tag_ids = request.data.get('tag', [])  # Get tag IDs from the request data
            array = json.loads(tag_ids)
            tags = Tag.objects.filter(id__in=array)  # Get the Tag objects based on IDs
@@ -3494,9 +3494,9 @@ class ServicessingleBlogPostView(GenericAPIView):
 
     def delete(self, request,page_slug, blog_slug):
         try:
-            page = Page.objects.get(slug=page_slug)
-        except Page.DoesNotExist:
-            return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+            page = Category.objects.get(slug=page_slug)
+        except Category.DoesNotExist:
+            return Response({'error': 'Category not found'}, status=status.HTTP_404_NOT_FOUND)
 
         review = self.get_blogpost(blog_slug)
         if not review:
@@ -3749,6 +3749,39 @@ class OurworkuserView(GenericAPIView):
         serializer = OurworkUserSerializer(blogs)
         return Response(serializer.data)
 
+from rest_framework.pagination import BasePagination
+
+class ShowpageMorePagination(BasePagination):
+    default_limit = 10
+    max_limit = 100  # Set a maximum limit to prevent excessive loading
+
+    def get_limit(self, request):
+        if 'limit' in request.query_params:
+            try:
+                limit = int(request.query_params['limit'])
+                return min(limit, self.max_limit)
+            except ValueError:
+                pass
+        return self.default_limit
+
+    def get_offset(self, request):
+        if 'offset' in request.query_params:
+            try:
+                return int(request.query_params['offset'])
+            except ValueError:
+                pass
+        return 0
+
+    def paginate_queryset(self, queryset, request, view=None):
+        self.limit = self.get_limit(request)
+        self.offset = self.get_offset(request)
+        return list(queryset[self.offset : self.offset + self.limit])
+
+    def get_paginated_response(self, data):
+        return {
+            'next_offset': self.offset + self.limit if len(data) == self.limit else None,
+            'results': data,
+        }
 
 
 
@@ -3757,8 +3790,8 @@ from .serializers import WorkresultSerializer
 from rest_framework.pagination import LimitOffsetPagination
 
 class ShowMorePagination(LimitOffsetPagination):
-    default_limit = 2
-    max_limit = 2
+    default_limit = 6
+    max_limit = 6
 
 class OurworkresultView(generics.ListAPIView):
     serializer_class = WorkresultSerializer
@@ -3844,19 +3877,47 @@ class allBloguserView(generics.ListAPIView):
     queryset = BlogPost.objects.all()
     pagination_class = ShowMorePagination
 
+class categoriesView(generics.ListAPIView):
+    serializer_class = blogsingleSerializer
+    queryset = BlogPost.objects.all()
+    pagination_class = ShowMorePagination
+
+
+
+class alleverythingBloguserView(generics.ListAPIView):
+    serializer_class = blogsingleSerializer
+    queryset = BlogPost.objects.all()
+    pagination_class = ShowMorePagination
+
 class BlogbycategoryView(GenericAPIView):
 
     serializer_class = PageblogSerializer
 
     def get(self, request,page_slug):
         try:
-            blogs = Page.objects.filter(slug=page_slug)
+            blogs = Category.objects.filter(slug=page_slug)
             # first_three_blogs = blogs[:3]
-        except Page.DoesNotExist:
-            return Response({'error': 'please create a Page category in Dashboard'}, status=status.HTTP_404_NOT_FOUND)
+        except Category.DoesNotExist:
+            return Response({'error': 'Category create a Page category in Dashboard'}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = PageblogSerializer(blogs, many=True)
         return Response(serializer.data)
+
+class BlogbysubcategoryView(GenericAPIView):
+
+    serializer_class = PageblogSerializer
+
+    def get(self, request,page_slug):
+        try:
+            blogs = Subcategory.objects.filter(slug=page_slug)
+            # first_three_blogs = blogs[:3]
+        except Subcategory.DoesNotExist:
+            return Response({'error': 'Subcategory create a Page category in Dashboard'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = PageblogSerializer(blogs, many=True)
+        return Response(serializer.data)
+
+
 
 
 class SingleblogView(GenericAPIView):
@@ -4440,3 +4501,123 @@ class OurworkListView(ListAPIView):
         queryset = Ourworkproject.objects.all()
         serializer_class = OurworkprojectSerializer
         pagination_class = CustomPagination
+
+class UserOurworkListView(ListAPIView):
+
+        queryset = Ourworkproject.objects.all()
+        serializer_class = OurworkprojectSerializer
+        pagination_class = ShowMorePagination
+
+class CategoryView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = CategorySerializer
+
+    def get(self, request):
+        pages = Category.objects.all()
+        serializer = CategorySerializer(pages, many=True)
+        return Response(serializer.data)
+
+
+
+    def post(self, request):
+        serializer = CategorySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CategoryUpdateView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = CategorySerializer
+
+    def get(self, request,page_slug):
+        try:
+            page = Category.objects.get(slug=page_slug)
+        except Category.DoesNotExist:
+            return Response({'error': 'Page not found error'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = CategorySerializer(page)
+        return Response(serializer.data)
+
+
+
+    def delete(self, request, page_slug):
+        try:
+            page = Category.objects.get(slug=page_slug)
+        except ObjectDoesNotExist:
+            return Response({'error': 'Category not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        page.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def put(self, request, page_slug):
+        try:
+            page = Category.objects.get(slug=page_slug)
+            serializer = CategorySerializer(page, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Category.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+
+class SubcategoryView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = SubcategorySerializer
+
+    def get(self, request):
+        pages = Subcategory.objects.all()
+        serializer = SubcategorySerializer(pages, many=True)
+        return Response(serializer.data)
+
+
+
+    def post(self, request):
+        serializer = SubcategorySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SubcategoryUpdateView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = SubcategorySerializer
+
+    def get(self, request,page_slug):
+        try:
+            page = Subcategory.objects.get(slug=page_slug)
+        except Subcategory.DoesNotExist:
+            return Response({'error': 'Subcategory not found error'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = SubcategorySerializer(page)
+        return Response(serializer.data)
+
+
+
+    def delete(self, request, page_slug):
+        try:
+            page = Subcategory.objects.get(slug= page_slug)
+        except ObjectDoesNotExist:
+            return Response({'error': 'Subcategory not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        page.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def put(self, request, page_slug):
+        try:
+            page = Subcategory.objects.get(slug=page_slug)
+            serializer = SubcategorySerializer(page, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Subcategory.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)

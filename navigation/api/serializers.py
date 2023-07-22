@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.urls import reverse
 
 from navigation.models import ( 
-    MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,
+    MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,Category,Subcategory,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Emailinput,Social,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,
     Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Servicessectionfour,servicescapabilities,Ourworkmeta,
     Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,Pricingcta,Servicessectionone,Servicescta,Userdata,Homepagemeta,Servicesmeta,
@@ -545,8 +545,8 @@ class ServicesBlogPostSerializer(serializers.ModelSerializer):
 
 
       def get_blogpage_slug(self, BlogPost):
-          if BlogPost.page:
-              return BlogPost.page.slug
+          if BlogPost.category:
+              return BlogPost.category.slug
           return None
       
 
@@ -1389,10 +1389,36 @@ class blogsingleSerializer(serializers.ModelSerializer):
 #         model = BlogPost
 #         fields = '__all__'
 
+class SubcategorySerializer(serializers.ModelSerializer):
+
+
+    pagethumbnail_path = serializers.SerializerMethodField()
+    subcategoryallblog_path = serializers.SerializerMethodField()
+
+
+
+    def get_pagethumbnail_path(self, Subcategory):
+        if Subcategory.pageimg:
+            return Subcategory.pageimg.image.url
+        return None
+
+    def get_subcategoryallblog_path(self, obj):
+        if obj.slug:
+            return reverse('blogbysubcategory',args=[obj.slug])
+        return None
+
+    class Meta:
+        model = Subcategory
+        fields = '__all__'
+
 class PageblogSerializer(serializers.ModelSerializer):
 
-    servicesBlogPost = blogsingleSerializer(many=True, read_only=True)
+    blogcategory = blogsingleSerializer(many=True, read_only=True)
     blogthumbnailimg_path = serializers.SerializerMethodField()
+    servicesBlogPost = blogsingleSerializer(many=True, read_only=True)
+
+    BlogsSubcategory = SubcategorySerializer(many=True, read_only=True)
+
 
 
     page_url = serializers.SerializerMethodField()
@@ -1402,13 +1428,13 @@ class PageblogSerializer(serializers.ModelSerializer):
             return reverse('blogbycategory',args=[Page.slug])
         return None
 
-    def get_blogthumbnailimg_path(self, Page):
-        if Page.pageimg:
-            return Page.pageimg.image.url
+    def get_blogthumbnailimg_path(self, Category):
+        if Category.pageimg:
+            return Category.pageimg.url
         return None
 
     class Meta:
-        model = Page
+        model = Category
         fields = '__all__'   
 
 ###timepass
@@ -1423,22 +1449,22 @@ class PageHomeblogSerializer(serializers.ModelSerializer):
     blogs = serializers.SerializerMethodField()
 
     def get_blogs(self, obj):
-        blog_posts = BlogPost.objects.filter(page=obj)[:3]
+        blog_posts = BlogPost.objects.filter(category=obj)[:3]
         serializer = blogsingleSerializer(blog_posts, many=True)
         return serializer.data
 
-    def get_page_url(self, Page):
-        if Page.slug:
-            return reverse('blogbycategory',args=[Page.slug])
+    def get_page_url(self, Category):
+        if Category.slug:
+            return reverse('blogbycategory',args=[Category.slug])
         return None
 
-    def get_blogthumbnailimg_path(self, Page):
-        if Page.pageimg:
-            return Page.pageimg.image.url
+    def get_blogthumbnailimg_path(self, Category):
+        if Category.pageimg:
+            return Category.pageimg.url
         return None
 
     class Meta:
-        model = Page
+        model = Category
         fields = '__all__'   
 
 class BlogUserSerializer(serializers.ModelSerializer):
@@ -1460,11 +1486,15 @@ class BlogUserSerializer(serializers.ModelSerializer):
 class BlogTimepassUserSerializer(serializers.ModelSerializer):
 
     blogsectionone = BlogsectiononeSerializer(many=True, read_only=True)
-    Blogsservicepages = PageHomeblogSerializer(many=True, read_only=True)
+    BlogsCategory = PageHomeblogSerializer(many=True, read_only=True)
     blogsectiontwo = BlogsectiontwoSerializer(many=True, read_only=True)
     Blogsectionthree = BlogsectionthreeSerializer(many=True, read_only=True)
     Blogsectionfour = BlogsectionfourSerializer(many=True, read_only=True)
+    blogallpageurl = serializers.SerializerMethodField()
 
+
+    def get_blogallpageurl(self,page_slug):
+            return reverse('blogsab')
 
     class Meta:
         model = Blogs
@@ -2361,4 +2391,78 @@ class adminlogoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Adminpanellogo
         fields = '__all__'
+
+class CategorySerializer(serializers.ModelSerializer):
+
+    # sectiononeservices = ServicessectiononeSerializer(many=True, read_only=True)
+    # sectiontwoservices = ServicessectiontwoSerializer(many=True, read_only=True)
+    # sectionthreeservices = ServicessectionThreeSerializer(many=True, read_only=True)
+    # servicesreviewpage = ServicesreviewSerializer(many=True, read_only=True)
+    # servicesfaq = FaqSerializer(many=True, read_only=True)
+    # sectionsixservices = ServicessectionsixSerializer(many=True, read_only=True)
+    # sectionsevenservices = ServicessectionsevenSerializer(many=True, read_only=True)
+    # slidersection = SlidersectionSerializer(many=True, read_only=True)
+
+
+
+
+    pagethumbnail_path = serializers.SerializerMethodField()
+    pageicon_path = serializers.SerializerMethodField()
+    pageblogimage_path = serializers.SerializerMethodField()
+    blogiconimage_path = serializers.SerializerMethodField()
+
+
+
+
+    # blogimgsection = serializers.SerializerMethodField()
+
+    # def get_blogimgsection(self, Page):
+    #     if Page.slug:
+    #         return reverse('blogimgsection',args=[Page.slug])
+    #     return None
+
+    def get_pagethumbnail_path(self, Page):
+        if Page.pageimg:
+            return Page.pageimg.image.url
+        return None
+
+    def get_pageicon_path(self, Page):
+        if Page.pageicon:
+            return Page.pageicon.image.url
+        return None
+
+    def get_pageblogimage_path(self, Page):
+        if Page.blogimage:
+            return Page.blogimage.image.url
+        return None
+
+    def get_blogiconimage_path(self, Page):
+        if Page.blogicon:
+            return Page.blogicon.image.url
+        return None
+
+
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+    def create(self, validated_data):
+        # Get or create the first objects from Homepage, Pricing, and Whyus models
+
+        blog, blogpage = Blogs.objects.get_or_create()
+        
+
+        if blogpage:
+            blog.title = "blogpage"
+            blog.save()
+
+        # Assign the related objects to the Page model
+
+        validated_data['blog'] = blog
+
+
+        return super().create(validated_data)
+
+
+
 

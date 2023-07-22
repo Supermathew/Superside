@@ -21,16 +21,16 @@ from django.conf import settings
 import navigation.signals
 from navigation.api.views import (
     ImageUploadView, HeaderView, MenuView, SubMenuView, FooterView, SectiontwoView, SectionfourView,OurworkuserView,OurworkresultsingleView,ServicesUserpageView,
-    PricingUpdateFaqView,authordetailsView,UsersinglereviewView,CapacityView,CapacityUpdateView,ServicesctaView,
+    PricingUpdateFaqView,authordetailsView,UsersinglereviewView,CapacityView,CapacityUpdateView,ServicesctaView,UserOurworkListView,
     SectiononeView, VideoUploadView, SectionthreeView, DetailsView, HomepageReviewView, PageView,WhyususerView,OurworkallresultView,bookacalluserView,HomepageUpdateSlidersection2View,authornameview,
-    ImageUpdateUploadView,UserFactsview,PricingctaView,ServicessectionfourView,
+    ImageUpdateUploadView,UserFactsview,PricingctaView,ServicessectionfourView,CategoryView,SubcategoryView,BlogbysubcategoryView,
     PagelistView, ServicessectiononeView, ServicessectiontwoView, ServicessectionThreeView,homepageView,homeView,BloguserView,
-    SingleblogView,BlogbycategoryView,UserdataView,clientUserdataView,BlogsectionfiveView,ServicesView,
-    PricingUpdatedetailsView,DetailsUpdateView,PricingUpdatesubdetailsView,adminlogoView,
+    SingleblogView,BlogbycategoryView,UserdataView,clientUserdataView,BlogsectionfiveView,ServicesView,SubcategoryUpdateView,
+    PricingUpdatedetailsView,DetailsUpdateView,PricingUpdatesubdetailsView,adminlogoView,CategoryUpdateView,
     allBloguserView,BlogbytagView,SectionfiveView,singlereviewView,HomepagemetaView,HomepagemetaUpdateView,PricingmetaView,pricingmetaUpdateView,
-    sectionsixView, FaqView, ServicessectionsixView, ServicessectionsevenView,OurworkListView,
+    sectionsixView, FaqView, ServicessectionsixView, ServicessectionsevenView,OurworkListView,alleverythingBloguserView,
     servicesview,OurworkresultView,HomepageSlidersection1updateView,HomepageUpdateReviewView,FaqUpdateView,whyusmetaView,whyusmetaUpdateView,
-    SocialupdateView,tagdetailsView,UserFooterView,UsernavbarView,blogmetaView,BlogsListView,
+    SocialupdateView,tagdetailsView,UserFooterView,UsernavbarView,blogmetaView,BlogsListView,categoriesView,
     BookacallView,BookacallsectiononeView,BookacallsectiontwoView,HomepageSlidersection1View,HomepageSlidersection2View,OurworkresultsinglepreviousView,
     OurworkresultsinglenextAPIView,BlogbyauthorView,UserHeaderView,UserHomepageSlidersection1View,UserHomepageSlidersection2View,UserHomepageReviewView,
     OurworksectiononeView, OurworksectiontwoView, OurworkView, BlogsView, BlogssectiononeView,OurworkprojectView,ServicessingleOurworkView,BlogauthorView,
@@ -70,6 +70,7 @@ urlpatterns = [
     path('header/', UserHeaderView.as_view()),
     path('navbar/', UsernavbarView.as_view()),
     path('footer/', UserFooterView.as_view()),
+    path('categories/', categoriesView.as_view()),
     path('social/', UserSocialView.as_view()),##approved
     path('dashboard/header/', HeaderView.as_view()),
     path('dashboard/menu/', MenuView.as_view()),
@@ -94,7 +95,9 @@ urlpatterns = [
     path('userdata/', UserdataView.as_view()),
     path('userdata/<slug:page_slug>/', clientUserdataView.as_view()),
     path('blogs/all/', allBloguserView.as_view()),
+    path('blogs/alleveything/', alleverythingBloguserView.as_view(),name='blogsab'),
     path('blogs/category/<slug:page_slug>/', BlogbycategoryView.as_view(),name='blogbycategory'),
+    path('blogs/subcategory/<slug:page_slug>/', BlogbysubcategoryView.as_view(),name='blogbysubcategory'),
     path('blogs/tags/<slug:tag_slug>/', BlogbytagView.as_view(),name='blogbytag'),
     path('blogs/<slug:page_slug>/', SingleblogView.as_view(),name='singleblog'),
     path('blogs/author/<slug:author_name>/', authornameview.as_view(),name='authorname'),
@@ -108,6 +111,12 @@ urlpatterns = [
     # path('homepage/<slug:page_slug>/', servicesview.as_view(),name='servicespages'),
     # path('dashboard/multiplefile/', multiplefileView.as_view(),name='multiplefile'),#approved
     path('dashboard/logo/', adminlogoView.as_view()),
+    path('dashboard/category/', CategoryView.as_view()),
+    path('dashboard/category/<slug:page_slug>/', CategoryUpdateView.as_view()),
+    path('dashboard/subcategory/', SubcategoryView.as_view()),
+    path('dashboard/subcategory/<slug:page_slug>/', SubcategoryUpdateView.as_view()),
+
+
     path('dashboard/subscriberemail/', EmailView.as_view(),name='subscriberemail'),#approved
     path('dashboard/social/', SocialView.as_view(),name='socialmedia'),##approved
     path('dashboard/social/<int:social_id>/', SocialupdateView.as_view(),name='socialmedia-update'),#approved
@@ -162,6 +171,7 @@ urlpatterns = [
     path('dashboard/blogs/', BlogsView.as_view(),name='blogs'),
     path('dashboard/blogs/all/', BlogsListView.as_view()),
     path('dashboard/ourwork/all/', OurworkListView.as_view()),
+    path('showmore/ourwork/', UserOurworkListView.as_view()),
     path('dashboard/blogs/<slug:page_slug>/sectionone/', BlogssectiononeView.as_view(),name='blogsectionone'),
     path('dashboard/blogs/<slug:page_slug>/sectiontwo/', BlogssectiontwoView.as_view(),name='blogsectiontwo'),
     path('dashboard/blogs/<slug:page_slug>/blogmetadetails/', blogmetaView.as_view(),name='blogmetadetails'),

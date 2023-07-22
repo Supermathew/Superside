@@ -919,27 +919,7 @@ class Tag(models.Model):
         super().save(*args, **kwargs)
 
 
-class BlogPost(models.Model):
-      title = models.CharField(max_length=800, unique=True)
-      slug = AutoSlugField(populate_from='title', unique=True)
-      category = models.CharField(max_length=800,null=True,blank=True)
-      thumbnail = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='blogpostthumbnail')
-      Postauthor = models.ForeignKey(Blogauthor, on_delete=models.SET_NULL,null=True,blank=True,related_name='blogpostauthor')
-      body = RichTextUploadingField()
-      summary = models.TextField()
-      created = models.DateTimeField(auto_now_add=True)
-      tag = models.ManyToManyField(Tag, related_name='blogposts')
-      jsondata = models.TextField(null=True,blank=True)
-      page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='servicesBlogPost')
 
-
-      def __str__(self):
-            return self.title
-
-      def save(self, *args, **kwargs):
-            if self.title != self.slug:  # Only update the slug if the title has changed
-                  self.slug = slugify(self.title)
-            super().save(*args, **kwargs)
 
 
 class Ourworkproject(models.Model):
@@ -1054,3 +1034,68 @@ class Adminpanellogo(models.Model):
 
       def __str__(self):
          return self.logo
+
+
+
+from django.db import models
+from autoslug import AutoSlugField
+
+from django.db import models
+from autoslug import AutoSlugField
+from django.utils.text import slugify
+
+class Category(models.Model):
+    title = models.TextField(unique=True)
+    description = models.TextField()
+    slug = AutoSlugField(populate_from='title', unique=True)
+    blog = models.ForeignKey(Blogs, on_delete=models.CASCADE, null=True, blank=True, related_name='BlogsCategory')
+    pageimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL, null=True, blank=True, related_name='pageimageCategory')
+    pageicon = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL, null=True, blank=True, related_name='pageiconCategory')
+    blogimage = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL, null=True, blank=True, related_name='blogimageCategory')
+    blogicon = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL, null=True, blank=True, related_name='blogiconimageCategory')
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if self.title != self.slug:  # Only update the slug if the title has changed
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+
+class Subcategory(models.Model):
+    title = models.TextField(unique=True)
+    description = models.TextField()
+    slug = AutoSlugField(populate_from='title', unique=True)
+    blog = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='BlogsSubcategory')
+    pageimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL, null=True, blank=True, related_name='pageimagesubCategory')
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if self.title != self.slug:  # Only update the slug if the title has changed
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+
+class BlogPost(models.Model):
+    title = models.CharField(max_length=800, unique=True)
+    slug = AutoSlugField(populate_from='title', unique=True)
+    thumbnail = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL, null=True, blank=True, related_name='blogpostthumbnail')
+    Postauthor = models.ForeignKey(Blogauthor, on_delete=models.SET_NULL, null=True, blank=True, related_name='blogpostauthor')
+    body = RichTextUploadingField()
+    summary = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    tag = models.ManyToManyField(Tag, related_name='blogposts')
+    jsondata = models.TextField(null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='blogcategory')
+    subcategory = models.ForeignKey(Subcategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='SubcategoryBlogPost')
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if self.title != self.slug:  # Only update the slug if the title has changed
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
