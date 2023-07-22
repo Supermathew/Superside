@@ -25,7 +25,7 @@ from navigation.api.views import (
     SectiononeView, VideoUploadView, SectionthreeView, DetailsView, HomepageReviewView, PageView,WhyususerView,OurworkallresultView,bookacalluserView,HomepageUpdateSlidersection2View,authornameview,
     ImageUpdateUploadView,UserFactsview,PricingctaView,ServicessectionfourView,
     PagelistView, ServicessectiononeView, ServicessectiontwoView, ServicessectionThreeView,homepageView,homeView,BloguserView,
-    SingleblogView,BlogbycategoryView,UserdataView,clientUserdataView,BlogsectionfiveView,
+    SingleblogView,BlogbycategoryView,UserdataView,clientUserdataView,BlogsectionfiveView,ServicesView,
     PricingUpdatedetailsView,DetailsUpdateView,PricingUpdatesubdetailsView,adminlogoView,
     allBloguserView,BlogbytagView,SectionfiveView,singlereviewView,HomepagemetaView,HomepagemetaUpdateView,PricingmetaView,pricingmetaUpdateView,
     sectionsixView, FaqView, ServicessectionsixView, ServicessectionsevenView,OurworkListView,
@@ -73,6 +73,7 @@ urlpatterns = [
     path('social/', UserSocialView.as_view()),##approved
     path('dashboard/header/', HeaderView.as_view()),
     path('dashboard/menu/', MenuView.as_view()),
+    path('services/', ServicesView.as_view()),
     path('dashboard/menu/<int:menu_id>/', MenuUpdateView.as_view()),
     path('dashboard/menu/<int:menu_id>/submenu/', SubMenuView.as_view()),
     path('dashboard/menu/<int:menu_id>/submenu/<int:submenu_id>/', SubMenuUpdateView.as_view()),

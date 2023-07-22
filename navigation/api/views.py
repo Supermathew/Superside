@@ -462,15 +462,41 @@ class UserFactsview(GenericAPIView):
     # permission_classes = [IsAuthenticated]
     serializer_class = FactsSerializer
 
+    # def get(self, request):
+    #     try:
+    #         facts = Facts.objects.filter()[:1].filter()  # Get the first object if exists
+    #     except Facts.DoesNotExist:
+    #          facts = Facts.objects.create()
+    #         # Perform any additional initialization for the newly created facts object
+
+    #     serializer = FactsSerializer(facts)
+    #     return Response(serializer.data)
     def get(self, request):
-        try:
-            facts = Facts.objects.filter()[:1].filter()  # Get the first object if exists
-        except Facts.DoesNotExist:
-             facts = Facts.objects.create()
+            # Try to retrieve an existing Facts instance from the database
+            facts = Facts.objects.first()
+
+            if facts is None:
+                # If no Facts instance exists, create a new one with default values
+                facts = Facts(
+                    subTitle1="",
+                    title1="",
+                    desc1="",
+                    subTitle2="",
+                    title2="",
+                    desc2="",
+                    subTitle3="",
+                    title3="",
+                    desc3="",
+                    subTitle4="",
+                    title4="",
+                    desc4="",
+                )
+                # Save the newly created facts object to the database
+                facts.save()
             # Perform any additional initialization for the newly created facts object
 
-        serializer = FactsSerializer(facts)
-        return Response(serializer.data)
+            serializer = FactsSerializer(facts)
+            return Response(serializer.data)
 
 class SectionfourView(GenericAPIView):
 
@@ -3857,6 +3883,16 @@ class ServicesUserpageView(GenericAPIView):
             return Response({'error': 'please create a Page in Dashboard'}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = ServicesuserSerializer(blogs)
+        return Response(serializer.data)
+
+
+class ServicesView(GenericAPIView):
+
+    serializer_class = PageDashboardSerializer
+
+    def get(self, request):
+        pages = Page.objects.all()
+        serializer = PageDashboardSerializer(pages, many=True)
         return Response(serializer.data)
 
 

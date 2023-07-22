@@ -11,7 +11,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class MediaBucket(models.Model):
-    image = models.ImageField(upload_to='media/')
+    image = models.FileField(upload_to='media/')
 
     def __str__(self):
         return f'files' 
@@ -91,18 +91,27 @@ class Sectiontwo(models.Model):
          return f'Sectiontwo'
 
 class Facts(models.Model):
-      subTitle1 = models.TextField(null=True,blank=True)
-      title1 = models.TextField(null=True,blank=True)
-      desc1 = models.TextField(null=True,blank=True)
-      subTitle2 = models.TextField(null=True,blank=True)
-      title2 = models.TextField(null=True,blank=True)
-      desc2 = models.TextField(null=True,blank=True)
-      subTitle3 = models.TextField(null=True,blank=True)
-      title3 = models.TextField(null=True,blank=True)
-      desc3 = models.TextField(null=True,blank=True)
-      subTitle4 = models.TextField(null=True,blank=True)
-      title4 = models.TextField(null=True,blank=True)
-      desc4 = models.TextField(null=True,blank=True)
+      subTitle1 = models.TextField(null=True,blank=True,default="null")
+      title1 = models.TextField(null=True,blank=True,default="null")
+      desc1 = models.TextField(null=True,blank=True,default="null")
+      subTitle2 = models.TextField(null=True,blank=True,default="null")
+      title2 = models.TextField(null=True,blank=True,default="null")
+      desc2 = models.TextField(null=True,blank=True,default="null")
+      subTitle3 = models.TextField(null=True,blank=True,default="null")
+      title3 = models.TextField(null=True,blank=True,default="null")
+      desc3 = models.TextField(null=True,blank=True,default="null")
+      subTitle4 = models.TextField(null=True,blank=True,default="null")
+      title4 = models.TextField(null=True,blank=True,default="null")
+      desc4 = models.TextField(null=True,blank=True,default="null")
+
+      def save(self, *args, **kwargs):
+        # Set default values to "null" for each field if not provided
+        for field in self._meta.fields:
+            if field.name.startswith('subTitle') or field.name.startswith('title') or field.name.startswith('desc'):
+                if getattr(self, field.name) is None:
+                    setattr(self, field.name, 'null')
+
+        super(Facts, self).save(*args, **kwargs)
 
       def __str__(self):
          return f'Facts'
