@@ -108,7 +108,7 @@ class ForgotPasswordView(GenericAPIView):
             # Compose password reset email
             subject = 'Reset Your Password'
             message = f"Click the following link to reset your password:\n\n" \
-                      f"backendurl/{uid}/{token}\n\n" \
+                      f"{backendurl}/{uid}/{token}\n\n" \
                       f"If you didn't request this, please ignore this email."
             to_email = email
             send_email = EmailMessage(subject, message, to=[to_email])
