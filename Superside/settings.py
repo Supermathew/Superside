@@ -125,10 +125,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = env("DJANGO_EMAILPORT")
-EMAIL_HOST_USER = env("DJANGO_EMAILHOST_USER")
-EMAIL_HOST_PASSWORD = env("DJANGO_EMAILHOST_PASSWORD")
-EMAIL_USE_TLS = env("DJANGO_EMAIL_USE_TLS")
+EMAIL_PORT = env("EMAILPORT")
+EMAIL_HOST_USER = env("EMAILHOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAILHOST_PASSWORD")
+EMAIL_USE_TLS = env("EMAIL_USE_TLS")
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
