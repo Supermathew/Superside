@@ -39,7 +39,7 @@ from navigation.models import (
     MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,Emailinput,Social,Category,Subcategory,
     Bookacall,Bookacallsectionone,Bookacallsectiontwo,Facts,Pricingcta,Servicessectionfour,servicescapabilities,Servicescta,Userdata,Homepagemeta,Pricingmeta,Whyusmeta,Ourworkmeta,Blogsmeta,Servicesmeta,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,CommonSlidersection2,CommonReview,CommonSlidersection1,
-    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Blogsectionfive,
+    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Blogsectionfive,Featuredpost,
     Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,BlogPost,Ourworkproject,Adminpanellogo
 )
 
@@ -53,7 +53,7 @@ from .serializers import (
 HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,HomepageReviewSerializer,PricingctaSerializer,PricingmetaSerializer,whyusmetaSerializer,
     ServicessectionsixSerializer,ServicessectionsevenSerializer,FactsSerializer,userdataSerializer,adminlogoSerializer,
     OurworkSerializer,OurworksectiononeSerializer,OurworksectiontwoSerializer,CategorySerializer,SubcategorySerializer,
-    BlogsSerializer,BlogsectiononeSerializer,BlogsectiontwoSerializer,HomepagemetaSerializer,
+    BlogsSerializer,BlogsectiononeSerializer,BlogsectiontwoSerializer,HomepagemetaSerializer,BlogsectionsevenSerializer,
     BlogsectionthreeSerializer,BlogsectionfourSerializer,WhyusSerializer,
     WhyussectionsevenSerializer,WhyussectionsixSerializer,HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,
     WhyussectionfiveSerializer,PricingUserSerializer,
@@ -3820,41 +3820,116 @@ class OurworkresultsingleView(generics.ListAPIView):
         slug = self.kwargs.get('page_slug')
         work = self.kwargs.get('work_slug')
         return Ourworkproject.objects.filter(slug=work, page__slug=slug)
+
+    def get(self, request, *args, **kwargs):
+        slug = self.kwargs.get('page_slug')
+        work = self.kwargs.get('work_slug')
+        queryset = self.get_queryset()
+        current_blog = queryset.first()
+
+        if current_blog is not None:
+            serializer = self.serializer_class(current_blog)
+            next_blog = Ourworkproject.objects.filter(id__gt=current_blog.id, page__slug=slug).first()
+            previous_blog = Ourworkproject.objects.filter(id__lt=current_blog.id, page__slug=slug).last()
+
+
+            status_data = {
+                'next_work_available': next_blog is not None,
+                'previous_work_available': previous_blog is not None
+            }
+
+            response_data = {
+                'status': status_data,
+                'data': serializer.data
+            }
+            serializer_data_with_status = serializer.data
+            serializer_data_with_status['status'] = status_data
+
+            return Response(serializer_data_with_status, status=status.HTTP_200_OK)
+        else:
+            return Response(status=404)
     
 
 
-class OurworkresultsinglenextAPIView(GenericAPIView):
 
+class OurworkresultsinglenextAPIView(APIView):
     serializer_class = WorkresultSerializer
 
-    def get(self, request,page_slug, work_slug):
+    def get(self, request, page_slug, work_slug):
         try:
             current_blog = Ourworkproject.objects.get(slug=work_slug).id
-            next_blog = Ourworkproject.objects.filter(id__gt=current_blog,page__slug=page_slug).first()
+            next_blog = Ourworkproject.objects.filter(id__gt=current_blog, page__slug=page_slug).first()
+
             if next_blog is not None:
+                next_blog_id = next_blog.id
+                next_next_blog = Ourworkproject.objects.filter(id__gt=next_blog_id, page__slug=page_slug).first()
+                previous_blog = Ourworkproject.objects.filter(id__lt=current_blog, page__slug=page_slug).last()
                 serializer = WorkresultSerializer(next_blog)
-                return Response(serializer.data)
-            else:
-                return Response(status=404)
+
+                status_data = {
+                    'next_work_available': next_next_blog is not None,
+                    'previous_work_available': previous_blog is not None
+                }
+            # if next_next_blog is not None:
+            #     response_data = {
+            #         'status': True,
+            #         'data': serializer.data
+            #     }
+            # else:
+            #     response_data = {
+            #         'status': False,
+            #         'data': serializer.data
+            #     }
+                response_data = {
+                    'status': status_data,
+                    'data': serializer.data
+                }
+                serializer_data_with_status = serializer.data
+                serializer_data_with_status['status'] = status_data
+
+            return Response(serializer_data_with_status, status=status.HTTP_200_OK)
+
         except Ourworkproject.DoesNotExist:
-            return Response(status=404)
+            return Response({'status': False}, status=status.HTTP_404_NOT_FOUND)
 
-class OurworkresultsinglepreviousView(GenericAPIView):
 
+class OurworkresultsinglepreviousView(APIView):
     serializer_class = WorkresultSerializer
 
-    def get(self, request,page_slug, work_slug):
+    def get(self, request, page_slug, work_slug):
         try:
             current_id = Ourworkproject.objects.get(slug=work_slug).id
-            # current_blog = Ourworkproject.objects.get(id=blog_id,,page__slug=page_slug)
-            previous_blog = Ourworkproject.objects.filter(id__lt=current_id,page__slug=page_slug).last()
+            previous_blog = Ourworkproject.objects.filter(id__lt=current_id, page__slug=page_slug).last()
+            next_next_blog = Ourworkproject.objects.filter(id__gt=current_id, page__slug=page_slug).first()
+
+
             if previous_blog is not None:
                 serializer = WorkresultSerializer(previous_blog)
-                return Response(serializer.data)
-            else:
-                return Response(status=404)
+                status_data = {
+                    'next_work_available': next_next_blog is not None,
+                    'previous_work_available': previous_blog is not None
+                }
+            # if next_next_blog is not None:
+            #     response_data = {
+            #         'status': True,
+            #         'data': serializer.data
+            #     }
+            # else:
+            #     response_data = {
+            #         'status': False,
+            #         'data': serializer.data
+            #     }
+                response_data = {
+                    'status': status_data,
+                    'data': serializer.data
+                }
+                serializer_data_with_status = serializer.data
+                serializer_data_with_status['status'] = status_data
+
+            return Response(serializer_data_with_status, status=status.HTTP_200_OK)
+
         except Ourworkproject.DoesNotExist:
-            return Response(status=404)
+            return Response({'status': False}, status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -4621,3 +4696,46 @@ class SubcategoryUpdateView(GenericAPIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Subcategory.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+class BlogsectionsevenView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = BlogsectionsevenSerializer
+
+    def get(self, request, page_slug):
+        try:
+            section2 = Featuredpost.objects.get(page__slug=page_slug)
+        except Featuredpost.DoesNotExist:
+            try:
+                page = Blogs.objects.get(slug=page_slug)
+            except Blogs.DoesNotExist:
+                return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+            section2 = Featuredpost.objects.create(page=page)
+
+        serializer = BlogsectionsevenSerializer(section2)
+        return Response(serializer.data)
+
+    def put(self, request, page_slug):
+        try:
+            section1 = Featuredpost.objects.get(page__slug=page_slug)
+        except Featuredpost.DoesNotExist:
+            return Response({'error': 'Featuredpost object not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = BlogsectionsevenSerializer(section1, data=request.data)
+        if serializer.is_valid():
+            tag_ids = request.data.get('blogs', [])  # Get tag IDs from the request data
+            print(tag_ids)
+            array = json.loads(tag_ids)
+            tags = BlogPost.objects.filter(id__in=array)  # Get the BlogPost objects based on IDs
+            print(tags)
+            section1.blogs.set(tags)  # Set the blogs for the featured post
+            serializer.save()  # Save the changes to the Featuredpost object
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+

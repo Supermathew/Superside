@@ -656,6 +656,8 @@ class Blogsectionfive(models.Model):
 
 
 
+
+
 class Whyussectionseven(models.Model):
       sectionsevenheading = models.TextField(null=True,blank=True)
       sectionsevensubheading = models.TextField(null=True,blank=True)
@@ -1099,3 +1101,13 @@ class BlogPost(models.Model):
         if self.title != self.slug:  # Only update the slug if the title has changed
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+class Featuredpost(models.Model):
+      featuredposttext = models.TextField(null=True,blank=True)
+      allblogimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='allblogimg')
+      page = models.ForeignKey(Blogs, on_delete=models.SET_NULL,null=True,blank=True,related_name='FeaturedpostBlogsectionfive')
+      blogs = models.ManyToManyField(BlogPost, blank=True, related_name='featured_posts')
+
+
+      def __str__(self):
+          return f'Featuredpost' 

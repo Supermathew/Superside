@@ -38,7 +38,7 @@ from navigation.api.views import (
     BlogssectiontwoView, BlogssectionthreeView, BlogssectionfourView, WhyussectiontwoView,WhyussectionthreeView,WhyussectionfiveView,WhyussectionsixView,WhyusView,
     WhyussectionsevenView,SocialView,MenuUpdateView,SubMenuUpdateView,ourworkmetaView,ourworkmetaUpdateView,servicesmetaView,servicesmetaUpdateView,
     PricingdetailsView,PricingFaqView,PricingsectionfourView,PricingsectionthreeView,PricingView,PricingsectiontwoView,PricingsectiononeView,PricingsubdetailsView,
-    ServicesBlogPostView,ServicessingleBlogPostView,UserSocialView
+    ServicesBlogPostView,ServicessingleBlogPostView,UserSocialView,BlogsectionsevenView
 )
 from django.urls import path, include
 from rest_framework import routers
@@ -89,8 +89,8 @@ urlpatterns = [
     path('ourwork/all/', OurworkallresultView.as_view(),name='ourworkallresult'),
     path('ourwork/all/<slug:page_slug>/', OurworkresultView.as_view(),name='ourworkresult'),
     path('ourwork/all/<slug:page_slug>/<slug:work_slug>/', OurworkresultsingleView.as_view(),name='ourworksingle'),
-    path('ourwork/all/<slug:page_slug>/<slug:work_slug>/next', OurworkresultsinglenextAPIView.as_view(),name='ourworksingle-next'),
-    path('ourwork/all/<slug:page_slug>/<slug:work_slug>/previous', OurworkresultsinglepreviousView.as_view(),name='ourworksingle-previous'),
+    path('ourwork/all/<slug:page_slug>/<slug:work_slug>/next/', OurworkresultsinglenextAPIView.as_view(),name='ourworksingle-next'),
+    path('ourwork/all/<slug:page_slug>/<slug:work_slug>/previous/', OurworkresultsinglepreviousView.as_view(),name='ourworksingle-previous'),
     path('blogs/', BloguserView.as_view()),
     path('userdata/', UserdataView.as_view()),
     path('userdata/<slug:page_slug>/', clientUserdataView.as_view()),
@@ -180,6 +180,7 @@ urlpatterns = [
     path('dashboard/blogs/<slug:page_slug>/sectionthree/', BlogssectionthreeView.as_view(),name='blogsectionthree'),
     path('dashboard/blogs/<slug:page_slug>/sectionfour/', BlogssectionfourView.as_view(),name='blogsectionfour'),
     path('dashboard/blogs/<slug:page_slug>/sectionfive/', BlogsectionfiveView.as_view(),name='Blogsectionfive'),
+    path('dashboard/blogs/<slug:page_slug>/sectionseven/', BlogsectionsevenView.as_view(),name='Blogsectionseven'),
     path('dashboard/ourwork/', OurworkView.as_view(),name='ourwork'),
     path('dashboard/ourwork/<slug:page_slug>/sectionone/', OurworksectiononeView.as_view(),name='ourworksectionone'),
     path('dashboard/ourwork/<slug:page_slug>/ourworkmetadetails/', ourworkmetaView.as_view(),name='ourworkmetadetails'),
