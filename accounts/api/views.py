@@ -224,7 +224,7 @@ class updateprofileView(GenericAPIView):
 
 
 
-class ChangePasswordView(APIView):
+class ChangePasswordView(GenericAPIView):
 
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]

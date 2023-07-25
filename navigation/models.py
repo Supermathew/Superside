@@ -147,6 +147,7 @@ class Sectionfive(models.Model):
 
 class Singlereview(models.Model):
       Singlereviewtext = models.TextField(null=True,blank=True)
+      brandingtext = models.TextField(null=True,blank=True)
 
       def __str__(self):
          return f'singlereview'
@@ -1105,6 +1106,7 @@ class BlogPost(models.Model):
 class Featuredpost(models.Model):
       featuredposttext = models.TextField(null=True,blank=True)
       allblogimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='allblogimg')
+      thumbimage = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='thumbimage')
       page = models.ForeignKey(Blogs, on_delete=models.SET_NULL,null=True,blank=True,related_name='FeaturedpostBlogsectionfive')
       blogs = models.ManyToManyField(BlogPost, blank=True, related_name='featured_posts')
 

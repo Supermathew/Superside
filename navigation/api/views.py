@@ -57,7 +57,7 @@ HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,HomepageReview
     BlogsectionthreeSerializer,BlogsectionfourSerializer,WhyusSerializer,CommonhelpbrandingSerializer,
     WhyussectionsevenSerializer,WhyussectionsixSerializer,HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,
     WhyussectionfiveSerializer,PricingUserSerializer,CommonbrandingSerializer,
-    WhyussectionthreeSerializer,WhyussectiontwoSerializer,HomeSerializer,PricingFaqSerializer,
+    WhyussectionthreeSerializer,WhyussectiontwoSerializer,HomeSerializer,PricingFaqSerializer,SubcategoryforcatSerializer,
     PricingsectiononeSerializer,PricingSerializer,PricingsectiontwoSerializer,
     PricingsectionthreeSerializer,PricingsectionfourSerializer,PricingdetailsSerializer,ServicesBlogPostSerializer,OurworkprojectSerializer,
     PricingsubdetailsSerializer,ServicesBlogPostSerializer,TagSerializer,BlogauthorSerializer
@@ -3905,30 +3905,99 @@ class alleverythingBloguserView(generics.ListAPIView):
 class BlogbycategoryView(GenericAPIView):
 
     serializer_class = PageblogSerializer
+    queryset = BlogPost.objects.all()
+
+
+    def get(self, request,page_slug):
+        try:
+            blogs = BlogPost.objects.filter(category__slug=page_slug)
+            # first_three_blogs = blogs[:3]
+        except BlogPost.DoesNotExist:
+            return Response({'error': 'BlogPost create a Page BlogPost in Dashboard'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = ServicesBlogPostSerializer(blogs, many=True)
+        return Response(serializer.data)
+
+class categoryheadingView(GenericAPIView):
+
+    serializer_class = PageblogSerializer
+    queryset = Category.objects.all()
+
 
     def get(self, request,page_slug):
         try:
             blogs = Category.objects.filter(slug=page_slug)
             # first_three_blogs = blogs[:3]
         except Category.DoesNotExist:
-            return Response({'error': 'Category create a Page category in Dashboard'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Category create a Page Category in Dashboard'}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = PageblogSerializer(blogs, many=True)
+        serializer = CategorySerializer(blogs, many=True)
         return Response(serializer.data)
 
-class BlogbysubcategoryView(GenericAPIView):
+class categorysubheadingView(GenericAPIView):
 
     serializer_class = PageblogSerializer
+    queryset = Subcategory.objects.all()
+
 
     def get(self, request,page_slug):
         try:
             blogs = Subcategory.objects.filter(slug=page_slug)
             # first_three_blogs = blogs[:3]
         except Subcategory.DoesNotExist:
+            return Response({'error': 'Subcategory create a Page Subcategory in Dashboard'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = SubcategoryforcatSerializer(blogs, many=True)
+        return Response(serializer.data)
+
+
+
+
+class BlogbysubcategoryView(GenericAPIView):
+
+    serializer_class = SubcategorySerializer
+    queryset = BlogPost.objects.all()
+
+    def get(self, request,page_slug):
+        try:
+            blogs = BlogPost.objects.filter(subcategory__slug=page_slug)
+            # first_three_blogs = blogs[:3]
+        except BlogPost.DoesNotExist:
+            return Response({'error': 'BlogPost create a Page category in Dashboard'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = ServicesBlogPostSerializer(blogs, many=True)
+        return Response(serializer.data)
+
+class subcategosryView(GenericAPIView):
+
+    serializer_class = SubcategorySerializer
+    queryset = Subcategory.objects.all()
+
+    def get(self, request,page_slug):
+        try:
+            blogs = Subcategory.objects.filter(blog__slug=page_slug)
+            # first_three_blogs = blogs[:3]
+        except Subcategory.DoesNotExist:
             return Response({'error': 'Subcategory create a Page category in Dashboard'}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = PageblogSerializer(blogs, many=True)
+        serializer = SubcategorySerializer(blogs, many=True)
         return Response(serializer.data)
+
+class subcategoryView(GenericAPIView):
+
+    serializer_class = SubcategoryforcatSerializer
+    queryset = Subcategory.objects.all()
+
+    def get(self, request,page_slug):
+        try:
+            blogs = Subcategory.objects.filter(blog__slug=page_slug)
+            # first_three_blogs = blogs[:3]
+        except Subcategory.DoesNotExist:
+            return Response({'error': 'Subcategory create a Page category in Dashboard'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = SubcategoryforcatSerializer(blogs, many=True)
+        return Response(serializer.data)
+
 
 
 
@@ -4769,5 +4838,49 @@ class blogwithservicesView(GenericAPIView):
             serializer.save()  # Save the changes to the Featuredpost object
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class featuredblogView(GenericAPIView):
+
+
+    serializer_class = BlogsectionsevenSerializer
+    queryset = Featuredpost.objects.first()
+
+    def get(self, request):
+        # try:
+            section2 = Featuredpost.objects.first()
+        # except Featuredpost.DoesNotExist:
+        #     try:
+        #         page = Blogs.objects.get(slug=page_slug)
+        #     except Blogs.DoesNotExist:
+        #         return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        #     section2 = Featuredpost.objects.create(page=page)
+
+            serializer = BlogsectionsevenSerializer(section2)
+            return Response(serializer.data)
+
+
+class UsercategoryView(GenericAPIView):
+
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+
+    def get(self, request):
+        pages = Category.objects.all()
+        serializer = CategorySerializer(pages, many=True)
+        return Response(serializer.data)
+
+class UsersubcategoryView(GenericAPIView):
+
+    serializer_class = CategorySerializer
+    queryset = Subcategory.objects.all()
+
+    def get(self, request,page_slug):
+        section1 = Subcategory.objects.get(blog__slug=page_slug)
+        pages = Category.objects.all()
+        serializer = SubcategorySerializer(section1, many=True)
+        return Response(serializer.data)
+
+
 
 
