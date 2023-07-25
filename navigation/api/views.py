@@ -39,24 +39,24 @@ from navigation.models import (
     MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,Emailinput,Social,Category,Subcategory,
     Bookacall,Bookacallsectionone,Bookacallsectiontwo,Facts,Pricingcta,Servicessectionfour,servicescapabilities,Servicescta,Userdata,Homepagemeta,Pricingmeta,Whyusmeta,Ourworkmeta,Blogsmeta,Servicesmeta,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,CommonSlidersection2,CommonReview,CommonSlidersection1,
-    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Blogsectionfive,Featuredpost,
+    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Blogsectionfive,Featuredpost,Commonbranding,Servicesblog,
     Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,BlogPost,Ourworkproject,Adminpanellogo
 )
 
 from .serializers import (
     SubMenuSerializer,FooterSerializer,SectiontwoSerializer,HomepageSerializer,OurworkUserSerializer,ServicesuserSerializer,ServicessectionfourSerializer,ServicesctaSerializer,
     SectionfourSerializer,SectiononeSerializer,VideoBucketSerializer,WhyusUserSerializer,bookcallUserSerializer,SocialSerializer,capacitySerializer,
-    SectionthreeSerializer,DetailsSerializer,HomepageReviewSerializer,BlogUserSerializer,blogsingleSerializer,blogpageauthorSerializer,
+    SectionthreeSerializer,DetailsSerializer,HomepageReviewSerializer,BlogUserSerializer,blogsingleSerializer,blogpageauthorSerializer,blogwithservicesSerializer,
     BookacallSerializer,BookacallsectiononeSerializer,BookacallsectiontwoSerializer,PageblogSerializer,BlogTimepassUserSerializer,authordetailsSerializer,
     PageSerializer,ServicessectiononeSerializer,ServicessectiontwoSerializer,PageDashboardSerializer,BlogsectionfiveSerializer,blogmetaSerializer,ourworkmetaSerializer,
     ServicessectionThreeSerializer,FaqSerializer,EmailSerializer,SectionsixSerializer,SectionfiveSerializer,singlereviewSerializer,servicesmetaSerializer,
 HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,HomepageReviewSerializer,PricingctaSerializer,PricingmetaSerializer,whyusmetaSerializer,
-    ServicessectionsixSerializer,ServicessectionsevenSerializer,FactsSerializer,userdataSerializer,adminlogoSerializer,
+    ServicessectionsixSerializer,ServicessectionsevenSerializer,FactsSerializer,userdataSerializer,adminlogoSerializer,blogwithhelpservicesSerializer,
     OurworkSerializer,OurworksectiononeSerializer,OurworksectiontwoSerializer,CategorySerializer,SubcategorySerializer,
     BlogsSerializer,BlogsectiononeSerializer,BlogsectiontwoSerializer,HomepagemetaSerializer,BlogsectionsevenSerializer,
-    BlogsectionthreeSerializer,BlogsectionfourSerializer,WhyusSerializer,
+    BlogsectionthreeSerializer,BlogsectionfourSerializer,WhyusSerializer,CommonhelpbrandingSerializer,
     WhyussectionsevenSerializer,WhyussectionsixSerializer,HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,
-    WhyussectionfiveSerializer,PricingUserSerializer,
+    WhyussectionfiveSerializer,PricingUserSerializer,CommonbrandingSerializer,
     WhyussectionthreeSerializer,WhyussectiontwoSerializer,HomeSerializer,PricingFaqSerializer,
     PricingsectiononeSerializer,PricingSerializer,PricingsectiontwoSerializer,
     PricingsectionthreeSerializer,PricingsectionfourSerializer,PricingdetailsSerializer,ServicesBlogPostSerializer,OurworkprojectSerializer,
@@ -2241,99 +2241,37 @@ class ServicessectionsevenView(GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class UserServicessectionsevenView(GenericAPIView):
 
-# class SlidersectionView(GenericAPIView):
+    serializer_class = ServicessectionsevenSerializer
 
-#     permission_classes = [IsAuthenticated]
-#     serializer_class = SlidersectionSerializer
+    def get(self, request, page_slug):
+        try:
+            section1 = Servicessectionseven.objects.get(page__slug=page_slug)
+        except Servicessectionseven.DoesNotExist:
+            try:
+                page = Page.objects.get(slug=page_slug)
+            except Page.DoesNotExist:
+                return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
 
-#     def get_image(self, image_id):
-#         try:
-#             review = Slidersection.objects.get(id=image_id)
-#             return review
-#         except Slidersection.DoesNotExist:
-#             return None
-    
-#     def get(self, request, page_slug):
-#         try:
-#             page = Page.objects.get(slug=page_slug)
-#         except Page.DoesNotExist:
-#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+            section1 = Servicessectionseven.objects.create(page=page)
 
-#         images = Slidersection.objects.filter(page=page)
-#         serializer = SlidersectionSerializer(images, many=True)
-#         return Response(serializer.data, status=status.HTTP_200_OK)
+        serializer = ServicessectionsevenSerializer(section1)
+        return Response(serializer.data)
 
+    def put(self, request, page_slug):
+        try:
+            section1 = Servicessectionseven.objects.get(page__slug=page_slug)
+        except Servicessectionseven.DoesNotExist:
+            return Response({'error': 'Servicessectionseven object not found'}, status=status.HTTP_404_NOT_FOUND)
 
-#     def post(self, request, page_slug):
-#         try:
-#             page = Page.objects.get(slug=page_slug)
-#         except Page.DoesNotExist:
-#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-        
-#         serializer = SlidersectionSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save(page=page)
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# class SlidersectionUpdateView(GenericAPIView):
-
-#     permission_classes = [IsAuthenticated]
-#     serializer_class = SlidersectionSerializer
+        serializer = ServicessectionsevenSerializer(section1, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-#     def get_image(self, image_id):
-#         try:
-#             review = Slidersection.objects.get(id=image_id)
-#             return review
-#         except Slidersection.DoesNotExist:
-#             return None
-    
-#     def get(self, request, page_slug, image_id):
-#         try:
-#             page = Page.objects.get(slug=page_slug)
-#         except Page.DoesNotExist:
-#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-
-#         try:
-#           images = Slidersection.objects.get(page=page,id=image_id)
-#         except Slidersection.DoesNotExist:
-#             return Response({'error': 'image id  not found'}, status=status.HTTP_404_NOT_FOUND)
-
-#         serializer = SlidersectionSerializer(images)
-#         return Response(serializer.data, status=status.HTTP_200_OK)
-
-#     def put(self, request,page_slug, image_id):
-#         image = self.get_image(image_id)
-#         if image is None:
-#             return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
-
-#         try:
-#             page = Page.objects.get(slug=page_slug)
-#         except Page.DoesNotExist:
-#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-
-#         serializer = SlidersectionSerializer(image, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_200_OK)
-
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-#     def delete(self, request,page_slug, image_id):
-#         image = self.get_image(image_id)
-#         if image is None:
-#             return Response({'error': 'image not found'}, status=status.HTTP_404_NOT_FOUND)
-
-#         try:
-#             page = Page.objects.get(slug=page_slug)
-#         except Page.DoesNotExist:
-#             return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
-
-#         image.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
@@ -4735,7 +4673,101 @@ class BlogsectionsevenView(GenericAPIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class CommonbrandingView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = CommonbrandingSerializer
+
+    def get(self, request):
+            # Attempt to retrieve the first Commonbranding instance from the database
+        section1 = Commonbranding.objects.first()
+        print(section1)
+        # If the instance does not exist, create a new one
+        if section1 is None:
+            section1 = Commonbranding.objects.create(commonbrandingtext="Default Text")
+
+        serializer = CommonhelpbrandingSerializer(section1)
+        return Response(serializer.data)
+
+    def put(self, request):
+        try:
+            section1 = Commonbranding.objects.first()
+        except Commonbranding.DoesNotExist:
+            return Response({'error': 'Commonbranding object not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = CommonbrandingSerializer(section1, data=request.data)
+        if serializer.is_valid():
+            image1 = request.data.get('image1', [])  # Get tag IDs from the request data
+            image2 = request.data.get('image2', [])  # Get tag IDs from the request data
+            image1 = json.loads(image1)
+            image2 = json.loads(image2)
+            print(image1)
+            image1 = MediaBucket.objects.filter(id__in=image1)  # Get the BlogPost objects based on IDs
+            image2 = MediaBucket.objects.filter(id__in=image2)  # Get the BlogPost objects based on IDs
+            print(image1)
+            print(section1)
+            if section1 is not None:
+                section1.image1.set(image1)
+                section1.image2.set(image2)
+                print("mathew")
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                return Response({'error': 'Commonbranding object not found'}, status=status.HTTP_404_NOT_FOUND)
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class UsercommonbrandingView(GenericAPIView):
+
+    serializer_class = CommonbrandingSerializer
+
+    def get(self, request):
+        try:
+            header = Commonbranding.objects.first()  # Retrieve the first and only Header object
+            serializer = CommonbrandingSerializer(header)
+            return Response(serializer.data)
+        except Commonbranding.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class blogwithservicesView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = blogwithservicesSerializer
+
+    def get(self, request, page_slug):
+            section1 = Servicesblog.objects.first()
+
+            if section1 is None:
+                try:
+                    page = Page.objects.get(slug=page_slug)
+                except Page.DoesNotExist:
+                    return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+                section1 = Servicesblog.objects.create(page=page)
+            # Perform any additional initialization for the newly created section1 object
+
+            serializer = blogwithservicesSerializer(section1)
+            return Response(serializer.data)
+
+    def put(self, request, page_slug):
+        try:
+            section1 = Servicesblog.objects.first()
+        except Sectionfour.DoesNotExist:
+            return Response({'error': 'Sectionfour object not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = blogwithhelpservicesSerializer(section1, data=request.data)
+        if serializer.is_valid():
+            tag_ids = request.data.get('blogs', [])  # Get tag IDs from the request data
+            print(tag_ids)
+            array = json.loads(tag_ids)
+            tags = BlogPost.objects.filter(id__in=array)  # Get the BlogPost objects based on IDs
+            print(tags)
+            section1.blogs.set(tags)  # Set the blogs for the featured post
+            serializer.save()  # Save the changes to the Featuredpost object
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

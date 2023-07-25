@@ -1111,3 +1111,21 @@ class Featuredpost(models.Model):
 
       def __str__(self):
           return f'Featuredpost' 
+
+class Commonbranding(models.Model):
+      commonbrandingtext = models.TextField(null=True,blank=True)
+      image1 = models.ManyToManyField(MediaBucket, blank=True, related_name='slider1')
+      image2 = models.ManyToManyField(MediaBucket, blank=True, related_name='slider2')
+
+
+      def __str__(self):
+          return f'Commonbranding'
+
+
+class Servicesblog(models.Model):
+      sectiontwoheading = models.TextField(null=True,blank=True)
+      page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='Servicesblog')
+      blogs = models.ManyToManyField(BlogPost, blank=True, related_name='Servicesblogall')
+
+      def __str__(self):
+         return f'Servicesblog'

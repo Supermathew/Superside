@@ -5,12 +5,15 @@ from navigation.models import (
     MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,Category,Subcategory,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Emailinput,Social,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,
     Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Servicessectionfour,servicescapabilities,Ourworkmeta,Featuredpost,
-    Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,Pricingcta,Servicessectionone,Servicescta,Userdata,Homepagemeta,Servicesmeta,
+    Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,Pricingcta,Servicessectionone,Servicescta,Userdata,Homepagemeta,Servicesmeta,Commonbranding,Servicesblog,
     Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,Ourworkproject,Blogsectionfive,Pricingmeta,Whyusmeta,Blogsmeta,Adminpanellogo
 )
 
 
 class MediaBucketSerializer(serializers.ModelSerializer):
+
+
+
     class Meta:
         model = MediaBucket
         fields = '__all__'
@@ -952,6 +955,7 @@ class PageDashboardSerializer(serializers.ModelSerializer):
     pageblogimage_path = serializers.SerializerMethodField()
     page_url = serializers.SerializerMethodField()
     blogiconimage_path = serializers.SerializerMethodField()
+    servicepage_path = serializers.SerializerMethodField()
 
     # blogimgsection = serializers.SerializerMethodField()
     
@@ -959,6 +963,11 @@ class PageDashboardSerializer(serializers.ModelSerializer):
     def get_page_url(self, Page):
         if Page.slug:
             return reverse('servicespages',args=[Page.slug])
+        return None
+
+    def get_servicepage_path(self, Page):
+        if Page.slug:
+            return reverse('blogwithservices',args=[Page.slug])
         return None
 
     def get_section1_url(self, Page):
@@ -1358,8 +1367,8 @@ class blogsingleSerializer(serializers.ModelSerializer):
         return None
     
     def get_blogservicepage_slug(self, BlogPost):
-        if BlogPost.page:
-            return BlogPost.page.slug
+        if BlogPost.category:
+            return BlogPost.category.slug
         return None
 
     def get_page_url(self, BlogPost):
@@ -2160,23 +2169,7 @@ class WorkresultSerializer(serializers.ModelSerializer):
 #         model = Ourworkproject
 #         fields = '__all__'
 
-class ServicesuserSerializer(serializers.ModelSerializer):
 
-    sectiononeservices = ServicessectiononeSerializer(many=True, read_only=True)
-    sectiontwoservices = ServicessectiontwoSerializer(read_only=True,many=True)
-    sectionthreeservices = ServicessectionThreeSerializer(many=True, read_only=True)
-    sectionfourservices = ServicessectionfourSerializer(many=True, read_only=True)
-    servicescapability = capacitySerializer(many=True, read_only=True)
-    servicesfaq = FaqSerializer(many=True, read_only=True)
-    sectionsixservices = ServicessectionsixSerializer(many=True, read_only=True)
-    sectionsevenservices = ServicessectionsevenSerializer(many=True, read_only=True)
-    Servicescta = ServicesctaSerializer(many=True, read_only=True)
-    # slidersection = SlidersectionSerializer(many=True, read_only=True)
-
-        
-    class Meta:
-        model = Page
-        fields = '__all__'
 
 ######## Bookaserializer ####
 
@@ -2504,4 +2497,68 @@ class BlogTimepassUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Blogs
+        fields = '__all__'
+
+class CommonbrandingSerializer(serializers.ModelSerializer):
+    image1 = MediaBucketSerializer(many=True, source='slider1', required=False)
+    image2 = MediaBucketSerializer(many=True, source='slider2', required=False)
+
+
+    class Meta:
+        model = Commonbranding
+        fields = '__all__'
+
+class CommonhelpbrandingSerializer(serializers.ModelSerializer):
+
+    image1 = serializers.SerializerMethodField()
+    image2 = serializers.SerializerMethodField()
+
+    def get_image1(self, obj):
+        return MediaBucketSerializer(obj.image1.all(), many=True).data
+
+    def get_image2(self, obj):
+        return MediaBucketSerializer(obj.image2.all(), many=True).data
+
+    class Meta:
+        model = Commonbranding
+        fields = '__all__'
+
+
+class blogwithservicesSerializer(serializers.ModelSerializer):
+    blogs = blogsingleSerializer(many=True,read_only=True)
+
+
+
+
+    class Meta:
+        model = Servicesblog
+        fields = '__all__'
+
+class blogwithhelpservicesSerializer(serializers.ModelSerializer):
+    blogs = blogsingleSerializer(many=True,read_only=True)
+
+
+
+
+    class Meta:
+        model = Servicesblog
+        fields = '__all__'
+
+class ServicesuserSerializer(serializers.ModelSerializer):
+
+    sectiononeservices = ServicessectiononeSerializer(many=True, read_only=True)
+    sectiontwoservices = ServicessectiontwoSerializer(read_only=True,many=True)
+    sectionthreeservices = ServicessectionThreeSerializer(many=True, read_only=True)
+    sectionfourservices = ServicessectionfourSerializer(many=True, read_only=True)
+    servicescapability = capacitySerializer(many=True, read_only=True)
+    servicesfaq = FaqSerializer(many=True, read_only=True)
+    sectionsixservices = ServicessectionsixSerializer(many=True, read_only=True)
+    sectionsevenservices = ServicessectionsevenSerializer(many=True, read_only=True)
+    Servicescta = ServicesctaSerializer(many=True, read_only=True)
+    Servicesblog = blogwithservicesSerializer(many=True,read_only=True)
+    # slidersection = SlidersectionSerializer(many=True, read_only=True)
+
+        
+    class Meta:
+        model = Page
         fields = '__all__'
