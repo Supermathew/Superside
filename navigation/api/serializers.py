@@ -65,7 +65,7 @@ class HeaderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Header
-        fields = ['id', 'headerlogo','blackphoto_url','faviconimage_url', 'photo_url', 'header']
+        fields = '__all__'
 
 
 class FooterSerializer(serializers.ModelSerializer):
