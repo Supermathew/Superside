@@ -44,15 +44,28 @@ class MenuSerializer(serializers.ModelSerializer):
 class HeaderSerializer(serializers.ModelSerializer):
     header = MenuSerializer(read_only=True)
     photo_url = serializers.SerializerMethodField()
+    blackphoto_url = serializers.SerializerMethodField()
+    faviconimage_url = serializers.SerializerMethodField()
+
 
     def get_photo_url(self, Header):
         if Header.headerlogo:
             return Header.headerlogo.image.url
         return None
 
+    def get_blackphoto_url(self, Header):
+        if Header.headerblacknwhitelogo:
+            return Header.headerblacknwhitelogo.image.url
+        return None
+
+    def get_faviconimage_url(self, Header):
+        if Header.favicon:
+            return Header.favicon.image.url
+        return None
+
     class Meta:
         model = Header
-        fields = ['id', 'headerlogo', 'photo_url', 'header']
+        fields = ['id', 'headerlogo','blackphoto_url','faviconimage_url', 'photo_url', 'header']
 
 
 class FooterSerializer(serializers.ModelSerializer):

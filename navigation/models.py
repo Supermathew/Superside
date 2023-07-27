@@ -39,6 +39,10 @@ class SubMenu(models.Model):
 
 class Header(models.Model):
       headerlogo = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='logo')
+      headerblacknwhitelogo = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='headerblacknwhitelogo')
+      favicon = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='favicon')
+      appname = models.TextField(null=True,blank=True)
+      appdiscription = models.TextField(null=True,blank=True)
       menu = models.ForeignKey(Menu, on_delete=models.CASCADE,null=True,blank=True,related_name='header')
 
       def __str__(self):

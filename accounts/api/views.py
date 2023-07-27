@@ -105,7 +105,6 @@ class ForgotPasswordView(GenericAPIView):
 
             backendurl = env("BACKEND_URL")
 
-            # Compose password reset email
             subject = 'Reset Your Password'
             message = f"Click the following link to reset your password:\n\n" \
                       f"{backendurl}/{uid}/{token}\n\n" \
