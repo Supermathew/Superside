@@ -129,7 +129,7 @@ class ResetPasswordValidateView(GenericAPIView):
 
     serializer_class = UserSerializer
 
-    def get(self, request, uidb64, token):
+    def post(self, request, uidb64, token):
         try:
             uid = urlsafe_base64_decode(uidb64).decode()
             User = get_user_model()
@@ -138,8 +138,23 @@ class ResetPasswordValidateView(GenericAPIView):
             user = None
 
         if user is not None and default_token_generator.check_token(user, token):
-            request.session['uid'] = uid
-            return Response({'detail': 'please reset your password!'})
+            password = request.data.get('password')
+            confirm_password = request.data.get('confirm_password')
+
+            if password == None or confirm_password == None:
+                return Response({'detail': 'Please enter a password and confirm password.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            if password == confirm_password:
+                # uid = request.session.get('uid')
+                User = get_user_model()
+                user = User.objects.get(pk=uid)
+                user.set_password(password)
+                user.save()
+                return Response({'detail': 'Password reset successful'})
+            else:
+                return Response({'detail': 'Passwords do not match!'}, status=status.HTTP_400_BAD_REQUEST)
+            # request.session['uid'] = uid
+            # return Response({'detail': 'please reset your password!'})
         else:
             return Response({'detail': 'This link has expired!'}, status=status.HTTP_400_BAD_REQUEST)
 
