@@ -1083,19 +1083,19 @@ class PageDashboardSerializer(serializers.ModelSerializer):
         blog, blogpage = Blogs.objects.get_or_create()
         
         if homepage:
-            homepage.title = "homePage"
+            homepage.title = "page"
             homepage.save()
         if pricepage:
-            pricing.title = "pricepage"
+            pricing.title = "page"
             pricing.save()
         if whyuspage:
-            whyus.title = "whyuspage"
+            whyus.title = "page"
             whyus.save()
         if ourworkpage: 
-            ourwork.title = "ourworkpage"
+            ourwork.title = "page"
             ourwork.save()
         if blogpage:
-            blog.title = "blogpage"
+            blog.title = "page"
             blog.save()
 
         # Assign the related objects to the Page model
