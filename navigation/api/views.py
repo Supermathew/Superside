@@ -4807,9 +4807,9 @@ class blogwithservicesView(GenericAPIView):
     serializer_class = blogwithservicesSerializer
 
     def get(self, request, page_slug):
-            section1 = Servicesblog.objects.first()
-
-            if section1 is None:
+        try:
+            section1 = Servicesblog.objects.get(page__slug=page_slug)
+        except Servicesblog.DoesNotExist:
                 try:
                     page = Page.objects.get(slug=page_slug)
                 except Page.DoesNotExist:
@@ -4818,13 +4818,13 @@ class blogwithservicesView(GenericAPIView):
                 section1 = Servicesblog.objects.create(page=page)
             # Perform any additional initialization for the newly created section1 object
 
-            serializer = blogwithservicesSerializer(section1)
-            return Response(serializer.data)
+        serializer = blogwithservicesSerializer(section1)
+        return Response(serializer.data)
 
     def put(self, request, page_slug):
         try:
-            section1 = Servicesblog.objects.first()
-        except Sectionfour.DoesNotExist:
+            section1 = Servicesblog.objects.get(page__slug=page_slug)
+        except Servicesblog.DoesNotExist:
             return Response({'error': 'Sectionfour object not found'}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = blogwithhelpservicesSerializer(section1, data=request.data)
