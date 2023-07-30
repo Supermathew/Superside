@@ -267,3 +267,4 @@ AWS_DEFAULT_ACL =  None
 AWS_S3_VERITY = env.bool("AWS_S3_VERITY")
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_QUERYSTRING_AUTH = env.bool("AWS_QUERYSTRING_AUTH")
+AWS_DEFAULT_ACL = 'public-read'
