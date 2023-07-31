@@ -13,6 +13,10 @@ from ckeditor_uploader.fields import RichTextUploadingField
 class MediaBucket(models.Model):
     image = models.FileField(upload_to='media/')
 
+    class Meta:
+        ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
+
+
     def __str__(self):
         return f'files' 
 
