@@ -113,10 +113,10 @@ class ImageUpdateUploadView(GenericAPIView):
     def delete(self, request, image_id):
         try:
             image = MediaBucket.objects.get(id=image_id)
-            image_path = image.image.path
+            # image_path = image.image.path
             image.delete()
-            if os.path.exists(image_path):
-                os.remove(image_path)
+            # if os.path.exists(image_path):
+            #     os.remove(image_path)
             return Response(status=status.HTTP_204_NO_CONTENT)
         except MediaBucket.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
@@ -701,10 +701,10 @@ class VideoUpdateUploadView(GenericAPIView):
     def delete(self, request, video_id):
         try:
             video = VideoBucket.objects.get(id=video_id)
-            video_path = video.video.path
+            # video_path = video.video.path
             video.delete()
-            if os.path.exists(video_path):
-                os.remove(video_path)
+            # if os.path.exists(video_path):
+            #     os.remove(video_path)
             return Response(status=status.HTTP_204_NO_CONTENT)
         except VideoBucket.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)

@@ -4,7 +4,10 @@ from django.utils.text import slugify
 import re
 from ckeditor_uploader.fields import RichTextUploadingField
 
-
+from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
+from storages.backends.s3boto3 import S3Boto3Storage
 
 
 # Create your models here.
@@ -20,12 +23,19 @@ class MediaBucket(models.Model):
     def __str__(self):
         return f'files' 
 
+@receiver(pre_delete, sender=MediaBucket)
+def delete_s3_object(sender, instance, **kwargs):
+    if instance.image:
+        storage = S3Boto3Storage()
+        storage.delete(instance.image.name)
+
 class Menu(models.Model):
       url = models.CharField(max_length=200,null=True,blank=True)
       name = models.CharField(max_length=200)
       menu_isbtn = models.BooleanField(default=False)
 
-
+      class Meta:
+            ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
 
 
       def __(self):
@@ -35,6 +45,9 @@ class SubMenu(models.Model):
       menu = models.ForeignKey(Menu, on_delete=models.CASCADE,null=True,blank=True,related_name='sub_menu')
       name = models.CharField(max_length=100)
       url = models.CharField(max_length=200)
+
+      class Meta:
+            ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
 
       def __(self):
         return self.id
@@ -198,8 +211,17 @@ class Sectionone(models.Model):
 class VideoBucket(models.Model):
     video = models.FileField(upload_to='video/')
 
+    class Meta:
+        ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
+
     def __str__(self):
         return self.id 
+
+@receiver(pre_delete, sender=VideoBucket)
+def delete_s3_object(sender, instance, **kwargs):
+    if instance.video:
+        storage = S3Boto3Storage()
+        storage.delete(instance.video.name)
 
 
 class Sectionthree(models.Model):
@@ -228,6 +250,9 @@ class Details(models.Model):
       detailsimage = models.ForeignKey(MediaBucket,null=True,blank=True,on_delete=models.SET_NULL,related_name='detailsimage')
       page = models.ForeignKey(Homepage,null=True,blank=True,on_delete=models.CASCADE,related_name='Homepagedetails')
 
+      class Meta:
+            ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
+
       def __str__(self):
          return f'Details'
 
@@ -235,6 +260,9 @@ class Homepagemeta(models.Model):
       metakey = models.TextField()
       metavalue = models.TextField()
       page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='Homepagemeta')
+
+      class Meta:
+            ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
 
       def __str__(self):
          return f'Homepagemeta'
@@ -265,6 +293,9 @@ class CommonSlidersection1(models.Model):
       sliderimage = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='homepagesliderimagesection1')
       # page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSlidersection1')
 
+      class Meta:
+            ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
+
       def __str__(self):
          return f'HomepageSlidersection1'
 
@@ -272,6 +303,9 @@ class CommonSlidersection1(models.Model):
 class CommonSlidersection2(models.Model):
       sliderimage = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='homepagesliderimagesection2')
       # page = models.ForeignKey(Homepage, on_delete=models.CASCADE,null=True,blank=True,related_name='HomepageSlidersection2')
+
+      class Meta:
+            ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
 
       def __str__(self):
          return f'HomepageSlidersection2'
@@ -304,6 +338,9 @@ class Whyusmeta(models.Model):
       metavalue = models.TextField()
       page = models.ForeignKey(Whyus, on_delete=models.CASCADE,null=True,blank=True,related_name='Whyusmeta')
 
+      class Meta:
+            ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
+
       def __str__(self):
          return f'Whyusmeta'
 
@@ -331,6 +368,9 @@ class Ourworkmeta(models.Model):
       metakey = models.TextField()
       metavalue = models.TextField()
       page = models.ForeignKey(Ourwork, on_delete=models.CASCADE,null=True,blank=True,related_name='Ourworkmeta')
+
+      class Meta:
+            ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
 
       def __str__(self):
          return f'Ourworkmeta'
@@ -360,6 +400,9 @@ class Blogsmeta(models.Model):
       metavalue = models.TextField()
       page = models.ForeignKey(Blogs, on_delete=models.CASCADE,null=True,blank=True,related_name='Blogsmeta')
 
+      class Meta:
+            ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
+
       def __str__(self):
          return f'Blogsmeta'
 
@@ -384,6 +427,9 @@ class Pricingmeta(models.Model):
       metavalue = models.TextField()
       page = models.ForeignKey(Pricing, on_delete=models.CASCADE,null=True,blank=True,related_name='pricingmeta')
 
+      class Meta:
+            ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
+
       def __str__(self):
          return f'pricingmeta'
 
@@ -407,7 +453,8 @@ class Page(models.Model):
 
 
 
-
+    class Meta:
+        ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
 
 
     def __str__(self):
@@ -423,6 +470,9 @@ class Servicesmeta(models.Model):
       metakey = models.TextField()
       metavalue = models.TextField()
       page = models.ForeignKey(Page, on_delete=models.CASCADE,null=True,blank=True,related_name='Servicesmeta')
+
+      class Meta:
+            ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
 
       def __str__(self):
          return f'Servicesmeta'
@@ -907,6 +957,9 @@ class Blogauthor(models.Model):
     name = models.CharField(max_length=225,unique=True)
     slug = AutoSlugField(populate_from='name', unique=True)
 
+    class Meta:
+        ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
+
 
     def __str__(self):
         return self.name
@@ -920,6 +973,8 @@ class Tag(models.Model):
     tag = models.TextField(unique=True)
     slug = AutoSlugField(populate_from='tag', unique=True)
 
+    class Meta:
+        ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
 
     def __str__(self):
         return self.tag
@@ -1065,6 +1120,9 @@ class Category(models.Model):
     blogimage = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL, null=True, blank=True, related_name='blogimageCategory')
     blogicon = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL, null=True, blank=True, related_name='blogiconimageCategory')
 
+    class Meta:
+        ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
+
     def __str__(self):
         return self.title
 
@@ -1102,6 +1160,9 @@ class BlogPost(models.Model):
     jsondata = models.TextField(null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='blogcategory')
     subcategory = models.ForeignKey(Subcategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='SubcategoryBlogPost')
+
+    class Meta:
+        ordering = ['-id']  # The minus sign (-) indicates descending order based on primary key
 
     def __str__(self):
         return self.title
