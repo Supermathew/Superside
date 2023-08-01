@@ -1163,7 +1163,7 @@ class OurworksectiononeSerializer(serializers.ModelSerializer):
 
     def get_video_url(self, Ourworksectionone):
           if Ourworksectionone.sectiontwovideo:
-             return obj.sectiontwovideo.video.url
+             return Ourworksectionone.sectiontwovideo.video.url
           return None
 
 
