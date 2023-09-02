@@ -2000,7 +2000,7 @@ class PricingsectiononeSerializer(serializers.ModelSerializer):
 
     photo_url = serializers.SerializerMethodField()
 
-    def get_photo_url(self, Pricingsectionthree):
+    def get_photo_url(self, Pricingsectionone):
         if Pricingsectionone.sectiononebannerimg:
             return Pricingsectionone.sectiononebannerimg.image.url
         return None

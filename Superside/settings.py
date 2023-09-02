@@ -85,6 +85,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3003",
     "https://superside-admin.vercel.app",
     "https://superside-nextjs.netlify.app",
+    "https://britishlogo-new.vercel.app",
 
     
 ]
