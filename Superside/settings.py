@@ -35,7 +35,7 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 DEBUG = env("DJANGO_DEBUG")
 
 
-ALLOWED_HOSTS = ["localhost","127.0.0.1","superside.onrender.com","http://superside.onrender.com","https://superside.onrender.com","https://superside-admin.vercel.app","https://superside-nextjs.netlify.app"]
+ALLOWED_HOSTS = ["localhost","127.0.0.1","superside.onrender.com","http://superside.onrender.com","https://superside.onrender.com","https://superside-admin.vercel.app","https://superside-nextjs.netlify.app","https://britishlogo-new.vercel.app"]
 
 
 CSRF_TRUSTED_ORIGINS = ["https://superside.onrender.com"]

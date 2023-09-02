@@ -2002,7 +2002,7 @@ class PricingsectiononeSerializer(serializers.ModelSerializer):
 
     def get_photo_url(self, Pricingsectionthree):
         if Pricingsectionone.sectiononebannerimg:
-            return Pricingsectionthree.sectiononebannerimg.image.url
+            return Pricingsectionone.sectiononebannerimg.image.url
         return None
 
     class Meta:
