@@ -4,8 +4,8 @@ from django.urls import reverse
 from navigation.models import ( 
     MediaBucket,Header,Menu,SubMenu,Footer,Sectiontwo,Sectionfour,Sectionone,VideoBucket,Sectionthree,Details,Pricingsubdetails,Category,Subcategory,
     Page,Servicessectionone,Servicessectiontwo,ServicessectionThree,Faq,Servicessectionsix,Servicessectionseven,Pricingdetails,Emailinput,Social,Ourwork,Ourworksectionone,Ourworksectiontwo,Blogs,Blogsectionone,Blogsectiontwo,Blogsectionthree,Blogsectionfour,Pricingsectionfour,
-    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Servicessectionfour,servicescapabilities,Ourworkmeta,Featuredpost,
-    Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,Pricingcta,Servicessectionone,Servicescta,Userdata,Homepagemeta,Servicesmeta,Commonbranding,Servicesblog,
+    Whyus,Whyussectionseven,Whyussectionsix,Whyussectionfive,Whyussectionthree,Whyussectionthree,Homepage,Sectionfive,Singlereview,Sectionsix,Servicessectionfour,servicescapabilities,Ourworkmeta,Featuredpost,Ourworksectionfive,
+    Bookacall,Bookacallsectionone,Bookacallsectiontwo,CommonSlidersection2,CommonReview,CommonSlidersection1,Facts,Pricingcta,Servicessectionone,Servicescta,Userdata,Homepagemeta,Servicesmeta,Commonbranding,Servicesblog,Pricingsinglefaq,
     Whyussectiontwo,PricingFaq,Pricingsectionthree,Pricingsectiontwo,Pricingsectionone,Pricing,BlogPost,Tag,Blogauthor,Ourworkproject,Blogsectionfive,Pricingmeta,Whyusmeta,Blogsmeta,Adminpanellogo
 )
 
@@ -1126,6 +1126,7 @@ class OurworkSerializer(serializers.ModelSerializer):
     section1_url = serializers.SerializerMethodField()
     ourworkmeta_url = serializers.SerializerMethodField()
     section2_url = serializers.SerializerMethodField()
+    section5_url = serializers.SerializerMethodField()
 
 
     page_url = serializers.SerializerMethodField()
@@ -1138,6 +1139,11 @@ class OurworkSerializer(serializers.ModelSerializer):
     def get_section1_url(self, Ourwork):
         if Ourwork.slug:
             return reverse('ourworksectionone',args=[Ourwork.slug])
+        return None
+
+    def get_section5_url(self, Ourwork):
+        if Ourwork.slug:
+            return reverse('ourworksectionfive',args=[Ourwork.slug])
         return None
 
     def get_ourworkmeta_url(self, Ourwork):
@@ -1194,6 +1200,64 @@ class OurworksectiontwoSerializer(serializers.ModelSerializer):
         model = Ourworksectiontwo
         fields = '__all__'
 
+
+
+
+class OurworksectionfiveSerializer(serializers.ModelSerializer):
+    sectiononeimage1_path = serializers.SerializerMethodField()
+    sectiononeimage2_path = serializers.SerializerMethodField()
+    sectiononeimage3_path = serializers.SerializerMethodField()
+
+
+    def get_sectiononeimage1_path(self, obj):
+        if obj.sectionfiveimage1:
+            return obj.sectionfiveimage1.image.url
+        return None
+
+    def get_sectiononeimage2_path(self, obj):
+        if obj.sectionfiveimage2:
+            return obj.sectionfiveimage2.image.url
+        return None
+
+    def get_sectiononeimage3_path(self, obj):
+        if obj.sectionfiveimage3:
+            return obj.sectionfiveimage3.image.url
+        return None
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        data_dict = {
+            "sectionfivetopheading": representation.get("sectionfivetopheading"),
+            "sectionfivesubheading": representation.get("sectionfivesubheading"),
+            "sectionfivediscription": representation.get("sectionfivediscription"),
+            "sectionfiveheading": representation.get("sectionfiveheading"),
+            "sectionfivetopsubheading": representation.get("sectionfivetopsubheading"),
+            "sectionfivecolourtext": representation.get("sectionfivecolourtext"),
+            "content": [
+                {
+                    "sectionfiveimage1": self.get_sectiononeimage1_path(instance),
+                    "sectionfiveimage1details":representation.get("sectionfiveimage1details"),
+                    "sectionfiveimage1id":representation.get("sectionfiveimage1"),
+                },
+                {
+                    "sectionfiveimage2": self.get_sectiononeimage2_path(instance),
+                    "sectionfiveimage2details":representation.get("sectionfiveimage2details"),
+                    "sectionfiveimage2id":representation.get("sectionfiveimage2"),
+                },
+                {
+                    "sectionfiveimage3": self.get_sectiononeimage3_path(instance),
+                    "sectionfiveimage3details":representation.get("sectionfiveimage3details"),
+                    "sectionfiveimage3id":representation.get("sectionfiveimage3"),
+                },
+            ],
+        }
+        return data_dict
+
+
+    class Meta:
+        model = Ourworksectionfive
+        fields = '__all__'
+
 class PageourworkSerializer(serializers.ModelSerializer):
 
     # pagethumbnail_path = serializers.SerializerMethodField()
@@ -1219,6 +1283,7 @@ class OurworkUserSerializer(serializers.ModelSerializer):
     ourworksectionone = OurworksectiononeSerializer(many=True, read_only=True)
     Ourworkmeta = ourworkmetaSerializer(many=True, read_only=True)
     ourworksectiontwo = OurworksectiontwoSerializer(many=True, read_only=True)
+    Ourworksectionfive = OurworksectionfiveSerializer(many=True, read_only=True)
     Ourworkservicepages = PageourworkSerializer(many=True, read_only=True)
 
 
@@ -1670,6 +1735,29 @@ class PricingctaSerializer(serializers.ModelSerializer):
         model = Pricingcta
         fields = '__all__'
 
+class PricingsinglefaqSerializer(serializers.ModelSerializer):
+    photo_url = serializers.SerializerMethodField()
+    phoneimgphoto_url = serializers.SerializerMethodField()
+
+    # video_url = serializers.SerializerMethodField()
+
+    # def get_video_url(self, Ourworksectionone):
+    #       if Ourworksectionone.sectiontwovideo:
+    #          return obj.sectiontwovideo.video.url
+    #       return None
+    def get_photo_url(self, Pricingcta):
+        if Pricingsinglefaq.Pricingsinglefaqimg:
+            return Pricingcta.Pricingsinglefaqimg.image.url
+        return None
+
+    def get_phoneimgphoto_url(self, Pricingcta):
+        if Pricingsinglefaq.Pricingsinglefaqmobileimg:
+            return Pricingcta.Pricingsinglefaqmobileimg.image.url
+        return None
+
+    class Meta:
+        model = Pricingsinglefaq
+        fields = '__all__'
 
 class WhyussectionsixSerializer(serializers.ModelSerializer):
     sectionsiximage1_path = serializers.SerializerMethodField()
@@ -1910,6 +1998,12 @@ class PricingFaqSerializer(serializers.ModelSerializer):
 
 class PricingsectiononeSerializer(serializers.ModelSerializer):
 
+    photo_url = serializers.SerializerMethodField()
+
+    def get_photo_url(self, Pricingsectionthree):
+        if Pricingsectionone.sectiononebannerimg:
+            return Pricingsectionthree.sectiononebannerimg.image.url
+        return None
 
     class Meta:
         model = Pricingsectionone
@@ -1920,6 +2014,7 @@ class PricingSerializer(serializers.ModelSerializer):
     section1_url = serializers.SerializerMethodField()
     metadetails_url = serializers.SerializerMethodField()
     section2_url = serializers.SerializerMethodField()
+    sectionsinglefaq_url = serializers.SerializerMethodField()
     section3_url = serializers.SerializerMethodField()
     section4_url = serializers.SerializerMethodField()
     section5_url = serializers.SerializerMethodField()
@@ -1936,6 +2031,12 @@ class PricingSerializer(serializers.ModelSerializer):
         if Pricing.slug:
             return reverse('Pricingsectionone',args=[Pricing.slug])
         return None
+
+    def get_sectionsinglefaq_url(self, Pricing):
+        if Pricing.slug:
+            return reverse('Pricingsinglefaq',args=[Pricing.slug])
+        return None
+
 
     def get_metadetails_url(self, Pricing):
         if Pricing.slug:
@@ -2123,6 +2224,7 @@ class PricingUserSerializer(serializers.ModelSerializer):
 
     Pricingsectionone = PricingsectiononeSerializer(many=True, read_only=True)
     pricingmeta = PricingmetaSerializer(many=True, read_only=True)
+    Pricingsinglefaq = PricingsinglefaqSerializer(many=True, read_only=True)
     Pricingdetails = PricingdetailsSerializer(many=True, read_only=True)
     Pricingsectiontwo = PricingsectiontwoSerializer(many=True,read_only=True)
     Pricingsectionthree = PricingsectionthreeSerializer(many=True, read_only=True)

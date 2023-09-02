@@ -52,11 +52,11 @@ from .serializers import (
     ServicessectionThreeSerializer,FaqSerializer,EmailSerializer,SectionsixSerializer,SectionfiveSerializer,singlereviewSerializer,servicesmetaSerializer,
 HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,HomepageReviewSerializer,PricingctaSerializer,PricingmetaSerializer,whyusmetaSerializer,
     ServicessectionsixSerializer,ServicessectionsevenSerializer,FactsSerializer,userdataSerializer,adminlogoSerializer,blogwithhelpservicesSerializer,
-    OurworkSerializer,OurworksectiononeSerializer,OurworksectiontwoSerializer,CategorySerializer,SubcategorySerializer,
+    OurworkSerializer,OurworksectiononeSerializer,OurworksectiontwoSerializer,CategorySerializer,SubcategorySerializer,OurworksectionfiveSerializer,
     BlogsSerializer,BlogsectiononeSerializer,BlogsectiontwoSerializer,HomepagemetaSerializer,BlogsectionsevenSerializer,
     BlogsectionthreeSerializer,BlogsectionfourSerializer,WhyusSerializer,CommonhelpbrandingSerializer,
     WhyussectionsevenSerializer,WhyussectionsixSerializer,HomepageSlidersection2Serializer,HomepageSlidersection1Serializer,
-    WhyussectionfiveSerializer,PricingUserSerializer,CommonbrandingSerializer,
+    WhyussectionfiveSerializer,PricingUserSerializer,CommonbrandingSerializer,PricingsinglefaqSerializer,
     WhyussectionthreeSerializer,WhyussectiontwoSerializer,HomeSerializer,PricingFaqSerializer,SubcategoryforcatSerializer,
     PricingsectiononeSerializer,PricingSerializer,PricingsectiontwoSerializer,
     PricingsectionthreeSerializer,PricingsectionfourSerializer,PricingdetailsSerializer,ServicesBlogPostSerializer,OurworkprojectSerializer,
@@ -1345,6 +1345,37 @@ class ourworkmetaUpdateView(GenericAPIView):
         review.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+class OurworksectionfiveView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = OurworksectionfiveSerializer
+
+    def get(self, request, page_slug):
+        try:
+            section2 = Ourworksectionfive.objects.get(page__slug=page_slug)
+        except Ourworksectionfive.DoesNotExist:
+            try:
+                page = Whyus.objects.get(slug=page_slug)
+            except Whyus.DoesNotExist:
+                return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+            section2 = Ourworksectionfive.objects.create(page=page)
+
+        serializer = OurworksectionfiveSerializer(section2)
+        return Response(serializer.data)
+
+    def put(self, request, page_slug):
+        try:
+            section1 = Ourworksectionfive.objects.get(page__slug=page_slug)
+        except Ourworksectionfive.DoesNotExist:
+            return Response({'error': 'blogsectionfour page not created'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = OurworksectionfiveSerializer(section1, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 ###################servicesmetaView
 
@@ -2972,6 +3003,42 @@ class PricingctaView(GenericAPIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class PricingsinglefaqView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = PricingsinglefaqSerializer
+
+
+    def get(self, request, page_slug):
+        try:
+            section2 = Pricingsinglefaq.objects.get(page__slug=page_slug)
+        except Pricingsinglefaq.DoesNotExist:
+            try:
+                page = Pricing.objects.get(slug=page_slug)
+            except Pricing.DoesNotExist:
+                return Response({'error': 'Pricing Page not found'}, status=status.HTTP_404_NOT_FOUND)
+
+            section2 = Pricingsinglefaq.objects.create(page=page)
+
+        serializer = PricingsinglefaqSerializer(section2)
+        return Response(serializer.data)
+
+    def put(self, request, page_slug):
+        try:
+            section1 = Pricingsinglefaq.objects.get(page__slug=page_slug)
+        except Pricingsinglefaq.DoesNotExist:
+            return Response({'error': 'Pricingsinglefaq page not created'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = PricingsinglefaqSerializer(section1, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 # class PricinguserreviewView(GenericAPIView):

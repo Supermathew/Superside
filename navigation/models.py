@@ -645,6 +645,25 @@ class Ourworksectiontwo(models.Model):
           return f'Ourworksectiontwo'
 
 
+class Ourworksectionfive(models.Model):
+      sectionfivetopheading = models.TextField(null=True,blank=True)
+      sectionfivesubheading = models.TextField(null=True,blank=True)
+      sectionfivediscription = models.TextField(null=True,blank=True)
+      sectionfiveheading = models.TextField(null=True,blank=True)
+      sectionfivetopsubheading = models.TextField(null=True,blank=True)
+      sectionfivecolourtext = models.TextField(null=True,blank=True)
+      sectionfiveimage1details = models.TextField(null=True,blank=True)
+      sectionfiveimage2details= models.TextField(null=True,blank=True)
+      sectionfiveimage3details = models.TextField(null=True,blank=True)
+      sectionfiveimage1 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Ourworksectionfiveimage1')
+      sectionfiveimage2 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Ourworksectionfiveimage2')
+      sectionfiveimage3 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Ourworksectionfiveimage3')
+      page = models.ForeignKey(Ourwork, on_delete=models.CASCADE,null=True,blank=True,related_name='Ourworksectionfive')
+
+      def __str__(self):
+          return f'Ourworksectionfive'
+
+
 
 
 class Blogsectionone(models.Model):
@@ -775,6 +794,9 @@ class Whyussectionthree(models.Model):
       sectiononeheading = models.TextField(null=True,blank=True)
       sectiononesubheading = models.TextField(null=True,blank=True)
       sectiononediscription = models.TextField(null=True,blank=True)
+      sectiononegetstartedtext = models.TextField(null=True,blank=True)
+      sectiononegetstartedlink = models.TextField(null=True,blank=True)
+      sectiononediscription = models.TextField(null=True,blank=True)
       sectionthreevideoimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionthreevideoimg')
       sectionthreevideo = models.ForeignKey(VideoBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='whyussectionthreevideo')
       page = models.ForeignKey(Whyus, on_delete=models.CASCADE,null=True,blank=True,related_name='Whyussectionthree')
@@ -832,6 +854,11 @@ class Pricingsectionone(models.Model):
       sectiononeheading = models.TextField(null=True,blank=True)
       sectiononesubheading = models.TextField(null=True,blank=True)
       sectiononediscription = models.TextField(null=True,blank=True)
+      sectiononecheckoutbtntext = models.TextField(null=True,blank=True)
+      sectiononecheckoutbtnlink = models.TextField(null=True,blank=True)
+      sectiononeplantext = models.TextField(null=True,blank=True)
+      sectiononeplandisc = models.TextField(null=True,blank=True)
+      sectiononebannerimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='sectiononebannerimg')
       page = models.ForeignKey(Pricing, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricingsectionone')
 
 
@@ -848,6 +875,7 @@ class Pricingsectiontwo(models.Model):
       sectiontwopoint5 = models.TextField(null=True,blank=True)
       sectiontwopoint6 = models.TextField(null=True,blank=True)
       sectiontwocompareprice = models.TextField(null=True,blank=True)
+      sectiontwofeaturetext = models.TextField(null=True,blank=True)
       sectiontwourl = models.TextField(null=True,blank=True)
       sectiontwocapability = models.TextField(null=True,blank=True)
       pricepdf = models.FileField(null=True,blank=True,upload_to='documents/')
@@ -949,6 +977,16 @@ class Pricingcta(models.Model):
 
       def __str__(self):
           return f'Pricingcta'
+
+class Pricingsinglefaq(models.Model):
+      Pricingsinglefaqheading = models.TextField(null=True,blank=True)
+      Pricingsinglefaqsubheading = models.TextField(null=True,blank=True)
+      Pricingsinglefaqimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Pricingsinglefaqimg')
+      Pricingsinglefaqmobileimg = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Pricingsinglefaqmobileimg')
+      page = models.ForeignKey(Pricing, on_delete=models.CASCADE,null=True,blank=True,related_name='Pricingsinglefaq')
+
+      def __str__(self):
+          return f'Pricingsinglefaq'
 
 class Blogauthor(models.Model):
     profilephoto = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='profilephoto')
