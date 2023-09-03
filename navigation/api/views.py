@@ -1356,9 +1356,9 @@ class OurworksectionfiveView(GenericAPIView):
             section2 = Ourworksectionfive.objects.get(page__slug=page_slug)
         except Ourworksectionfive.DoesNotExist:
             try:
-                page = Whyus.objects.get(slug=page_slug)
-            except Whyus.DoesNotExist:
-                return Response({'error': 'Page not found'}, status=status.HTTP_404_NOT_FOUND)
+                page = Ourwork.objects.get(slug=page_slug)
+            except Ourwork.DoesNotExist:
+                return Response({'error': 'Ourwork Page not found'}, status=status.HTTP_404_NOT_FOUND)
 
             section2 = Ourworksectionfive.objects.create(page=page)
 
