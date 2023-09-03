@@ -155,7 +155,6 @@ urlpatterns = [
     path('dashboard/pricing/<slug:page_slug>/sectiontwo/', PricingsectiontwoView.as_view(),name='Pricingsectiontwo'),
     path('dashboard/pricing/<slug:page_slug>/pricingmetadetails/', PricingmetaView.as_view(),name='Pricingmetadetails'),
     path('dashboard/pricing/<slug:page_slug>/pricingmetadetails/<int:meta_id>/', pricingmetaUpdateView.as_view(),name='Pricingmetadetails-update'),
-
     path('dashboard/pricing/<slug:page_slug>/sectionthree/', PricingsectionthreeView.as_view(),name='Pricingsectionthree'),
     path('dashboard/pricing/<slug:page_slug>/sectionfour/', PricingsectionfourView.as_view(),name='Pricingsectionfour'),
     path('dashboard/pricing/<slug:page_slug>/pricingcta/', PricingctaView.as_view(),name='pricingcta'),

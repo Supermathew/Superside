@@ -655,9 +655,11 @@ class Ourworksectionfive(models.Model):
       sectionfiveimage1details = models.TextField(null=True,blank=True)
       sectionfiveimage2details= models.TextField(null=True,blank=True)
       sectionfiveimage3details = models.TextField(null=True,blank=True)
+      sectionfiveimage4details = models.TextField(null=True,blank=True)
       sectionfiveimage1 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Ourworksectionfiveimage1')
       sectionfiveimage2 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Ourworksectionfiveimage2')
       sectionfiveimage3 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Ourworksectionfiveimage3')
+      sectionfiveimage4 = models.ForeignKey(MediaBucket, on_delete=models.SET_NULL,null=True,blank=True,related_name='Ourworksectionfiveimage4')
       page = models.ForeignKey(Ourwork, on_delete=models.CASCADE,null=True,blank=True,related_name='Ourworksectionfive')
 
       def __str__(self):

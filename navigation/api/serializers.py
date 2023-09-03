@@ -1207,6 +1207,7 @@ class OurworksectionfiveSerializer(serializers.ModelSerializer):
     sectiononeimage1_path = serializers.SerializerMethodField()
     sectiononeimage2_path = serializers.SerializerMethodField()
     sectiononeimage3_path = serializers.SerializerMethodField()
+    sectiononeimage4_path = serializers.SerializerMethodField()
 
 
     def get_sectiononeimage1_path(self, obj):
@@ -1222,6 +1223,11 @@ class OurworksectionfiveSerializer(serializers.ModelSerializer):
     def get_sectiononeimage3_path(self, obj):
         if obj.sectionfiveimage3:
             return obj.sectionfiveimage3.image.url
+        return None
+
+    def get_sectiononeimage4_path(self, obj):
+        if obj.sectionfiveimage4:
+            return obj.sectionfiveimage4.image.url
         return None
 
     def to_representation(self, instance):
@@ -1248,6 +1254,11 @@ class OurworksectionfiveSerializer(serializers.ModelSerializer):
                     "sectionfiveimage3": self.get_sectiononeimage3_path(instance),
                     "sectionfiveimage3details":representation.get("sectionfiveimage3details"),
                     "sectionfiveimage3id":representation.get("sectionfiveimage3"),
+                },
+                {
+                    "sectionfiveimage4": self.get_sectiononeimage4_path(instance),
+                    "sectionfiveimage4details":representation.get("sectionfiveimage4details"),
+                    "sectionfiveimage4id":representation.get("sectionfiveimage4"),
                 },
             ],
         }
